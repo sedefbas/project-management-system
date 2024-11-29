@@ -1,4 +1,4 @@
-package management.sedef.user.model;
+package management.sedef.user.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -38,7 +38,5 @@ public class UserEntity {
 
     @Column(name = "photo")
     private String photo;
-
-
 
 }
