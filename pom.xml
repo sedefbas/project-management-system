@@ -30,6 +30,8 @@
 		<java.version>21</java.version>
 		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
 		<jsonwebtoken.version>0.12.6</jsonwebtoken.version>
+		<org.slf4j.version>2.0.7</org.slf4j.version>
+		<org.apache.logging.log4j.version>2.20.0</org.apache.logging.log4j.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -76,6 +78,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-client</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
 
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -100,7 +107,26 @@
 			<artifactId>bcpkix-jdk15on</artifactId>
 			<version>1.70</version> <!-- Güncel sürüm numarasını kontrol edin -->
 		</dependency>
-
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${org.apache.logging.log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${org.apache.logging.log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${org.apache.logging.log4j.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
@@ -139,6 +165,14 @@
 	</dependencies>
 
 	<build>
+		<!-- Resources kısmı burada ekleniyor -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+
+		<!-- Eğer başka plugin'ler varsa, onları da burada ekleyebilirsiniz -->
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
