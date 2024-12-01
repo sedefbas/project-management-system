@@ -45,9 +45,9 @@ class SecurityConfiguration {
                 .authorizeHttpRequests(customizer -> customizer
                         .requestMatchers(HttpMethod.GET, "/public/**")
                         .permitAll()
-                        .requestMatchers("/sedef/register")
+                        .requestMatchers("/api/v1/auth/register")
                         .permitAll()
-                        .requestMatchers("/sedef/login") // /sedef/login rotası eklendi
+                        .requestMatchers("/api/v1/auth/login") // /sedef/login rotası eklendi
                         .permitAll()
                         .requestMatchers("/sedef/public")
                         .permitAll()
