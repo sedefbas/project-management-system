@@ -22,7 +22,7 @@ public class UserAdapter implements UserReadPort, UserSavePort {
     private final UserToUserEntityMapper userToUserEntityMapper = UserToUserEntityMapper.initialize();
 
     @Override
-    public Optional<User> findById(final String id) {
+    public Optional<User> findById(final Long id) {
         return userRepository.findById(id).
                 map(userEntityToUserMapper::map);
     }
