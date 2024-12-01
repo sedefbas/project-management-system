@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: sedef
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/yonetim
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+application:
+  security:
+    jwt:
+      private-key: ${PRIVATE_KEY_PATH:src/main/resources/certs/private.key}
+      public-key: ${PUBLIC_KEY_PATH:src/main/resources/certs/public.key}
+      expiration: ${TOKEN_EXPIRE_MILLISECOND:86400000}
+      refresh-token:
+        expiration: ${REFRESH_TOKEN_EXPIRE_MILLISECOND:604800000}
+      guest-token:
+        expiration: ${GUEST_TOKEN_EXPIRE_MILLISECOND:604800000}
