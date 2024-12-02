@@ -1,25 +1,16 @@
 package management.sedef.auth.service.impl;
 
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ClaimsBuilder;
-import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
-import management.sedef.auth.exception.RoleNotFoundByNameException;
-import management.sedef.auth.exception.UserAlreadyRegisteredException;
-import management.sedef.auth.exception.UserNotFoundByEmailException;
-import management.sedef.auth.exception.UserPasswordNotValidException;
+import management.sedef.auth.exception.*;
 import management.sedef.auth.model.Role;
-import management.sedef.auth.model.Token;
-import management.sedef.auth.model.enums.TokenClaims;
-import management.sedef.auth.model.request.LoginRequest;
 import management.sedef.auth.model.request.RegisterRequest;
 import management.sedef.auth.model.request.VerifyRequest;
 import management.sedef.auth.port.RoleReadPort;
 import management.sedef.auth.service.RegistrationService;
-import management.sedef.auth.service.TokenService;
 import management.sedef.user.model.User;
 import management.sedef.user.model.UserVerification;
+import management.sedef.user.model.enums.UserStatus;
 import management.sedef.user.model.enums.UserVerificationStatus;
 import management.sedef.user.port.UserReadPort;
 import management.sedef.user.port.UserSavePort;
@@ -58,6 +49,7 @@ class RegistrationServiceImpl implements RegistrationService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
+                .status(UserStatus.NOT_VERIFIED)
                 .role(role)
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
@@ -74,7 +66,27 @@ class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
+    @Transactional
     public void verify(VerifyRequest verifyRequest) {
 
+        UserVerification userVerification = userVerificationReadPort
+                .findById(verifyRequest.getVerificationId())
+                .orElseThrow(() -> new UserVerificationIsNotFoundException(verifyRequest.getVerificationId()));
+
+        if (userVerification.isCompleted()) {
+            throw new UserVerificationAlreadyCompletedException();
+        }
+
+        userVerification.complete();
+        userVerificationSavePort.save(userVerification);
+
+
+        User user = userReadPort.findById(userVerification.getUser().getId())
+                .orElseThrow(() -> new UserNotFoundByIdException(userVerification.getUser().getId()));
+
+        user.verify();
+        userSavePort.save(user);
+
+        userEmailService.sendWelcome(user.getEmail());
     }
 }

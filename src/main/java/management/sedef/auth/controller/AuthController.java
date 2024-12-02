@@ -1,10 +1,12 @@
 package management.sedef.auth.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import management.sedef.auth.model.Token;
 import management.sedef.auth.model.request.LoginRequest;
 import management.sedef.auth.model.request.RegisterRequest;
+import management.sedef.auth.model.request.VerifyRequest;
 import management.sedef.auth.model.response.TokenResponse;
 import management.sedef.auth.service.AuthenticationService;
 import management.sedef.auth.service.RegistrationService;
@@ -25,6 +27,12 @@ public class AuthController {
     @PostMapping("/register")
     SuccessResponse<Void> register(@RequestBody RegisterRequest request) {
         registrationService.register(request);
+        return SuccessResponse.success();
+    }
+
+    @PostMapping("/verify")
+    SuccessResponse<Void> verify(@RequestBody VerifyRequest verifyRequest) {
+        registrationService.verify(verifyRequest);
         return SuccessResponse.success();
     }
 

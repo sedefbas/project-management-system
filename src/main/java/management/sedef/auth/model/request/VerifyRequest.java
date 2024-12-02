@@ -1,14 +1,17 @@
 package management.sedef.auth.model.request;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor //
 public class VerifyRequest {
 
-    @NotBlank
+    @NotNull
     private Long verificationId;
 
 }
