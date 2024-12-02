@@ -76,7 +76,7 @@ class MailServiceImpl implements MailService {
     }
 
     private String findTemplate(MailTemplate template) throws IOException {
-        String filePath = "static/" + template.getFile();
+        String filePath = "static/mail/" + template.getFile();
         log.debug("Looking for file at path: {}", filePath);
         ClassPathResource resource = new ClassPathResource(filePath);
 
