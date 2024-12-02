@@ -12,6 +12,7 @@ import management.sedef.user.model.User;
 import management.sedef.user.model.UserVerification;
 import management.sedef.user.model.enums.UserStatus;
 import management.sedef.user.model.enums.UserVerificationStatus;
+import management.sedef.user.model.enums.UserVerificationType;
 import management.sedef.user.port.UserReadPort;
 import management.sedef.user.port.UserSavePort;
 import management.sedef.user.port.UserVerificationReadPort;
@@ -59,6 +60,7 @@ class RegistrationServiceImpl implements RegistrationService {
         UserVerification userVerification = UserVerification.builder()
                 .user(savedUser)
                 .status(UserVerificationStatus.WAITING)
+                .type(UserVerificationType.EMAIL)
                 .build();
         userVerificationSavePort.save(userVerification);
 
@@ -67,10 +69,10 @@ class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     @Transactional
-    public void verify(VerifyRequest verifyRequest) {
+    public void verifyMail(VerifyRequest verifyRequest) {
 
         UserVerification userVerification = userVerificationReadPort
-                .findById(verifyRequest.getVerificationId())
+                .findByTypeAndId(UserVerificationType.EMAIL,verifyRequest.getVerificationId())
                 .orElseThrow(() -> new UserVerificationIsNotFoundException(verifyRequest.getVerificationId()));
 
         if (userVerification.isCompleted()) {

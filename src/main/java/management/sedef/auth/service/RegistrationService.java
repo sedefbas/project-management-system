@@ -6,5 +6,5 @@ public interface RegistrationService {
 
     void register(RegisterRequest request);
 
-    void verify(VerifyRequest verifyRequest);
+    void verifyMail(VerifyRequest verifyRequest);
 }

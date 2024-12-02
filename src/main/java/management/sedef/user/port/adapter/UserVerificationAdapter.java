@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import lombok.RequiredArgsConstructor;
 import management.sedef.user.model.UserVerification;
 import management.sedef.user.model.entity.UserVerificationEntity;
+import management.sedef.user.model.enums.UserVerificationType;
 import management.sedef.user.model.mapper.UserVerificationEntityToDomainMapper;
 import management.sedef.user.model.mapper.UserVerificationToEntityMapper;
 import management.sedef.user.port.UserVerificationReadPort;
@@ -23,12 +24,6 @@ public class UserVerificationAdapter  implements UserVerificationReadPort, UserV
     private final UserVerificationEntityToDomainMapper userVerificationEntityToDomainMapper = UserVerificationEntityToDomainMapper.initialize();
     private final UserVerificationToEntityMapper userVerificationToEntityMapper = UserVerificationToEntityMapper.initialize();
 
-    @Override
-    public Optional<UserVerification> findById(final Long id) {
-        return userVerificationRepository.findById(id)
-                .map(userVerificationEntityToDomainMapper::map);
-    }
-
 
     @Override
     public UserVerification save(final UserVerification userVerification) {
@@ -37,4 +32,9 @@ public class UserVerificationAdapter  implements UserVerificationReadPort, UserV
         return userVerificationEntityToDomainMapper.map(savedUserVerificationEntity);
     }
 
+    @Override
+    public Optional<UserVerification> findByTypeAndId(UserVerificationType type, Long id) {
+        return userVerificationRepository.findByTypeAndId(type,id)
+                .map(userVerificationEntityToDomainMapper::map);
+    }
 }

@@ -9,7 +9,10 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import management.sedef.auth.model.Role;
 import management.sedef.auth.model.entity.RoleEntity;
+import management.sedef.user.model.UserVerification;
 import management.sedef.user.model.enums.UserStatus;
+
+import java.util.List;
 
 @Entity
 @Getter

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import management.sedef.user.model.enums.UserVerificationStatus;
+import management.sedef.user.model.enums.UserVerificationType;
 
 @Entity
 @Getter
@@ -14,7 +15,10 @@ import management.sedef.user.model.enums.UserVerificationStatus;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_verification")
+@Table(
+        name = "user_verification",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "type"})  // user_id ve type kombinasyonunu benzersiz yapar
+)
 public class UserVerificationEntity {
 
     @Id
@@ -22,12 +26,16 @@ public class UserVerificationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private UserVerificationStatus status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private UserVerificationType type;
 
 }
