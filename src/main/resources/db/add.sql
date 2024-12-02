@@ -35,7 +35,8 @@ VALUES
     (4, 1), -- TESTER: READ
     (4, 2), -- TESTER: WRITE
     (5, 1), -- SCRUM_MASTER: READ
-    (5, 2), -- SCRUM_MASTER: WRITE -- ADMIN: READ
+    (5, 2), -- SCRUM_MASTER: WRITE
+    (6, 1), -- ADMIN: READ
     (6, 2), -- ADMIN: WRITE
     (6, 3), -- ADMIN: DELETE
     (6, 4), -- ADMIN: UPDATE
@@ -45,6 +46,6 @@ VALUES
     (9, 1); -- MEMBER: READ
 
 -- Insert a user into 'user' table (assuming role_id 1 is for USER)
-INSERT INTO user (email, first_name, last_name, password, phone, photo, role_id)
+INSERT INTO user (email, first_name, last_name, password, phone, photo, role_id, status)
 VALUES
-    ('sedef@example.com', 'Sedef', 'Nuray', 'password123', 5551234567, 'photo.jpg', 1);
+    ('sedef@example.com', 'Sedef', 'Nuray', 'password123', 5551234567, 'photo.jpg', 1, 'NOT_VERIFIED');

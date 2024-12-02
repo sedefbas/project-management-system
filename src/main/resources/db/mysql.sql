@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS role_permission (
                                                FOREIGN KEY (permission_id) REFERENCES permission(id) ON DELETE CASCADE
 );
 
--- User table creation
+-- User table creation with status column
 CREATE TABLE IF NOT EXISTS user (
                                     id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                     email VARCHAR(255) NOT NULL,
@@ -34,5 +34,6 @@ CREATE TABLE IF NOT EXISTS user (
                                     phone BIGINT NOT NULL,
                                     photo VARCHAR(255),
                                     role_id BIGINT,
+                                    status ENUM('NOT_VERIFIED', 'VERIFIED', 'BLOCKED') NOT NULL DEFAULT 'NOT_VERIFIED',
                                     FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE SET NULL
 );

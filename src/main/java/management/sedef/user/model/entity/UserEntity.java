@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import management.sedef.auth.model.Role;
 import management.sedef.auth.model.entity.RoleEntity;
+import management.sedef.user.model.enums.UserStatus;
 
 @Entity
 @Getter
@@ -41,6 +42,10 @@ public class UserEntity  {
 
     @Column(name = "photo")
     private String photo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private UserStatus status;
 
     @ManyToOne
     @JoinColumn(name = "role_id")  // Foreign key column
