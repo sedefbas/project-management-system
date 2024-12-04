@@ -3,6 +3,7 @@ package management.sedef.auth.model;
 import lombok.Getter;
 import lombok.Setter;
 import management.sedef.auth.model.entity.PermissionEntity;
+import management.sedef.auth.model.enums.RoleName;
 import management.sedef.auth.model.enums.RoleStatus;
 
 import java.util.List;
@@ -23,5 +24,10 @@ public class Role {
                 .map(PermissionEntity::getName)
                 .toList();
     }
+
+    public Boolean validateMemberOrCompanyOwnerRole() {
+        return this.name.equals(RoleName.MEMBER.name()) || this.name.equals(RoleName.COMPANY_OWNER.name());
+    }
+
 
 }

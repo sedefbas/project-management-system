@@ -1,7 +1,7 @@
 package management.sedef.auth.controller;
 
 
-import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 import management.sedef.auth.model.Token;
 import management.sedef.auth.model.request.LoginRequest;

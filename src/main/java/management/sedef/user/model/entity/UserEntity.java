@@ -1,18 +1,13 @@
 package management.sedef.user.model.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import management.sedef.auth.model.Role;
 import management.sedef.auth.model.entity.RoleEntity;
-import management.sedef.user.model.UserVerification;
 import management.sedef.user.model.enums.UserStatus;
-
-import java.util.List;
 
 @Entity
 @Getter

@@ -46,6 +46,10 @@ class RegistrationServiceImpl implements RegistrationService {
         Role role = roleReadPort.findByName(request.getRoleName())
                 .orElseThrow(() -> new RoleNotFoundByNameException(request.getRoleName().name()));
 
+        if (!role.validateMemberOrCompanyOwnerRole()) {
+            throw new InvalidRoleException("Invalid role. Only MEMBER or COMPANY_OWNER roles are allowed.");
+        }
+
         User user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
