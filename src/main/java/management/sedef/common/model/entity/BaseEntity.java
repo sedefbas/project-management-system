@@ -17,21 +17,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BaseEntity {
 
-    @Column(name = "created_by")
-    protected String createdBy;
-
     @Column(name = "created_at")
     protected LocalDateTime createdAt;
-
-    @Column(name = "updated_by")
-    protected String updatedBy;
 
     @Column(name = "updated_at")
     protected LocalDateTime updatedAt;
 
-    @Column(name = "finishedAt")
-    protected LocalDateTime finishedAt;
-
-    @Column(name = "realFinishedAt")
-    protected LocalDateTime realFinishedAt;
 }
