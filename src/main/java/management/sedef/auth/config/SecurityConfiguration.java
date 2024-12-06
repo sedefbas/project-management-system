@@ -36,13 +36,29 @@ class SecurityConfiguration {
         return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     }
 
+    private static final String[] WHITE_LIST_URL = {
+            "/swagger-ui.html",
+            "/swagger-ui.html",// Swagger UI'nin giriş URL'si
+            "/swagger-ui/**",    // Swagger UI'nin tüm alt URL'leri
+            "/v3/api-docs",      // Swagger Docs
+            "/v3/api-docs/**",   // Swagger Docs'in tüm alt URL'leri
+            "/swagger-resources/**",
+            "/webjars/**",
+            "/configuration/ui",
+            "/configuration/security"
+    };
+
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity,
                                            CustomBearerTokenAuthenticationFilter bearerTokenAuthenticationFilter) throws Exception {
 
         httpSecurity.cors(customizer -> customizer.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(customizer -> customizer
+                .authorizeHttpRequests(customizer ->
+                        customizer.requestMatchers(WHITE_LIST_URL)
+                        .permitAll()
                         .requestMatchers(HttpMethod.GET, "/public/**")
                         .permitAll()
                         .requestMatchers("/api/v1/auth/**")
@@ -73,6 +89,7 @@ class SecurityConfiguration {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
