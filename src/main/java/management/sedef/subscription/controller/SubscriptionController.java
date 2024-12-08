@@ -1,6 +1,5 @@
 package management.sedef.subscription.controller;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import management.sedef.common.model.entity.response.SuccessResponse;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/api/v1/subscription")
+@RequestMapping(path = "/api/v1/subscription")
 @RequiredArgsConstructor
 public class SubscriptionController {
 
@@ -23,16 +22,16 @@ public class SubscriptionController {
     private final SubscriptionToResponseMapper subscriptionToResponseMapper = SubscriptionToResponseMapper.initialize();
 
 
-    @GetMapping("/subscription/{id}")
-   // @PreAuthorize("hasAuthority('subscription:detail')")
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('SUBSCRIPTION_FIND_BY_ID')")
     SuccessResponse<SubscriptionResponse> findById(@PathVariable @Positive Long id) {
         Subscription subscription = subscriptionService.findById(id);
         SubscriptionResponse subscriptionResponse = subscriptionToResponseMapper.map(subscription);
         return SuccessResponse.success(subscriptionResponse);
     }
 
-    @GetMapping("/subscriptions")
-// @PreAuthorize("hasAuthority('subscription:detail')")
+    @GetMapping("/list")
+    @PreAuthorize("hasAuthority('SUBSCRIPTION_FIND_ALL')")
     public SuccessResponse<List<SubscriptionResponse>> findAll() {
 
         List<Subscription> subscriptionList = subscriptionService.findAll();
@@ -43,22 +42,22 @@ public class SubscriptionController {
     }
 
 
-    @PostMapping("/subscription")
-    //@PreAuthorize("hasAuthority('category:create')")
-    SuccessResponse<Void> create(@RequestBody @Valid SubscriptionRequest request) {
+    @PostMapping()
+    @PreAuthorize("hasAuthority('SUBSCRIPTION_CREATE')")
+    SuccessResponse<Void> create(@RequestBody  SubscriptionRequest request) {
         subscriptionService.create(request);
         return SuccessResponse.success();
     }
 
-    @PutMapping("/subscription/{id}")
-    //@PreAuthorize("hasAuthority('subscription:update')")
-    SuccessResponse<Void> update(@PathVariable @Positive Long id, @RequestBody @Valid SubscriptionRequest request) {
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('SUBSCRIPTION_UPDATE')")
+    SuccessResponse<Void> update(@PathVariable @Positive Long id, @RequestBody SubscriptionRequest request) {
         subscriptionService.update(id, request);
         return SuccessResponse.success();
     }
 
-    @DeleteMapping("/subscription/{id}")
-   // @PreAuthorize("hasAuthority('subscription:delete')")
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('SUBSCRIPTION_DELETE')")
     SuccessResponse<Void> delete(@PathVariable @Positive Long id) {
         subscriptionService.delete(id);
         return SuccessResponse.success();

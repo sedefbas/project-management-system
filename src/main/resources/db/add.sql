@@ -14,38 +14,36 @@ VALUES
 -- Insert permissions into 'permission' table
 INSERT INTO permission (name, description, is_hidden, status)
 VALUES
-    ('READ', 'Okuma izni', false, 'ACTIVE'),
-    ('WRITE', 'Yazma izni', false, 'ACTIVE'),
-    ('DELETE', 'Silme izni', false, 'ACTIVE'),
-    ('UPDATE', 'Güncelleme izni', false, 'ACTIVE'),
-    ('MANAGE_PROJECTS', 'Projeleri yönetme izni', false, 'ACTIVE'),
-    ('MANAGE_USERS', 'Kullanıcıları yönetme izni', false, 'ACTIVE');
+    ('SUBSCRIPTION_FIND_BY_ID', 'Abonelik detaylarını görme izni', false, 'ACTIVE'),
+    ('SUBSCRIPTION_FIND_ALL', 'Tüm abonelikleri listeleme izni', false, 'ACTIVE'),
+    ('SUBSCRIPTION_CREATE', 'Yeni bir abonelik oluşturma izni', false, 'ACTIVE'),
+    ('SUBSCRIPTION_UPDATE', 'Abonelik bilgilerini güncelleme izni', false, 'ACTIVE'),
+    ('SUBSCRIPTION_DELETE', 'Abonelik silme izni', false, 'ACTIVE');
 
 -- Insert roles and permissions into 'role_permission' table (many-to-many relationship)
+-- ADMIN rolüne yeni izinlerin atanması
 INSERT INTO role_permission (role_id, permission_id)
 VALUES
-    (1, 1), -- USER: READ
-    (1, 2), -- USER: WRITE
-    (2, 1), -- PROJECT_MANAGER: READ
-    (2, 2), -- PROJECT_MANAGER: WRITE
-    (2, 3), -- PROJECT_MANAGER: DELETE
-    (3, 1), -- DEVELOPER: READ
-    (3, 2), -- DEVELOPER: WRITE
-    (3, 4), -- DEVELOPER: UPDATE
-    (4, 1), -- TESTER: READ
-    (4, 2), -- TESTER: WRITE
-    (5, 1), -- SCRUM_MASTER: READ
-    (5, 2), -- SCRUM_MASTER: WRITE
-    (6, 1), -- ADMIN: READ
-    (6, 2), -- ADMIN: WRITE
-    (6, 3), -- ADMIN: DELETE
-    (6, 4), -- ADMIN: UPDATE
-    (7, 1), -- VIEWER: READ
-    (8, 1), -- COMPANY_OWNER: READ
-    (8, 2), -- COMPANY_OWNER: WRITE
-    (9, 1); -- MEMBER: READ
+    (6, (SELECT id FROM permission WHERE name = 'SUBSCRIPTION_FIND_BY_ID')), -- FIND_BY_ID
+    (6, (SELECT id FROM permission WHERE name = 'SUBSCRIPTION_FIND_ALL')),   -- FIND_ALL
+    (6, (SELECT id FROM permission WHERE name = 'SUBSCRIPTION_CREATE')),    -- CREATE
+    (6, (SELECT id FROM permission WHERE name = 'SUBSCRIPTION_UPDATE')),    -- UPDATE
+    (6, (SELECT id FROM permission WHERE name = 'SUBSCRIPTION_DELETE'));    -- DELETE
+
+
+INSERT INTO subscription (status, description, max_proje, max_task, max_user, price, features)
+VALUES
+    ('FREE', 'Temel özelliklere sahip plan', 1, 10, 5, 0.00, 'Sadece temel proje, görev ve kullanıcı desteği'),
+    ('PREMIUM', 'Gelişmiş özellikler ve sınırsız proje desteği', 10, 100, 50, 149.99, 'Sınırsız proje, 100 görev, 50 kullanıcı desteği'),
+    ('ENTERPRISE', 'Kurumsal seviyede tüm özellikler', NULL, NULL, NULL, 499.99, 'Sınırsız proje, görev ve kullanıcı desteği');
+
 
 -- Insert a user into 'user' table (assuming role_id 1 is for USER)
 INSERT INTO user (email, first_name, last_name, password, phone, photo, role_id, status)
 VALUES
     ('sedef@example.com', 'Sedef', 'Nuray', 'password123', 5551234567, 'photo.jpg', 1, 'NOT_VERIFIED');
+
+-- Yeni bir ADMIN rolüne sahip kullanıcı ekleniyor
+INSERT INTO user (email, first_name, last_name, password, phone, photo, role_id, status)
+VALUES
+    ('admin@example.com', 'Admin', 'User', 'securepassword', 5559876543, 'admin_photo.jpg', 6, 'VERIFIED');

@@ -63,8 +63,6 @@ class SecurityConfiguration {
                         .permitAll()
                         .requestMatchers("/api/v1/auth/**")
                         .permitAll()
-                        .requestMatchers("/api/v1/auth/login") // /sedef/login rotası eklendi
-                        .permitAll()
                         .requestMatchers("/sedef/public")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/user/*/followers", "/api/v1/user/*/followings")
