@@ -1,8 +1,8 @@
-package management.sedef.subscription.port;
+package management.sedef.subscriptionPlan.port;
 
-import management.sedef.subscription.model.Subscription;
+import management.sedef.subscriptionPlan.model.SubscriptionPlan;
 
-public interface SubscriptionDeletePort {
+public interface SubscriptionPlanDeletePort {
 
-    void delete(Subscription subscription);
+    void delete(SubscriptionPlan subscriptionPlan);
 }

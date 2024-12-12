@@ -1,20 +1,20 @@
-package management.sedef.subscription.service;
+package management.sedef.subscriptionPlan.service;
 
-import management.sedef.subscription.model.Subscription;
-import management.sedef.subscription.model.request.SubscriptionRequest;
+import management.sedef.subscriptionPlan.model.SubscriptionPlan;
+import management.sedef.subscriptionPlan.model.request.SubscriptionPlanRequest;
 
 import java.util.List;
 
-public interface SubscriptionService {
+public interface SubscriptionPlanService {
 
-    Subscription findById(Long id);
+    SubscriptionPlan findById(Long id);
 
-    List<Subscription> findAll();
+    List<SubscriptionPlan> findAll();
 
-    void create(SubscriptionRequest request);
+    void create(SubscriptionPlanRequest request);
 
     void delete(Long id);
 
-    void update(Long id, SubscriptionRequest subscriptionRequest);
+    void update(Long id, SubscriptionPlanRequest subscriptionRequest);
 
 }

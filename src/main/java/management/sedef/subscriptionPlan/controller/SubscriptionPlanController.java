@@ -1,57 +1,58 @@
-package management.sedef.subscription.controller;
+package management.sedef.subscriptionPlan.controller;
 
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import management.sedef.common.model.entity.response.SuccessResponse;
-import management.sedef.subscription.model.Subscription;
-import management.sedef.subscription.model.mapper.SubscriptionToResponseMapper;
-import management.sedef.subscription.model.request.SubscriptionRequest;
-import management.sedef.subscription.model.response.SubscriptionResponse;
-import management.sedef.subscription.service.SubscriptionService;
+import management.sedef.subscriptionPlan.model.SubscriptionPlan;
+import management.sedef.subscriptionPlan.model.mapper.SubscriptionPlanToResponseMapper;
+import management.sedef.subscriptionPlan.model.request.SubscriptionPlanRequest;
+import management.sedef.subscriptionPlan.model.response.SubscriptionPlanResponse;
+
+import management.sedef.subscriptionPlan.service.SubscriptionPlanService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/v1/subscription")
+@RequestMapping(path = "/api/v1/subscriptionPlan")
 @RequiredArgsConstructor
-public class SubscriptionController {
+public class SubscriptionPlanController {
 
-    private final SubscriptionService subscriptionService;
-    private final SubscriptionToResponseMapper subscriptionToResponseMapper = SubscriptionToResponseMapper.initialize();
+    private final SubscriptionPlanService subscriptionService;
+    private final SubscriptionPlanToResponseMapper subscriptionToResponseMapper = SubscriptionPlanToResponseMapper.initialize();
 
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('SUBSCRIPTION_FIND_BY_ID')")
-    SuccessResponse<SubscriptionResponse> findById(@PathVariable @Positive Long id) {
-        Subscription subscription = subscriptionService.findById(id);
-        SubscriptionResponse subscriptionResponse = subscriptionToResponseMapper.map(subscription);
-        return SuccessResponse.success(subscriptionResponse);
+    SuccessResponse<SubscriptionPlanResponse> findById(@PathVariable @Positive Long id) {
+        SubscriptionPlan subscriptionPlan = subscriptionService.findById(id);
+        SubscriptionPlanResponse subscriptionPlanResponse = subscriptionToResponseMapper.map(subscriptionPlan);
+        return SuccessResponse.success(subscriptionPlanResponse);
     }
 
     @GetMapping("/list")
     @PreAuthorize("hasAuthority('SUBSCRIPTION_FIND_ALL')")
-    public SuccessResponse<List<SubscriptionResponse>> findAll() {
+    public SuccessResponse<List<SubscriptionPlanResponse>> findAll() {
 
-        List<Subscription> subscriptionList = subscriptionService.findAll();
-        List<SubscriptionResponse> subscriptionResponses = subscriptionList.stream()
+        List<SubscriptionPlan> subscriptionPlanList = subscriptionService.findAll();
+        List<SubscriptionPlanResponse> subscriptionPlanRespons = subscriptionPlanList.stream()
                 .map(subscription -> subscriptionToResponseMapper.map(subscription))
                 .toList();
-        return SuccessResponse.success(subscriptionResponses);
+        return SuccessResponse.success(subscriptionPlanRespons);
     }
 
 
     @PostMapping()
     @PreAuthorize("hasAuthority('SUBSCRIPTION_CREATE')")
-    SuccessResponse<Void> create(@RequestBody  SubscriptionRequest request) {
+    SuccessResponse<Void> create(@RequestBody  SubscriptionPlanRequest request) {
         subscriptionService.create(request);
         return SuccessResponse.success();
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('SUBSCRIPTION_UPDATE')")
-    SuccessResponse<Void> update(@PathVariable @Positive Long id, @RequestBody SubscriptionRequest request) {
+    SuccessResponse<Void> update(@PathVariable @Positive Long id, @RequestBody SubscriptionPlanRequest request) {
         subscriptionService.update(id, request);
         return SuccessResponse.success();
     }

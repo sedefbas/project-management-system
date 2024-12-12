@@ -1,9 +1,9 @@
-package management.sedef.subscription.port;
+package management.sedef.subscriptionPlan.port;
 
-import management.sedef.subscription.model.Subscription;
+import management.sedef.subscriptionPlan.model.SubscriptionPlan;
 
-public interface SubscriptionSavePort {
+public interface SubscriptionPlanSavePort {
 
-    Subscription save(Subscription subscription);
+    SubscriptionPlan save(SubscriptionPlan subscriptionPlan);
 
 }

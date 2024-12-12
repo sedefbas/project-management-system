@@ -1,25 +1,20 @@
-package management.sedef.subscription.model.entity;
+package management.sedef.subscription.model;
+
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import management.sedef.company.model.entity.CompanyEntity;
+import management.sedef.company.model.Company;
 import management.sedef.subscription.model.enums.SubscriptionStatus;
 import management.sedef.subscriptionPlan.model.entity.SubscriptionPlanEntity;
 
 import java.time.LocalDate;
 
-@Entity
 @Getter
 @Setter
 @SuperBuilder
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "subscription")
-public class SubscriptionEntity {
+public class Subscription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +22,7 @@ public class SubscriptionEntity {
 
     @ManyToOne
     @JoinColumn(name = "company_id")
-    private CompanyEntity company;
+    private Company company;
 
     @ManyToOne
     @JoinColumn(name = "subscription_plan_id")
@@ -41,5 +36,4 @@ public class SubscriptionEntity {
 
     @Column(name = "status")
     private SubscriptionStatus status;
-
 }

@@ -1,21 +1,20 @@
-package management.sedef.subscription.model;
+package management.sedef.subscriptionPlan.model;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import management.sedef.subscription.model.enums.SubscriptionPlan;
+import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
 
 import java.math.BigDecimal;
 
 @Getter
 @Setter
 @SuperBuilder
-public class Subscription {
+public class SubscriptionPlan {
 
     private Long id;
 
-    private SubscriptionPlan subscriptionPlan;
+    private SubscriptionPlanStatus status;
 
     private String description;
 

@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import management.sedef.subscriptionPlan.model.enums.SubscriptionPlan;
+import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
 
 import java.math.BigDecimal;
 
@@ -26,7 +26,7 @@ public class SubscriptionPlanEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private SubscriptionPlan subscriptionPlan;
+    private SubscriptionPlanStatus subscriptionPlanStatus;
 
     @Column(name = "description")
     private String description;

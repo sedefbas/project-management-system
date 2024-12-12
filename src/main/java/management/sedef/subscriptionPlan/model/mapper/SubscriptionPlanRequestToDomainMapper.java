@@ -1,15 +1,16 @@
-package management.sedef.subscription.model.mapper;
+package management.sedef.subscriptionPlan.model.mapper;
 
 import management.sedef.common.model.entity.mapper.BaseMapper;
-import management.sedef.subscription.model.Subscription;
-import management.sedef.subscription.model.request.SubscriptionRequest;
+
+import management.sedef.subscriptionPlan.model.SubscriptionPlan;
+import management.sedef.subscriptionPlan.model.request.SubscriptionPlanRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
-public interface SubscriptionRequestToSubscriptionMapper extends BaseMapper<SubscriptionRequest, Subscription> {
+public interface SubscriptionPlanRequestToDomainMapper extends BaseMapper<SubscriptionPlanRequest,SubscriptionPlan> {
 
-    static SubscriptionRequestToSubscriptionMapper initialize(){
-        return Mappers.getMapper(SubscriptionRequestToSubscriptionMapper.class);
+    static SubscriptionPlanRequestToDomainMapper initialize(){
+        return Mappers.getMapper(SubscriptionPlanRequestToDomainMapper.class);
     }
 }

@@ -1,4 +1,4 @@
-package management.sedef.subscription.exception;
+package management.sedef.subscriptionPlan.exception;
 
 import management.sedef.common.exception.AbstractNotFoundException;
 

@@ -1,7 +1,8 @@
-package management.sedef.subscription.repository;
+package management.sedef.subscriptionPlan.repository;
 
-import management.sedef.subscription.model.entity.SubscriptionEntity;
+
+import management.sedef.subscriptionPlan.model.entity.SubscriptionPlanEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SubscriptionRepository extends JpaRepository<SubscriptionEntity,Long> {
+public interface SubscriptionPlanRepository extends JpaRepository<SubscriptionPlanEntity,Long> {
 }

@@ -1,13 +1,15 @@
-package management.sedef.subscription.port;
+package management.sedef.subscriptionPlan.port;
 
-import management.sedef.subscription.model.Subscription;
+import management.sedef.subscriptionPlan.model.SubscriptionPlan;
+
 
 import java.util.List;
 import java.util.Optional;
 
-public interface SubscriptionReadPort {
+public interface SubscriptionPlanReadPort {
 
-    List<Subscription> findAll();
-    Optional<Subscription> findById(Long id);
+    List<SubscriptionPlan> findAll();
+
+    Optional<SubscriptionPlan> findById(Long id);
 
 }

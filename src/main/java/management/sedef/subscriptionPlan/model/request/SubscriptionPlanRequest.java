@@ -1,15 +1,16 @@
-package management.sedef.subscription.model.request;
+package management.sedef.subscriptionPlan.model.request;
 
 import lombok.Getter;
 import lombok.Setter;
+import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
 
 import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class SubscriptionRequest {
+public class SubscriptionPlanRequest {
 
-    private String subscriptionPlan;
+    private SubscriptionPlanStatus subscriptionPlan;
 
     private String description;
 
