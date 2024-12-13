@@ -26,7 +26,7 @@ public class SubscriptionPlanEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private SubscriptionPlanStatus subscriptionPlanStatus;
+    private SubscriptionPlanStatus status;
 
     @Column(name = "description")
     private String description;

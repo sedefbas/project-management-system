@@ -4,6 +4,7 @@ package management.sedef.subscriptionPlan.service.ımpl;
 import lombok.RequiredArgsConstructor;
 import management.sedef.subscriptionPlan.exception.SubscriptionNotFoundException;
 import management.sedef.subscriptionPlan.model.SubscriptionPlan;
+import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
 import management.sedef.subscriptionPlan.model.mapper.SubscriptionPlanRequestToDomainMapper;
 import management.sedef.subscriptionPlan.model.request.SubscriptionPlanRequest;
 import management.sedef.subscriptionPlan.port.SubscriptionPlanDeletePort;
@@ -62,6 +63,11 @@ public class SubscriptionPlanServiceImpl implements SubscriptionPlanService {
        subscriptionPlan.setPrice(subscriptionRequest.getPrice());
        subscriptionPlan.setMaxTasks(subscriptionRequest.getMaxUsers());
        subscriptionPlanSavePort.save(subscriptionPlan);
+    }
+
+    public SubscriptionPlan findByStatus(SubscriptionPlanStatus status) {
+        return subscriptionPlanReadPort.findByStatus(status)
+                .orElseThrow(() -> new IllegalArgumentException("Subscription plan not found for status: " + status));
     }
 
 

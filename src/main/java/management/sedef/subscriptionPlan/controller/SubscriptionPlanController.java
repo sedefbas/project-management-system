@@ -22,9 +22,8 @@ public class SubscriptionPlanController {
     private final SubscriptionPlanService subscriptionService;
     private final SubscriptionPlanToResponseMapper subscriptionToResponseMapper = SubscriptionPlanToResponseMapper.initialize();
 
-
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('SUBSCRIPTION_FIND_BY_ID')")
+    @PreAuthorize("hasAuthority('subscription:detail')")
     SuccessResponse<SubscriptionPlanResponse> findById(@PathVariable @Positive Long id) {
         SubscriptionPlan subscriptionPlan = subscriptionService.findById(id);
         SubscriptionPlanResponse subscriptionPlanResponse = subscriptionToResponseMapper.map(subscriptionPlan);
@@ -32,9 +31,8 @@ public class SubscriptionPlanController {
     }
 
     @GetMapping("/list")
-    @PreAuthorize("hasAuthority('SUBSCRIPTION_FIND_ALL')")
+    @PreAuthorize("hasAuthority('subscription:list')")
     public SuccessResponse<List<SubscriptionPlanResponse>> findAll() {
-
         List<SubscriptionPlan> subscriptionPlanList = subscriptionService.findAll();
         List<SubscriptionPlanResponse> subscriptionPlanRespons = subscriptionPlanList.stream()
                 .map(subscription -> subscriptionToResponseMapper.map(subscription))
@@ -42,23 +40,22 @@ public class SubscriptionPlanController {
         return SuccessResponse.success(subscriptionPlanRespons);
     }
 
-
     @PostMapping()
-    @PreAuthorize("hasAuthority('SUBSCRIPTION_CREATE')")
-    SuccessResponse<Void> create(@RequestBody  SubscriptionPlanRequest request) {
+    @PreAuthorize("hasAuthority('subscription:create')")
+    SuccessResponse<Void> create(@RequestBody SubscriptionPlanRequest request) {
         subscriptionService.create(request);
         return SuccessResponse.success();
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('SUBSCRIPTION_UPDATE')")
+    @PreAuthorize("hasAuthority('subscription:update')")
     SuccessResponse<Void> update(@PathVariable @Positive Long id, @RequestBody SubscriptionPlanRequest request) {
         subscriptionService.update(id, request);
         return SuccessResponse.success();
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('SUBSCRIPTION_DELETE')")
+    @PreAuthorize("hasAuthority('subscription:delete')")
     SuccessResponse<Void> delete(@PathVariable @Positive Long id) {
         subscriptionService.delete(id);
         return SuccessResponse.success();
