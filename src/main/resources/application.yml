@@ -38,3 +38,8 @@ application:
         expiration: ${REFRESH_TOKEN_EXPIRE_MILLISECOND:604800000}
       guest-token:
         expiration: ${GUEST_TOKEN_EXPIRE_MILLISECOND:604800000}
+
+iyzico:
+  apiKey: "sandbox-YIeS7SDwadvQXUY26824xOfVp2utB1Fg"
+  secretKey: "sandbox-mWT88UW4eOKknM3KLim3As2yuCWd1xiM"
+  baseUrl: "https://sandbox-api.iyzipay.com"

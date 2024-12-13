@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import management.sedef.common.model.entity.BaseEntity;
 import management.sedef.user.model.enums.UserVerificationStatus;
 import management.sedef.user.model.enums.UserVerificationType;
 
@@ -19,7 +20,7 @@ import management.sedef.user.model.enums.UserVerificationType;
         name = "user_verification",
         uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "type"})  // user_id ve type kombinasyonunu benzersiz yapar
 )
-public class UserVerificationEntity {
+public class UserVerificationEntity  extends BaseEntity {
 
     @Id
     @Column(name = "id")

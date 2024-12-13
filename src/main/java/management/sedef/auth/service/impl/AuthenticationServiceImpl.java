@@ -24,7 +24,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
 
-
+//todo hesap doğrulması yapılmadan giriş yapılmamalı düzelt ?
     @Override
     public Token login(LoginRequest request) {
 

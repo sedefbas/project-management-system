@@ -63,7 +63,7 @@ class SecurityConfiguration {
                         .permitAll()
                         .requestMatchers("/api/v1/auth/**")
                         .permitAll()
-                        .requestMatchers("/sedef/public")
+                        .requestMatchers("/api/payments/non3ds")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/user/*/followers", "/api/v1/user/*/followings")
                         .permitAll()
