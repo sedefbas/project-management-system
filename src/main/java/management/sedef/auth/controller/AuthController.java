@@ -2,9 +2,11 @@ package management.sedef.auth.controller;
 
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import management.sedef.auth.model.Token;
 import management.sedef.auth.model.request.LoginRequest;
+import management.sedef.auth.model.request.RefreshRequest;
 import management.sedef.auth.model.request.RegisterRequest;
 import management.sedef.auth.model.request.VerifyRequest;
 import management.sedef.auth.model.response.TokenResponse;
@@ -39,6 +41,16 @@ public class AuthController {
     @PostMapping("/login")
     SuccessResponse<TokenResponse> login(@RequestBody LoginRequest request) {
         final Token token = authenticationService.login(request);
+        final TokenResponse tokenResponse = TokenResponse.builder()
+                .accessToken(token.getAccessToken())
+                .refreshToken(token.getRefreshToken())
+                .build();
+        return SuccessResponse.success(tokenResponse);
+    }
+
+    @PostMapping("/refresh")
+    SuccessResponse<TokenResponse> refresh(@RequestBody @Valid RefreshRequest refreshRequest) {
+        final Token token = authenticationService.refresh(refreshRequest);
         final TokenResponse tokenResponse = TokenResponse.builder()
                 .accessToken(token.getAccessToken())
                 .refreshToken(token.getRefreshToken())

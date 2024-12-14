@@ -6,15 +6,20 @@ import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import management.sedef.auth.exception.UserNotFoundByEmailException;
 import management.sedef.auth.exception.UserPasswordNotValidException;
+import management.sedef.auth.model.Identity;
 import management.sedef.auth.model.Token;
 import management.sedef.auth.model.enums.TokenClaims;
 import management.sedef.auth.model.request.LoginRequest;
+import management.sedef.auth.model.request.RefreshRequest;
 import management.sedef.auth.service.AuthenticationService;
+import management.sedef.auth.service.InvalidTokenService;
 import management.sedef.auth.service.TokenService;
 import management.sedef.user.model.User;
 import management.sedef.user.port.UserReadPort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +28,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserReadPort userReadPort;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
+    private final InvalidTokenService invalidTokenService;
+    private final Identity identity;
 
 //todo hesap doğrulması yapılmadan giriş yapılmamalı düzelt ?
     @Override
@@ -54,5 +61,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public void logout(String refreshToken) {
 
+        final String refreshTokenId = tokenService.getPayload(refreshToken).getId();
+        final String tokenId = tokenService.getPayload(identity.getAccessToken()).getId();
+
+        final List<String> invalidTokenIds = List.of(refreshTokenId, tokenId);
+        invalidTokenService.saveAll(invalidTokenIds);
+    }
+
+    @Override
+    public Token refresh(RefreshRequest refreshRequest) {
+
+        final String refreshToken = refreshRequest.getRefreshToken();
+        final Claims payload = tokenService.getPayload(refreshToken);
+
+        final String email = payload.get(TokenClaims.USER_MAIL.getValue(), String.class);
+        final User user = userReadPort.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundByEmailException(email));
+
+        final Claims claims = this.generateClaims(user);
+
+        return tokenService.generate(claims, refreshToken);
     }
 }
