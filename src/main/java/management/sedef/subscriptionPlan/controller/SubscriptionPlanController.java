@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import management.sedef.common.model.entity.response.SuccessResponse;
 import management.sedef.subscriptionPlan.model.SubscriptionPlan;
+import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
 import management.sedef.subscriptionPlan.model.mapper.SubscriptionPlanToResponseMapper;
 import management.sedef.subscriptionPlan.model.request.SubscriptionPlanRequest;
 import management.sedef.subscriptionPlan.model.response.SubscriptionPlanResponse;
@@ -61,5 +62,11 @@ public class SubscriptionPlanController {
         return SuccessResponse.success();
     }
 
-
+    @GetMapping("/status/id")
+    @PreAuthorize("hasAuthority('subscription:detail')")
+    SuccessResponse<SubscriptionPlanResponse>  findByStatus(SubscriptionPlanStatus status) {
+        SubscriptionPlan subscriptionPlan = subscriptionService.findByStatus(status);
+        SubscriptionPlanResponse subscriptionPlanRespons = subscriptionToResponseMapper.map(subscriptionPlan);
+        return SuccessResponse.success(subscriptionPlanRespons);
+    }
 }

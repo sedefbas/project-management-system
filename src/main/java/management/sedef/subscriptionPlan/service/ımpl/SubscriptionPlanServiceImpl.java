@@ -10,9 +10,9 @@ import management.sedef.subscriptionPlan.model.request.SubscriptionPlanRequest;
 import management.sedef.subscriptionPlan.port.SubscriptionPlanDeletePort;
 import management.sedef.subscriptionPlan.port.SubscriptionPlanReadPort;
 import management.sedef.subscriptionPlan.port.SubscriptionPlanSavePort;
+import management.sedef.subscriptionPlan.repository.SubscriptionPlanRepository;
 import management.sedef.subscriptionPlan.service.SubscriptionPlanService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -23,6 +23,7 @@ public class SubscriptionPlanServiceImpl implements SubscriptionPlanService {
     private final SubscriptionPlanReadPort subscriptionPlanReadPort;
     private final SubscriptionPlanDeletePort subscriptionPlanDeletePort;
     private final SubscriptionPlanRequestToDomainMapper subscriptionPlanRequestToDomainMapper = SubscriptionPlanRequestToDomainMapper.initialize();
+    private final SubscriptionPlanRepository subscriptionPlanRepository;
 
     @Override
     public SubscriptionPlan findById(Long id) {
@@ -55,7 +56,7 @@ public class SubscriptionPlanServiceImpl implements SubscriptionPlanService {
        final SubscriptionPlan subscriptionPlan = subscriptionPlanReadPort.findById(id)
                  .orElseThrow(()-> new SubscriptionNotFoundException(id));
 
-       subscriptionPlan.setStatus(subscriptionRequest.getSubscriptionPlan());
+       subscriptionPlan.setStatus(subscriptionRequest.getStatus());
        subscriptionPlan.setDescription(subscriptionRequest.getDescription());
        subscriptionPlan.setMaxProjects(subscriptionRequest.getMaxProjects());
        subscriptionPlan.setMaxTasks(subscriptionRequest.getMaxTasks());
@@ -69,6 +70,7 @@ public class SubscriptionPlanServiceImpl implements SubscriptionPlanService {
         return subscriptionPlanReadPort.findByStatus(status)
                 .orElseThrow(() -> new IllegalArgumentException("Subscription plan not found for status: " + status));
     }
+
 
 
 }

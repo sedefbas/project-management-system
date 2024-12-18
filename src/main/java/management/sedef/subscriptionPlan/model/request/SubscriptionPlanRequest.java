@@ -1,5 +1,6 @@
 package management.sedef.subscriptionPlan.model.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
 @Setter
 public class SubscriptionPlanRequest {
 
-    private SubscriptionPlanStatus subscriptionPlan;
+    private SubscriptionPlanStatus status;
 
     private String description;
 

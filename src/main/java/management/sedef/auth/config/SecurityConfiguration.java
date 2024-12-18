@@ -63,7 +63,7 @@ class SecurityConfiguration {
                         .permitAll()
                         .requestMatchers("/api/v1/auth/**")
                         .permitAll()
-                        .requestMatchers("/api/payments/non3ds")
+                        .requestMatchers("/api/payments/**")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/user/*/followers", "/api/v1/user/*/followings")
                         .permitAll()

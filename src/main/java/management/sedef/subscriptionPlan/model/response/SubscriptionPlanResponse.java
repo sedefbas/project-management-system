@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Setter
 public class SubscriptionPlanResponse {
     private Long id;
-    private SubscriptionPlanStatus subscriptionPlan;
+    private SubscriptionPlanStatus status;
     private String description;
     private Integer maxProjects;
     private Integer maxTasks;

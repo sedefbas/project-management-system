@@ -1,5 +1,7 @@
 package management.sedef.subscriptionPlan.model;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
