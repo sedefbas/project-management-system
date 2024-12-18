@@ -9,6 +9,8 @@ import lombok.experimental.SuperBuilder;
 import management.sedef.auth.model.entity.RoleEntity;
 import management.sedef.user.model.enums.UserStatus;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -16,7 +18,7 @@ import management.sedef.user.model.enums.UserStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
-public class UserEntity  {
+public class UserEntity {
 
     @Id
     @Column(name = "id")
@@ -48,5 +50,14 @@ public class UserEntity  {
     @ManyToOne
     @JoinColumn(name = "role_id")  // Foreign key column
     private RoleEntity role;
+
+    @Column(name = "last_login_time")
+    private LocalDateTime lastLoginDate;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
 }
