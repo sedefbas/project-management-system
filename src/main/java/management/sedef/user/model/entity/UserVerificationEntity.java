@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import management.sedef.common.model.entity.BaseEntity;
 import management.sedef.user.model.enums.UserVerificationStatus;
 import management.sedef.user.model.enums.UserVerificationType;
 

@@ -16,9 +16,11 @@ import management.sedef.auth.service.InvalidTokenService;
 import management.sedef.auth.service.TokenService;
 import management.sedef.user.model.User;
 import management.sedef.user.port.UserReadPort;
+import management.sedef.user.port.UserSavePort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,6 +28,7 @@ import java.util.List;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserReadPort userReadPort;
+    private final UserSavePort userSavePort;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
     private final InvalidTokenService invalidTokenService;
@@ -42,6 +45,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new UserPasswordNotValidException();
         }
+
+        user.setLastLoginDate(LocalDateTime.now());
+        userSavePort.save(user);
 
         final Claims claims = this.generateClaims(user);
         return tokenService.generate(claims);

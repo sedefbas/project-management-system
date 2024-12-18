@@ -1,10 +1,11 @@
 package management.sedef.auth.model.request;
 
-import jakarta.validation.constraints.Email;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import management.sedef.auth.model.enums.RoleName;
+
 
 @Getter
 @Setter

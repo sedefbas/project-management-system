@@ -14,4 +14,6 @@ public interface TokenService {
     Claims getPayload(String token);
 
     UsernamePasswordAuthenticationToken getAuthentication(String token);
+
+    Long getUserIdFromToken(String token);
 }

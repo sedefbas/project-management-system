@@ -21,4 +21,5 @@ public class LoginRequest {
     @Size(min = 8, max = 255, message = "Password should not be less than 8-255")
     private String password;
 
+
 }

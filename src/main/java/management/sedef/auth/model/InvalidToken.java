@@ -4,7 +4,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import management.sedef.common.model.entity.BaseEntity;
 
 @Getter
 @Setter

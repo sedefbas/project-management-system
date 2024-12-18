@@ -124,6 +124,13 @@ public class TokenServiceImp implements TokenService {
                 .getPayload();
     }
 
+    public Long getUserIdFromToken(String token) {
+        Claims claims = getPayload(token);
+        Double userIdDouble = claims.get(TokenClaims.USER_ID.getValue(), Double.class);
+        return userIdDouble != null ? userIdDouble.longValue() : null;
+    }
+
+
 
     @Override
     public UsernamePasswordAuthenticationToken getAuthentication(String token) {

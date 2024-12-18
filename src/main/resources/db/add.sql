@@ -24,19 +24,26 @@ VALUES
     ('company:list', 'Şirketleri listeleme izni', false, 'ACTIVE'),
     ('company:create', 'Yeni bir şirket oluşturma izni', false, 'ACTIVE'),
     ('company:update', 'Şirket bilgilerini güncelleme izni', false, 'ACTIVE'),
-    ('company:delete', 'Şirket silme izni', false, 'ACTIVE');
+    ('company:delete', 'Şirket silme izni', false, 'ACTIVE'),
+    ('address:create', 'Adres oluşturma izni', false, 'ACTIVE'),
+    ('address:delete', 'Adres silme izni', false, 'ACTIVE'),
+    ('address:update', 'Adres güncelleme izni', false, 'ACTIVE'),
+    ('address:list', 'Adresleri listeleme izni', false, 'ACTIVE'),
+    ('address:detail', 'Adres detaylarını görme izni', false, 'ACTIVE');
 
 
 -- ADMIN rolüne yeni izinlerin atanması
 INSERT INTO role_permission (role_id, permission_id)
 SELECT 6, id FROM permission WHERE name IN
                                    ('subscription:detail', 'subscription:list', 'subscription:create', 'subscription:update', 'subscription:delete',
-                                    'company:detail', 'company:list', 'company:create', 'company:update', 'company:delete');
+                                    'company:detail', 'company:list', 'company:create', 'company:update', 'company:delete',
+                                    'address:create', 'address:delete', 'address:update', 'address:list', 'address:detail');
 
 -- COMPANY_OWNER rolüne yeni izinlerin atanması
 INSERT INTO role_permission (role_id, permission_id)
 SELECT 8, id FROM permission WHERE name IN
-                                   ('company:detail', 'company:list', 'company:create', 'company:update', 'company:delete');
+                                   ('company:detail', 'company:list', 'company:create', 'company:update', 'company:delete',
+                                    'address:create', 'address:delete', 'address:update', 'address:list', 'address:detail');
 
 
 
