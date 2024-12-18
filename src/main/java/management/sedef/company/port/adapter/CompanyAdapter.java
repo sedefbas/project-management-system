@@ -35,6 +35,11 @@ public class CompanyAdapter implements CompanyReadPort, CompanyDeletePort, Compa
     }
 
     @Override
+    public List<Company> findCompaniesByUserId(Long userId) {
+        return repository.findCompaniesByUserId(userId).stream().map(companyEntityToDomainMapper::map).toList();
+    }
+
+    @Override
     public void delete(Company company) {
         final CompanyEntity companyEntity = companyToEntityMapper.map(company);
         repository.delete(companyEntity);

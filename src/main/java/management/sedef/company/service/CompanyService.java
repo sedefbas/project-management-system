@@ -16,4 +16,6 @@ public interface CompanyService {
     void delete(Long id);
 
     void update(Long id,CompanyRequest request);
+
+    List<Company>findCompaniesByUserId(Long userId);
 }

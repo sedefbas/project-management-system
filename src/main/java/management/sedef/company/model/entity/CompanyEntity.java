@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import management.sedef.common.model.entity.BaseEntity;
 import management.sedef.company.model.enums.CompanyStatus;
 
 import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;

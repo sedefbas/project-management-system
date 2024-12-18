@@ -7,6 +7,7 @@ import management.sedef.company.model.Company;
 import management.sedef.company.model.mapper.companymapper.CompanyToResponseMapper;
 import management.sedef.company.model.request.CompanyRequest;
 import management.sedef.company.model.response.CompanyResponse;
+import management.sedef.company.model.response.CompanySummaryResponse;
 import management.sedef.company.service.CompanyService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -62,4 +63,22 @@ public class CompanyController {
         companyService.update(id, request);
         return SuccessResponse.success();
     }
+
+    @GetMapping("/user/{id}")
+    @PreAuthorize("hasAnyAuthority('company:detail')")
+    public SuccessResponse<List<CompanySummaryResponse>> findCompaniesByUserId(@PathVariable Long id) {
+        List<Company> companyList = companyService.findCompaniesByUserId(id);
+
+        List<CompanySummaryResponse> companyResponses = companyList.stream()
+                .map(company -> {
+                    CompanySummaryResponse response = new CompanySummaryResponse();
+                    response.setId(company.getId());
+                    response.setName(company.getName());
+                    return response;
+                })
+                .toList();
+
+        return SuccessResponse.success(companyResponses);
+    }
+
 }

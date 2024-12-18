@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface CompanyReadPort {
     Optional<Company> findById(Long id);
     List<Company> findAll();
+    List<Company>findCompaniesByUserId(Long userId);
 }

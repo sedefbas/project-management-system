@@ -52,4 +52,9 @@ public class CompanyServiceImpl implements CompanyService {
                 .orElseThrow(()-> new CompanyNotFoundException(id));
         companyRequestToDomainMapper.map(request);
     }
+
+    @Override
+    public List<Company> findCompaniesByUserId(Long userId) {
+        return companyReadPort.findCompaniesByUserId(userId);
+    }
 }
