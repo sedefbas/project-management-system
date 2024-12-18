@@ -1,4 +1,4 @@
-package management.sedef.Payment;
+package management.sedef.Payment.service;
 
 import com.iyzipay.Options;
 import com.iyzipay.model.Payment;
@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PaymentService {
+public class IyzipayService {
 
     private final Options options;
 
     @Autowired
-    public PaymentService(Options options) {
+    public IyzipayService(Options options) {
         this.options = options;
     }
 
@@ -24,4 +24,5 @@ public class PaymentService {
     public ThreedsInitialize process3DSPayment(CreatePaymentRequest request) {
         return ThreedsInitialize.create(request, options);
     }
+
 }

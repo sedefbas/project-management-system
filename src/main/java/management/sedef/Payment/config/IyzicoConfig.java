@@ -1,4 +1,4 @@
-package management.sedef.Payment;
+package management.sedef.Payment.config;
 
 import org.springframework.context.annotation.Configuration;
 import com.iyzipay.Options;
