@@ -111,6 +111,8 @@ public class PaymentService {
 
         Payment payment = iyzipayService.processNon3DSPayment(iyzipayRequest);
 
+        //todo başarılı ise companyplanstatusu değişmeli.
+
         return payment;
     }
 

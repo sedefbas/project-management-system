@@ -1,4 +1,4 @@
-## Bitirme projem için jira benzeri proje yönetim sistemi yazıyorum. Açıkcası ödeme entegrasyonundan tutunda içinde bir çok özellikle jiraya çok benzeyeceği için ve maddi anlamda kazandırma potansiyeli olduğu için projenin yüzde 20si kadarı tamamlandığında private olarak değiştireceğim.
+## Bitirme projem için jira benzeri proje yönetim sistemi yazıyorum. Açıkcası ödeme entegrasyonundan tutunda içinde bir çok özellikle jiraya benzetmeye çalışacağım elimden geldiğince :) 
 ### Şuanda public olmasının sebebi;
 #### 
 1. Arkadaşlarım adapter patterninin nasıl kullanıldığını görmek istediler.

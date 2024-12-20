@@ -21,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "company")
-public class CompanyEntity extends BaseEntity {
+public class CompanyEntity  {
 
     @Id
     @Column(name = "id")
