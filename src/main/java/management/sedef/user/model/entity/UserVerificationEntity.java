@@ -19,7 +19,7 @@ import management.sedef.user.model.enums.UserVerificationType;
         name = "user_verification",
         uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "type"})  // user_id ve type kombinasyonunu benzersiz yapar
 )
-public class UserVerificationEntity  extends BaseEntity {
+public class UserVerificationEntity    {
 
     @Id
     @Column(name = "id")

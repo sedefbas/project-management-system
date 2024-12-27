@@ -16,7 +16,7 @@ spring:
     host: ${MAIL_HOST:smtp.gmail.com}
     port: ${MAIL_PORT:587}
     username: ${MAIL_USERNAME:bassedef98@gmail.com}
-    password: ${MAIL_PASSWORD:kguq gkhq cmkt hzux}
+    password: ${MAIL_PASSWORD:gizli}
     properties:
       mail:
         transport:
@@ -28,7 +28,7 @@ spring:
 
 application:
   front-end:
-    url: ${FRONT_END_URL:http://localhost:3000}
+    url: ${FRONT_END_URL:http://localhost:5173 }
   security:
     jwt:
       private-key: ${PRIVATE_KEY_PATH:src/main/resources/certs/private.key}

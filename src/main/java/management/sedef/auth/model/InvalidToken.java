@@ -8,8 +8,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-@EqualsAndHashCode(callSuper = true)
-public class InvalidToken extends BaseEntity {
+public class InvalidToken  {
 
     private Long id;
     private String tokenId;

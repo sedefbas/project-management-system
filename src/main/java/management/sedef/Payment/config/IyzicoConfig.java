@@ -51,6 +51,6 @@ public class IyzicoConfig {
     public void init() {
         System.out.println("apiKey: " + apiKey);
         System.out.println("secretKey: " + secretKey);
-        System.out.println("baseUrl: " + baseUrl);
+        System.out.println("baseUrls: " + baseUrl);
     }
 }

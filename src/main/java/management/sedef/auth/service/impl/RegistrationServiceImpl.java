@@ -69,9 +69,11 @@ class RegistrationServiceImpl implements RegistrationService {
                 .status(UserVerificationStatus.WAITING)
                 .type(UserVerificationType.EMAIL)
                 .build();
-        userVerificationSavePort.save(userVerification);
 
-        userEmailService.sendVerification(savedUser.getEmail(), userVerification.getId());
+        UserVerification savedUserVerification = userVerificationSavePort.save(userVerification);
+
+
+        userEmailService.sendVerification(savedUser.getEmail(), savedUserVerification.getId());
     }
 
     @Override

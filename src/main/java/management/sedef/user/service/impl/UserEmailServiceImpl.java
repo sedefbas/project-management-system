@@ -14,6 +14,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class UserEmailServiceImpl implements UserEmailService {
+
     @Value("${application.front-end.url}")
     private String frontEndUrl;
 
@@ -22,6 +23,10 @@ public class UserEmailServiceImpl implements UserEmailService {
     @Override
     public void sendVerification(final String email,
                                  final Long verificationId) {
+
+        final String baseUrl = frontEndUrl + "/auth/verify?verificationId=" + verificationId;
+        System.out.println("BASE_URL: " + baseUrl);
+
 
         final Map<String, Object> parameters = Map.of(
                 "BASE_URL", frontEndUrl + "/auth/verify?verificationId=" + verificationId
