@@ -1,0 +1,48 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: sedef
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/yonetim
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:bassedef98@gmail.com}
+    password: ${MAIL_PASSWORD:ilzq nhsa zdel fpuq}
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+application:
+  front-end:
+    url: ${FRONT_END_URL:http://localhost:5173}
+  security:
+    jwt:
+      private-key: ${PRIVATE_KEY_PATH:src/main/resources/certs/private.key}
+      public-key: ${PUBLIC_KEY_PATH:src/main/resources/certs/public.key}
+      expiration: ${TOKEN_EXPIRE_MILLISECOND:86400000}
+      refresh-token:
+        expiration: ${REFRESH_TOKEN_EXPIRE_MILLISECOND:604800000}
+      guest-token:
+        expiration: ${GUEST_TOKEN_EXPIRE_MILLISECOND:604800000}
+
+iyzico:
+  apiKey: "sandbox-YIeS7SDwadvQXUY26824xOfVp2utB1Fg"
+  secretKey: "sandbox-mWT88UW4eOKknM3KLim3As2yuCWd1xiM"
+  baseUrl: "https://sandbox-api.iyzipay.com"
