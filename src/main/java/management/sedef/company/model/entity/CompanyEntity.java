@@ -46,7 +46,7 @@ public class CompanyEntity  {
     @Column(name = "website")
     private String website;
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private AddressEntity address;
 

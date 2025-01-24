@@ -1,10 +1,12 @@
 package management.sedef.company.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import management.sedef.company.model.enums.CompanyStatus;
 import management.sedef.subscriptionPlan.model.SubscriptionPlan;
+import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
 import management.sedef.user.model.User;
 
 import java.time.LocalDateTime;
@@ -12,7 +14,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@SuperBuilder
+@Builder
 public class Company {
 
     private Long id;
@@ -33,7 +35,7 @@ public class Company {
 
     private CompanyStatus status;
 
-    private SubscriptionPlan subscriptionPlan;
+    private SubscriptionPlanStatus subscriptionPlan;
 
     private List<User> owners;
 

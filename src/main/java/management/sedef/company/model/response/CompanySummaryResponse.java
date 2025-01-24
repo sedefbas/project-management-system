@@ -1,10 +1,13 @@
 package management.sedef.company.model.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CompanySummaryResponse {
     private Long id;
     private String name;

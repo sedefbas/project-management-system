@@ -5,6 +5,7 @@ import io.jsonwebtoken.ClaimsBuilder;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import management.sedef.auth.exception.UserNotFoundByEmailException;
+import management.sedef.auth.exception.UserNotVerifiedException;
 import management.sedef.auth.exception.UserPasswordNotValidException;
 import management.sedef.auth.model.Identity;
 import management.sedef.auth.model.Token;
@@ -41,9 +42,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = userReadPort.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UserNotFoundByEmailException(request.getEmail()));
 
-
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new UserPasswordNotValidException();
+        }
+
+        if (!user.isVerified()) {
+            throw new UserNotVerifiedException(request.getEmail());
         }
 
         user.setLastLoginDate(LocalDateTime.now());
@@ -56,8 +60,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private Claims generateClaims(User user) {
         final ClaimsBuilder claimsBuilder = Jwts.claims();
         claimsBuilder.add(TokenClaims.USER_ID.getValue(), user.getId());
-        claimsBuilder.add(TokenClaims.USER_FIRST_NAME.getValue(), user.getFirstName());
-        claimsBuilder.add(TokenClaims.USER_LAST_NAME.getValue(), user.getLastName());
+        claimsBuilder.add(TokenClaims.USER_STATUS.getValue(),user.getStatus());
         claimsBuilder.add(TokenClaims.USER_MAIL.getValue(), user.getEmail());
         claimsBuilder.add(TokenClaims.USER_ROLE.getValue(), user.getRole().getName());
         claimsBuilder.add(TokenClaims.USER_PERMISSIONS.getValue(), user.getRole().getPermissionNames());

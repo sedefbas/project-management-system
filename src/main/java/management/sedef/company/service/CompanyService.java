@@ -1,13 +1,15 @@
 package management.sedef.company.service;
 
+import management.sedef.common.model.request.TokenRequest;
 import management.sedef.company.model.Company;
 import management.sedef.company.model.request.CompanyRequest;
+import management.sedef.company.model.request.CompanyUpdateRequest;
 
 import java.util.List;
 
 public interface CompanyService {
 
-    Company findById(Long id);
+    Company findCompanyById(Long id);
 
     List<Company> findAll();
 
@@ -15,7 +17,7 @@ public interface CompanyService {
 
     void delete(Long id);
 
-    void update(Long id,CompanyRequest request);
+    void update(CompanyUpdateRequest request);
 
-    List<Company>findCompaniesByUserId(Long userId);
+    List<Company> findCompaniesByToken(TokenRequest request);
 }

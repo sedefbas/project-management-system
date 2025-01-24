@@ -12,4 +12,5 @@ public interface CompanyRepository extends JpaRepository<CompanyEntity,Long> {
     @Query("SELECT c FROM CompanyEntity c JOIN c.owners u WHERE u.id = :userId")
     List<CompanyEntity> findCompaniesByUserId(Long userId);
 
+
 }

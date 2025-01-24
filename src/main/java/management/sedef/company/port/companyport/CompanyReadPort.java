@@ -1,6 +1,7 @@
 package management.sedef.company.port.companyport;
 
 import management.sedef.company.model.Company;
+import management.sedef.company.model.response.CompanySummaryResponse;
 
 import java.util.List;
 import java.util.Optional;

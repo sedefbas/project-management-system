@@ -1,12 +1,10 @@
 package management.sedef.company.model.request;
 
-import jakarta.validation.constraints.NotEmpty;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import management.sedef.company.model.enums.CompanyStatus;
 import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
 
-import java.util.List;
 
 
 @Getter
@@ -15,6 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CompanyRequest {
+
+    private String token;
 
     @NotNull
     private String name;
@@ -36,11 +36,6 @@ public class CompanyRequest {
     @NotNull
     private SubscriptionPlanStatus subscriptionPlanStatus;
 
-    @NotEmpty
-    private List<Long> ownerIds;
-
-    private Long addressId;
-
-    private CompanyStatus status;
+    private AddressRequest address;
 
 }
