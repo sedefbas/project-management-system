@@ -29,9 +29,6 @@ public class CompanyUserEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    @Column(name = "role")
-    private String role;
-
     @Column(name = "start_date")
     private LocalDate startDate;
 }
