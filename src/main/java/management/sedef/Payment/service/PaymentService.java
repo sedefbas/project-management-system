@@ -40,14 +40,15 @@ public class PaymentService {
 
         SubscriptionPlan subscriptionPlan = subscriptionPlanService.findById(paymentRequest.getSubscriptionPlanId());
 
-        Company company = companyService.findById(paymentRequest.getCompanyId());
+        Company company = companyService.findCompanyById(paymentRequest.getCompanyId());
 
         String uniqueId = UUID.randomUUID().toString();
+        String uniqueIdOrder = "TRANS-" + System.currentTimeMillis();
 
         // PaymentRequest verilerini dışarıdan alınacak verilerle dolduruyoruz
         CreatePaymentRequest iyzipayRequest = new CreatePaymentRequest();
-        iyzipayRequest.setLocale("tr");
-        iyzipayRequest.setConversationId("123456789");
+        iyzipayRequest.setLocale(Locale.TR.getValue());
+        iyzipayRequest.setConversationId(uniqueIdOrder);
         iyzipayRequest.setPrice(subscriptionPlan.getPrice());
         iyzipayRequest.setPaidPrice(subscriptionPlan.getPrice());
         iyzipayRequest.setCurrency("TRY");
@@ -82,7 +83,6 @@ public class PaymentService {
         buyer.setCity(company.getAddress().getCity());
         buyer.setCountry(company.getAddress().getCountry());
         buyer.setZipCode(company.getAddress().getZipCode());
-
         iyzipayRequest.setBuyer(buyer);
 
         // Fatura Bilgilerini dışarıdan alınacak verilerle dolduruyoruz
@@ -105,9 +105,7 @@ public class PaymentService {
         List<BasketItem> basketItems = new ArrayList<>();
         basketItems.add(basketItem);
 
-
         iyzipayRequest.setBasketItems(basketItems);
-
 
         Payment payment = iyzipayService.processNon3DSPayment(iyzipayRequest);
 

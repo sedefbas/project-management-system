@@ -21,6 +21,8 @@ public class IyzipayService {
         return Payment.create(request, options);
     }
 
+
+    //Bunu şimdilik kullanmayacağım.
     public ThreedsInitialize process3DSPayment(CreatePaymentRequest request) {
         return ThreedsInitialize.create(request, options);
     }
