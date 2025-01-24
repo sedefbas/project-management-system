@@ -1,7 +1,6 @@
 package management.sedef.Payment.model;
 
-import jakarta.persistence.Embeddable;
-import lombok.Builder;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,5 +12,4 @@ public class CardDetails {
     private String expireMonth;
     private String expireYear;
     private String cvc;
-
 }

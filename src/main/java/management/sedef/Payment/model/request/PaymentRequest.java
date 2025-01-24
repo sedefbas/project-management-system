@@ -10,7 +10,7 @@ import management.sedef.Payment.model.CardDetails;
 public class PaymentRequest {
     private Long subscriptionPlanId;
     private Long companyId;
-    private String token;
+    private String token; //
     private CardDetails cardDetails;
     private BillingInfo billingInfo;
     private Long identityNumber;

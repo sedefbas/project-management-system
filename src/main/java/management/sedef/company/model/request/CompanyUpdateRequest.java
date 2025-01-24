@@ -1,8 +1,8 @@
 package management.sedef.company.model.request;
 
 
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import management.sedef.company.model.enums.CompanyStatus;
 import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
 
 
@@ -12,29 +12,21 @@ import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CompanyRequest {
+public class CompanyUpdateRequest {
 
-    private String token;
+    private Long companyId;
 
-    @NotNull
     private String name;
 
-    @NotNull
     private String description;
 
-    @NotNull
     private Long taxNumber;
 
-    @NotNull
     private Long phoneNumber;
 
-    @NotNull
     private String email;
 
     private String website;
-
-    @NotNull
-    private SubscriptionPlanStatus subscriptionPlanStatus;
 
     private AddressRequest address;
 

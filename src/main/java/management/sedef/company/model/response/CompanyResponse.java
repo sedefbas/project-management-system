@@ -25,5 +25,5 @@ public class CompanyResponse {
     private String website;
     private CompanyStatus status;
     private SubscriptionPlan subscriptionPlan;
-    private List<User> owners;
+    private List<Long> owners_id;
 }

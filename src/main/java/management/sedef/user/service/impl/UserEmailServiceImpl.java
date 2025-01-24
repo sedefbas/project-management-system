@@ -15,7 +15,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserEmailServiceImpl implements UserEmailService {
 
-    @Value("${application.front-end.url}")
+    @Value(value = "${application.front-end.url}")
     private String frontEndUrl;
 
     private final MailService mailService;

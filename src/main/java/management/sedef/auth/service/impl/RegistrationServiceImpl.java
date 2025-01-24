@@ -58,6 +58,7 @@ class RegistrationServiceImpl implements RegistrationService {
                 .email(request.getEmail())
                 .status(UserStatus.NOT_VERIFIED)
                 .role(role)
+                .phone(request.getPhone())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .createdAt(LocalDateTime.now())
                 .build();

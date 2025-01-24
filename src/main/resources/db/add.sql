@@ -25,19 +25,28 @@ VALUES
     ('company:create', 'Yeni bir şirket oluşturma izni', false, 'ACTIVE'),
     ('company:update', 'Şirket bilgilerini güncelleme izni', false, 'ACTIVE'),
     ('company:delete', 'Şirket silme izni', false, 'ACTIVE'),
+    ('company-user:detail', 'Şirket kullanıcısının detaylarını görme izni', false, 'ACTIVE'),
+    ('company-user:list', 'Şirket kullanıcılarını listeleme izni', false, 'ACTIVE'),
+    ('company-user:create', 'Şirket kullanıcısı oluşturma izni', false, 'ACTIVE'),
+    ('company-user:update', 'Şirket kullanıcısı güncelleme izni', false, 'ACTIVE'),
+    ('company-user:delete', 'Şirket kullanıcısını silme izni', false, 'ACTIVE'),
     ('address:create', 'Adres oluşturma izni', false, 'ACTIVE'),
     ('address:delete', 'Adres silme izni', false, 'ACTIVE'),
     ('address:update', 'Adres güncelleme izni', false, 'ACTIVE'),
     ('address:list', 'Adresleri listeleme izni', false, 'ACTIVE'),
-    ('address:detail', 'Adres detaylarını görme izni', false, 'ACTIVE');
+    ('address:detail', 'Adres detaylarını görme izni', false, 'ACTIVE'),
+    ('user:detail', 'Kullanıcı detaylarını görme izni', false, 'ACTIVE'),
+    ('user:list', 'Kullanıcıları listeleme izni', false, 'ACTIVE'),
+    ('user:create', 'Yeni bir kullanıcı oluşturma izni', false, 'ACTIVE'),
+    ('user:update', 'Kullanıcı bilgilerini güncelleme izni', false, 'ACTIVE'),
+    ('user:delete', 'Kullanıcı silme izni', false, 'ACTIVE');
+
 
 
 -- ADMIN rolüne yeni izinlerin atanması
 INSERT INTO role_permission (role_id, permission_id)
-SELECT 6, id FROM permission WHERE name IN
-                                   ('subscription:detail', 'subscription:list', 'subscription:create', 'subscription:update', 'subscription:delete',
-                                    'company:detail', 'company:list', 'company:create', 'company:update', 'company:delete',
-                                    'address:create', 'address:delete', 'address:update', 'address:list', 'address:detail');
+SELECT 6, id FROM permission;
+
 
 -- COMPANY_OWNER rolüne yeni izinlerin atanması
 INSERT INTO role_permission (role_id, permission_id)
@@ -45,6 +54,9 @@ SELECT 8, id FROM permission WHERE name IN
                                    ('company:detail', 'company:list', 'company:create', 'company:update', 'company:delete',
                                     'address:create', 'address:delete', 'address:update', 'address:list', 'address:detail');
 
+-- MEMBER rolüne yeni izinlerin atanması
+INSERT INTO role_permission (role_id, permission_id)
+SELECT 9, id FROM permission WHERE name = 'company-user:detail';
 
 
 INSERT INTO subscription_plan (status, description, max_proje, max_task, max_user, price, features)

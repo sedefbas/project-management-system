@@ -80,12 +80,12 @@ class SecurityConfiguration {
 
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true);
+        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // Bu, izin verilen domain
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Yalnızca izin verilen metodlar
+        configuration.setAllowedHeaders(List.of("Content-Type", "Authorization")); // İzin verilen başlıklar
+        configuration.setAllowCredentials(true); // Kimlik doğrulama bilgileri ile izin ver
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/", configuration);
+        source.registerCorsConfiguration("/**", configuration); // Tüm endpointlere CORS yapılandırmasını uygula
         return source;
     }
 
