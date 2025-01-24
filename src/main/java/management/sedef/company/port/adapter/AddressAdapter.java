@@ -36,7 +36,15 @@ public class AddressAdapter implements AddressReadPort, AddressSavePort {
     @Override
     public Address save(Address address) {
         AddressEntity addressEntity = addressToEntityMapper.map(address);
-        repository.save(addressEntity);
+
+        System.out.println("Saving address: " + address);
+
+        addressEntity = repository.save(addressEntity);
+
+        // Kaydedildikten sonra address bilgilerini yazdır
+        System.out.println("Address saved with ID: " + addressEntity.getId());
+
         return addressEntityToDomainMapper.map(addressEntity);
     }
+
 }

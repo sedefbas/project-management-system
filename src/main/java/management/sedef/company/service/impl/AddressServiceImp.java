@@ -1,8 +1,8 @@
 package management.sedef.company.service.impl;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import management.sedef.company.exception.AddressNotFoundException;
-import management.sedef.company.exception.CompanyNotFoundException;
 import management.sedef.company.model.Address;
 
 import management.sedef.company.model.mapper.addressmapper.AddressRequestToDomainMapper;
@@ -28,8 +28,9 @@ public class AddressServiceImp implements AddressService {
     }
 
     @Override
-    public void create(AddressRequest request) {
+    public Address create(AddressRequest request) {
         Address address = addressRequestToDomainMapper.map(request);
         addressSavePort.save(address);
+        return address;
     }
 }
