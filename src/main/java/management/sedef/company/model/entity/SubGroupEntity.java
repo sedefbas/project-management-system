@@ -13,15 +13,17 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "team_groups")
-public class GroupEntity {
+@Table(name = "sub_groups")
+public class SubGroupEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
+
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
-    private CompanyEntity company;
+    @JoinColumn(name = "group_id", nullable = false)
+    private GroupEntity group;
+
 }
