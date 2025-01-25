@@ -7,6 +7,7 @@ import management.sedef.company.model.Address;
 import management.sedef.company.model.entity.AddressEntity;
 import management.sedef.company.model.enums.CompanyStatus;
 import management.sedef.subscriptionPlan.model.SubscriptionPlan;
+import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
 import management.sedef.user.model.User;
 import management.sedef.user.model.entity.UserEntity;
 
@@ -24,6 +25,6 @@ public class CompanyResponse {
     private String email;
     private String website;
     private CompanyStatus status;
-    private SubscriptionPlan subscriptionPlan;
+    private SubscriptionPlanStatus subscriptionPlan;
     private List<Long> owners_id;
 }

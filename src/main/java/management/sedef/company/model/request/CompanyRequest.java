@@ -19,11 +19,7 @@ public class CompanyRequest {
     @NotNull
     private String name;
 
-    @NotNull
     private String description;
-
-    @NotNull
-    private Long taxNumber;
 
     @NotNull
     private Long phoneNumber;
@@ -32,9 +28,6 @@ public class CompanyRequest {
     private String email;
 
     private String website;
-
-    @NotNull
-    private SubscriptionPlanStatus subscriptionPlanStatus;
 
     private AddressRequest address;
 
