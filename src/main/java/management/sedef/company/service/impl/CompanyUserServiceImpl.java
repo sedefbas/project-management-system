@@ -3,11 +3,9 @@ package management.sedef.company.service.impl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import management.sedef.auth.service.TokenService;
-import management.sedef.common.model.request.TokenRequest;
 import management.sedef.company.exception.UserNotFoundException;
 import management.sedef.company.model.Company;
 import management.sedef.company.model.CompanyUser;
-import management.sedef.company.model.mapper.companyusermapper.CompanyRequestToDomainMapper;
 import management.sedef.company.model.request.CompanyUserDeleteRequest;
 import management.sedef.company.model.request.CompanyUserRequest;
 import management.sedef.company.port.companyUserPort.CompanyUserDeletePort;
@@ -17,7 +15,6 @@ import management.sedef.company.service.CompanyService;
 import management.sedef.company.service.CompanyUserService;
 import management.sedef.user.model.User;
 import management.sedef.user.port.UserReadPort;
-import management.sedef.user.port.adapter.UserAdapter;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -37,8 +34,9 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 
 
     @Override
-    public CompanyUser findByToken(TokenRequest request) {
-        Long userId = tokenService.getUserIdFromToken(request.getToken()) ;
+    public CompanyUser findByToken(String token) {
+        String jwt = token.replace("Bearer ", "");
+        Long userId = tokenService.getUserIdFromToken(jwt) ;
         return findByUserId(userId);
     }
 
@@ -53,9 +51,9 @@ public class CompanyUserServiceImpl implements CompanyUserService {
 
 
     @Override
-    public void create(CompanyUserRequest companyUserRequest) {
+    public void create(CompanyUserRequest companyUserRequest,Long companyId) {
          User user = userReadPort.findByEmail(companyUserRequest.getUserEmail()).orElseThrow(() -> new UserNotFoundException());
-         Company company = companyService.findCompanyById(companyUserRequest.getCompanyId());
+         Company company = companyService.findCompanyById(companyId);
          CompanyUser companyUser = new CompanyUser();
          companyUser.setUser(user);
          companyUser.setStartDate(LocalDate.now());
@@ -64,8 +62,8 @@ public class CompanyUserServiceImpl implements CompanyUserService {
     }
 
     @Override
-    public void delete( @Valid CompanyUserDeleteRequest userDeleteRequest) {
-       CompanyUser companyUser =  companyUserReadPort.findByCompanyIdAndUserId(userDeleteRequest.getCompanyId(), userDeleteRequest.getUserId());
+    public void delete( Long companyId,Long userId ) {
+       CompanyUser companyUser =  companyUserReadPort.findByCompanyIdAndUserId(companyId,userId);
        companyUserDeletePort.delete(companyUser);
     }
 

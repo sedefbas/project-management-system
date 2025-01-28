@@ -23,8 +23,6 @@ public class Company {
 
     private String description;
 
-    private Long taxNumber;
-
     private Address address;
 
     private Long phoneNumber;
@@ -35,7 +33,7 @@ public class Company {
 
     private CompanyStatus status;
 
-    private SubscriptionPlanStatus subscriptionPlan;
+    private SubscriptionPlan subscriptionPlan;
 
     private List<User> owners;
 

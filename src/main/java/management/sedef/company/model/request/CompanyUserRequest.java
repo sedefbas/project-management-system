@@ -11,8 +11,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class CompanyUserRequest {
 
-    private Long companyId;
-
     private String userEmail;
 
     private LocalDate startDate;

@@ -19,12 +19,11 @@ public class CompanyResponse {
     private Long id;
     private String name;
     private String description;
-    private Long taxNumber;
     private Address address;
     private Long phoneNumber;
     private String email;
     private String website;
     private CompanyStatus status;
-    private SubscriptionPlanStatus subscriptionPlan;
+    private SubscriptionPlan subscriptionPlan;
     private List<Long> owners_id;
 }

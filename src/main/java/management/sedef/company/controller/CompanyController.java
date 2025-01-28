@@ -1,9 +1,9 @@
 package management.sedef.company.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import management.sedef.common.model.entity.response.SuccessResponse;
-import management.sedef.common.model.request.TokenRequest;
 import management.sedef.company.model.Company;
 import management.sedef.company.model.mapper.companymapper.CompanyToResponseMapper;
 import management.sedef.company.model.request.CompanyRequest;
@@ -23,35 +23,37 @@ import java.util.stream.Collectors;
 public class CompanyController {
 
     private final CompanyService companyService;
-    private final CompanyToResponseMapper companyToResponseMapper = CompanyToResponseMapper.initialize();
+    private final CompanyToResponseMapper companyToResponseMapper ;
 
     // ADMIN ve COMPANY_OWNER için şirket oluşturma yetkisi
-    @PostMapping()
+    @PostMapping
     @PreAuthorize("hasAnyAuthority('company:create')")
-    public SuccessResponse<Void> create(@RequestBody CompanyRequest request){
-        companyService.create(request);
+    public SuccessResponse<Void> create(@RequestBody @Valid CompanyRequest request,
+                                        @RequestHeader("Authorization") String token) {
+        companyService.create(request, token);
         return SuccessResponse.success();
     }
 
+
     // ADMIN ve COMPANY_OWNER için şirket silme yetkisi
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{companyId}")
     @PreAuthorize("hasAnyAuthority('company:delete')")
-    public SuccessResponse<Void> delete(@PathVariable @Positive Long id){
-        companyService.delete(id);
+    public SuccessResponse<Void> delete(@PathVariable @Positive Long companyId){
+        companyService.delete(companyId);
         return SuccessResponse.success();
     }
 
     // ADMIN ve COMPANY_OWNER için şirket detaylarını görme yetkisi
-    @GetMapping("/{id}")
+    @GetMapping("/{companyId}")
     @PreAuthorize("hasAnyAuthority('company:detail')")
-    public SuccessResponse<CompanyResponse> findById(@PathVariable Long id){
-        Company company = companyService.findCompanyById(id);
+    public SuccessResponse<CompanyResponse> findById(@PathVariable Long companyId){
+        Company company = companyService.findCompanyById(companyId);
         CompanyResponse companyResponse = companyToResponseMapper.map(company);
         return SuccessResponse.success(companyResponse);
     }
 
     // ADMIN ve COMPANY_OWNER için şirket listesine erişim yetkisi
-    @GetMapping("/list")
+    @GetMapping("/companies")
     @PreAuthorize("hasAnyAuthority('company:list')")
     public SuccessResponse<List<CompanyResponse>> findAll(){
         List<Company> companyList = companyService.findAll();
@@ -60,18 +62,20 @@ public class CompanyController {
     }
 
     // ADMIN ve COMPANY_OWNER için şirket güncelleme yetkisi
-    @PutMapping()
+    @PutMapping("/{companyId}")
     @PreAuthorize("hasAnyAuthority('company:update')")
-    public SuccessResponse<Void> update(@RequestBody CompanyUpdateRequest request){
-        companyService.update(request);
+    public SuccessResponse<Void> update(@RequestBody CompanyUpdateRequest request, @PathVariable Long companyId){
+        companyService.update(request, companyId);
         return SuccessResponse.success();
     }
 
+
+    //todo compnay:detail dan daha spesik bir isim vermek gerekir.
     //sahip oldugu şirketleri dönmesi için yazdım.
-    @GetMapping("/summary")
+    @GetMapping("/me/companies")
     @PreAuthorize("hasAnyAuthority('company:detail')")
-    public SuccessResponse<List<CompanySummaryResponse>> findCompaniesByToken(@RequestBody TokenRequest request) {
-        List<Company> companyList = companyService.findCompaniesByToken(request);
+    public SuccessResponse<List<CompanySummaryResponse>> findCompaniesByToken(@RequestHeader("Authorization") String token) {
+        List<Company> companyList = companyService.findCompaniesByToken(token);
 
         List<CompanySummaryResponse> companyResponses = companyList.stream()
                 .map(company -> {

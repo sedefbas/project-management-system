@@ -1,6 +1,5 @@
 package management.sedef.company.service;
 
-import management.sedef.common.model.request.TokenRequest;
 import management.sedef.company.model.Company;
 import management.sedef.company.model.request.CompanyRequest;
 import management.sedef.company.model.request.CompanyUpdateRequest;
@@ -13,11 +12,11 @@ public interface CompanyService {
 
     List<Company> findAll();
 
-    void create(CompanyRequest request);
+    void create(CompanyRequest request,String token);
 
     void delete(Long id);
 
-    void update(CompanyUpdateRequest request);
+    void update(CompanyUpdateRequest request, Long companyId);
 
-    List<Company> findCompaniesByToken(TokenRequest request);
+    List<Company> findCompaniesByToken(String token);
 }

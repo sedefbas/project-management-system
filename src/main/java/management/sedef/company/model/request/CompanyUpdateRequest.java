@@ -14,8 +14,6 @@ import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
 @NoArgsConstructor
 public class CompanyUpdateRequest {
 
-    private Long companyId;
-
     private String name;
 
     private String description;

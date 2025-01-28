@@ -9,6 +9,8 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import management.sedef.company.model.enums.CompanyStatus;
 
+import management.sedef.subscriptionPlan.model.SubscriptionPlan;
+import management.sedef.subscriptionPlan.model.entity.SubscriptionPlanEntity;
 import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
 import management.sedef.user.model.entity.UserEntity;
 
@@ -20,7 +22,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "company")
+@Table(name = "companies")
 public class CompanyEntity  {
 
     @Id
@@ -34,16 +36,13 @@ public class CompanyEntity  {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "tax_number")
-    private Long taxNumber;
-
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", unique = false)
     private Long phoneNumber;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = false)  // Benzersiz email
     private String email;
 
-    @Column(name = "website")
+    @Column(name = "website", unique = false)  // Benzersiz website
     private String website;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -54,13 +53,13 @@ public class CompanyEntity  {
     @Column(name = "status")
     private CompanyStatus status;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "subscription_plan_status")
-    private SubscriptionPlanStatus subscriptionPlanStatus;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "subscription_plan_id")
+    private SubscriptionPlanEntity subscriptionPlan;
 
     @ManyToMany
     @JoinTable(
-            name = "company_owner",
+            name = "company_owners",
             joinColumns = @JoinColumn(name = "company_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
