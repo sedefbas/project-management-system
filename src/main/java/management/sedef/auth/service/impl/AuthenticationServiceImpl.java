@@ -42,9 +42,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = userReadPort.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UserNotFoundByEmailException(request.getEmail()));
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new UserPasswordNotValidException();
-        }
+//todo veri tabanını şimdlik kolayca user ekleyebilmek için bu blogu kapattım.
+
+//        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+//            throw new UserPasswordNotValidException();
+//        }
 
         if (!user.isVerified()) {
             throw new UserNotVerifiedException(request.getEmail());

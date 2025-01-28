@@ -27,7 +27,7 @@ public class Role {
 
     //todo şimdilik admin için eklemem gerekti.d
     public Boolean validateMemberOrCompanyOwnerRole() {
-        return this.name.equals(RoleName.MEMBER.name())
+        return this.name.equals(RoleName.USER.name())
                 || this.name.equals(RoleName.COMPANY_OWNER.name())
                 || this.name.equals(RoleName.ADMIN.name());
     }
