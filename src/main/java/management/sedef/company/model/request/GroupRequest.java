@@ -8,6 +8,5 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupRequest {
-    private Long companyId;
     private String name;
 }

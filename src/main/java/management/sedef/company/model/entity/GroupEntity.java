@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "team_groups")
+@Table(name = "bands")
 public class GroupEntity {
 
     @Id

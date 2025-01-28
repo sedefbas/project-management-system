@@ -28,8 +28,8 @@ public class GroupServiceImpl implements GroupService {
 
 
     @Override
-    public void create(GroupRequest request) {
-        Company company = companyService.findCompanyById(request.getCompanyId());
+    public void create(Long companyId, GroupRequest request) {
+        Company company = companyService.findCompanyById(companyId);
         Group group = Group.builder()
                 .name(request.getName())
                 .company(company)

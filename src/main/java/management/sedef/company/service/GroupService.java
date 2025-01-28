@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface GroupService {
 
-    void create(GroupRequest request);
+    void create(Long companyId, GroupRequest request);
     void delete(Long id);
     void update(Long id,GroupUpdateRequest request);
     List<Group> findByCompanyId(Long companyId);
