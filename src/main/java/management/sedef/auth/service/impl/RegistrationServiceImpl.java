@@ -49,7 +49,7 @@ class RegistrationServiceImpl implements RegistrationService {
                 .orElseThrow(() -> new RoleNotFoundByNameException(request.getRoleName().name()));
 
         if (!role.validateMemberOrCompanyOwnerRole()) {
-            throw new InvalidRoleException("Invalid role. Only MEMBER or COMPANY_OWNER roles are allowed.");
+            throw new InvalidRoleException("Invalid role. Only USER or COMPANY_OWNER roles are allowed.");
         }
 
         User user = User.builder()
