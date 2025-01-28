@@ -7,6 +7,5 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubGroupRequest {
-    private Long groupId;
     private String name;
 }

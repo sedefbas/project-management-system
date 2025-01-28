@@ -7,7 +7,7 @@ import management.sedef.company.model.request.SubGroupUpdateRequest;
 import java.util.List;
 
 public interface SubGroupService {
-    void create(SubGroupRequest request);
+    void create(SubGroupRequest request,Long groupId);
     void delete(Long id);
     void update(Long id, SubGroupUpdateRequest request);
     SubGroup findById(Long id);

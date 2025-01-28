@@ -27,8 +27,8 @@ public class SubGroupServiceImpl implements SubGroupService {
 
 
     @Override
-    public void create(SubGroupRequest request) {
-        Group group = groupService.findById(request.getGroupId());
+    public void create(SubGroupRequest request,Long groupId) {
+        Group group = groupService.findById(groupId);
 
         SubGroup subGroup = SubGroup.builder()
                 .name(request.getName())
