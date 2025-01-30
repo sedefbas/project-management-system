@@ -9,6 +9,8 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import management.sedef.company.model.entity.CompanyEntity;
 import management.sedef.company.model.entity.GroupEntity;
+import management.sedef.project.model.enums.ProjectStatus;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,6 +34,10 @@ public class ProjectEntity {
 
     private String photo;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private ProjectStatus projectStatus;
+
     private LocalDate startDate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -40,13 +46,12 @@ public class ProjectEntity {
     @ManyToMany
     @JoinTable(
             name = "project_group",
-            joinColumns = @JoinColumn(name = "group_id"),
-            inverseJoinColumns = @JoinColumn(name = "proje_id")
+            joinColumns = @JoinColumn(name = "proje_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id")
     )
     private List<GroupEntity> groups;
 
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)
     private CompanyEntity company;
-
 }
