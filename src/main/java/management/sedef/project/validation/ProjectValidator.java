@@ -13,6 +13,7 @@ public class ProjectValidator {
      * @param existingProjectCount: Şirketin mevcut proje sayısı.
      * @throws MaxProjectLimitReachedException: Eğer maksimum proje sayısına ulaşılmışsa özel exception fırlatılır.
      */
+
     public static void validateMaxProjects(SubscriptionPlan subscriptionPlan, int existingProjectCount) {
         if (existingProjectCount >= subscriptionPlan.getMaxProjects()) {
             throw new MaxProjectLimitReachedException("Bu şirketin açabileceği maksimum proje sayısına ulaşıldı.");
@@ -25,9 +26,11 @@ public class ProjectValidator {
      * @param existingUserCount: Şirketin mevcut kullanıcı sayısı.
      * @throws MaxUserLimitReachedException: Eğer maksimum kullanıcı sayısına ulaşılmışsa özel exception fırlatılır.
      */
+
     public static void validateMaxUsers(SubscriptionPlan subscriptionPlan, int existingUserCount) {
         if (existingUserCount >= subscriptionPlan.getMaxUsers()) {
             throw new MaxUserLimitReachedException("Bu şirketin ekleyebileceği maksimum kullanıcı sayısına ulaşıldı.");
         }
     }
+
 }
