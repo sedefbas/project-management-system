@@ -1,8 +1,6 @@
-package management.sedef.project.port;
+package management.sedef.project.port.projectPort;
 
 import management.sedef.company.model.Group;
-import management.sedef.company.model.entity.GroupEntity;
-import management.sedef.company.model.response.GroupResponse;
 import management.sedef.project.model.Project;
 
 import java.util.List;

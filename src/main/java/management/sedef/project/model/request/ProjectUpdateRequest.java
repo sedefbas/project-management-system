@@ -32,7 +32,4 @@ public class ProjectUpdateRequest {
 
     private ProjectStatus status;
 
-    @NotEmpty(message = "Group IDs cannot be empty")
-    @NotNull(message = "Group IDs cannot be null")
-    private List<Long> groupIds;
 }

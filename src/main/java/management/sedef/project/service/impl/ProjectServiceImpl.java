@@ -7,18 +7,17 @@ import management.sedef.company.model.Group;
 import management.sedef.company.service.CompanyService;
 import management.sedef.company.service.GroupService;
 import management.sedef.project.model.Project;
-import management.sedef.project.model.mapper.ProjectRequestToDomainMapper;
-import management.sedef.project.model.mapper.ProjectUpdateToDomainMapper;
+import management.sedef.project.model.mapper.project.ProjectRequestToDomainMapper;
+import management.sedef.project.model.mapper.project.ProjectUpdateToDomainMapper;
 import management.sedef.project.model.request.ProjectRequest;
 import management.sedef.project.model.request.ProjectUpdateRequest;
-import management.sedef.project.port.ProjectDeleteAdapter;
-import management.sedef.project.port.ProjectReadAdapter;
-import management.sedef.project.port.ProjectSaveAdapter;
+import management.sedef.project.port.projectPort.ProjectDeleteAdapter;
+import management.sedef.project.port.projectPort.ProjectReadAdapter;
+import management.sedef.project.port.projectPort.ProjectSaveAdapter;
 import management.sedef.project.service.ProjectService;
 import management.sedef.project.validation.ProjectValidator;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +34,8 @@ public class ProjectServiceImpl implements ProjectService {
     private final GroupService groupService;
 
 
+
+
     @Override
     public void create(ProjectRequest request, Long companyId) {
         Company company = companyService.findCompanyById(companyId);
@@ -44,6 +45,8 @@ public class ProjectServiceImpl implements ProjectService {
         project.setCompany(company);
         saveAdapter.save(project);
     }
+
+
 
     @Override
     public void delete(Long projectId, Long companyId) {
@@ -79,25 +82,26 @@ public class ProjectServiceImpl implements ProjectService {
     public void removeGroupFromProject(Long companyId, Long projectId, Long groupId) {
 
         Project project = findByIdAndCompanyId(projectId, companyId);
-        List<Group> currentGroups = findGroupsByProjectIdAndCompanyId(companyId, projectId);
+        List<Group> currentGroups = findGroupsByProjectIdAndCompanyId(projectId, companyId);
 
-        Group group = groupService.findById(groupId);
+        boolean existsInProject = currentGroups.stream()
+                .anyMatch(g -> g.getId().equals(groupId));
 
-        if (currentGroups.contains(group)) {
-            project.getGroups().remove(group);
-            saveAdapter.save(project);
-        } else {
+        if (!existsInProject) {
             throw new GroupNotFoundException("Grup, projede mevcut değil.");
         }
 
+        project.getGroups().removeIf(g -> g.getId().equals(groupId));
+        saveAdapter.save(project);
     }
+
 
     @Override
     public void addGroupToProject(Long companyId, Long projectId, Long groupId) {
 
         Project project = findByIdAndCompanyId(projectId, companyId);
 
-        List<Group> currentGroups = findGroupsByProjectIdAndCompanyId(companyId, projectId);
+        List<Group> currentGroups = findGroupsByProjectIdAndCompanyId(projectId,companyId);
 
         List<Long> currentGroupIds = currentGroups.stream()
                 .map(Group::getId)

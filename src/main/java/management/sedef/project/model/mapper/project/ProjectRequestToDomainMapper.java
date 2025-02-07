@@ -1,4 +1,4 @@
-package management.sedef.project.model.mapper;
+package management.sedef.project.model.mapper.project;
 
 import management.sedef.company.model.Group;
 import management.sedef.company.service.GroupService;

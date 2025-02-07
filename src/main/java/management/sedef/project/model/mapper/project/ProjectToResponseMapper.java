@@ -1,6 +1,5 @@
-package management.sedef.project.model.mapper;
+package management.sedef.project.model.mapper.project;
 
-import management.sedef.common.model.entity.mapper.BaseMapper;
 import management.sedef.company.model.Company;
 import management.sedef.company.model.Group;
 import management.sedef.company.model.response.CompanySummaryResponse;

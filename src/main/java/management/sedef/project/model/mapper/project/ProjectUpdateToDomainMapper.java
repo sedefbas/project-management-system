@@ -1,4 +1,4 @@
-package management.sedef.project.model.mapper;
+package management.sedef.project.model.mapper.project;
 
 
 import management.sedef.common.model.entity.mapper.BaseMapper;

@@ -1,4 +1,4 @@
-package management.sedef.project.port;
+package management.sedef.project.port.projectPort;
 
 import management.sedef.project.model.Project;
 

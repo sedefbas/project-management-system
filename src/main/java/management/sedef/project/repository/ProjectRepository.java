@@ -11,9 +11,11 @@ import java.util.Optional;
 
 public interface ProjectRepository extends JpaRepository<ProjectEntity,Long> {
 
-    Optional<ProjectEntity> findByIdAndCompanyId(Long id, Long companyId);
+    @Query("SELECT p FROM ProjectEntity p WHERE p.id = :id AND p.company.id = :companyId")
+    Optional<ProjectEntity> findByIdAndCompanyId(@Param("id") Long id, @Param("companyId") Long companyId);
 
-    List<ProjectEntity> findAllByCompanyId(Long companyId);
+    @Query("SELECT p FROM ProjectEntity p WHERE p.company.id = :companyId")
+    List<ProjectEntity> findAllByCompanyId(@Param("companyId") Long companyId);
 
     @Query("SELECT p.groups FROM ProjectEntity p WHERE p.id = :projectId AND p.company.id = :companyId")
     List<GroupEntity> findGroupsByProjectIdAndCompanyId(Long projectId, Long companyId);
