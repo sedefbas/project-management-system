@@ -2,6 +2,7 @@ package management.sedef.auth.model.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import management.sedef.company.model.SubGroup;
 
 @Getter
 @RequiredArgsConstructor
@@ -15,7 +16,12 @@ public enum TokenClaims {
     USER_MAIL("userMail"),
     USER_STATUS("userStatus"),
     USER_ROLE("userRole"),
-    USER_PERMISSIONS("userPermissions");
+    USER_PERMISSIONS("userPermissions"),
+
+    COMPANY_ID("companyId"),
+    PROJECT_ID("projectId"),
+    GROUP_ID("groupId"),
+    SUB_GROUP_ID("subGroupId");
 
     private final String value;
 
