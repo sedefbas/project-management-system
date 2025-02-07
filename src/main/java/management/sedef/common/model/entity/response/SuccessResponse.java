@@ -23,6 +23,9 @@ public class SuccessResponse<T> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T result;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String message;
+
 
     public static SuccessResponse<Void> success() {
         return SuccessResponse.<Void>builder()
@@ -32,6 +35,12 @@ public class SuccessResponse<T> {
     public static <T> SuccessResponse<T> success(final T content) {
         return SuccessResponse.<T>builder()
                 .result(content)
+                .build();
+    }
+
+    public static <T> SuccessResponse<T> success( String message) {
+        return SuccessResponse.<T>builder()
+                .message(message)
                 .build();
     }
 
