@@ -1,14 +1,15 @@
 package management.sedef.company.service;
 
 import management.sedef.company.model.CompanyUser;
-import management.sedef.company.model.request.CompanyUserDeleteRequest;
 import management.sedef.company.model.request.CompanyUserRequest;
+import management.sedef.user.model.User;
+
 import java.util.List;
 
 public interface CompanyUserService {
     CompanyUser findByToken(String token);
-    CompanyUser findByUserId(Long userId);
-    List<CompanyUser>  findByCompanyId(Long companyId);
-    void create(CompanyUserRequest companyUserRequest, Long companyId);
+    List<CompanyUser> findByUsersCompanyId(Long companyId);
+    void addUserToCompany(CompanyUserRequest companyUserRequest, Long companyId);
     void delete( Long companyId,Long userId );
+    String sendUserInvitationToCompany(String email, Long companyId);
 }

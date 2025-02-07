@@ -8,11 +8,13 @@ import management.sedef.company.model.mapper.companymapper.CompanyUserMapper;
 import management.sedef.company.model.request.CompanyUserRequest;
 import management.sedef.company.model.response.CompanyUserResponse;
 import management.sedef.company.service.CompanyUserService;
-import management.sedef.user.model.mapper.UserSummaryMapper;
-import management.sedef.user.model.response.UserSummaryResponse;
+import management.sedef.user.model.User;
+import management.sedef.user.model.mapper.UserSummaryWithEmailMapper;
+import management.sedef.user.model.response.UserSummaryWithEmailResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/v1/company/{companyId}/users")
@@ -21,6 +23,16 @@ public class CompanyUserController {
 
      private  final CompanyUserService companyUserService;
 
+    @PostMapping("/invite")
+    @PreAuthorize("hasAnyAuthority('company-user:detail')")
+    public SuccessResponse<Void> sendUserInvitationToCompany(
+            @PathVariable Long companyId,
+            @RequestParam String email) {
+
+        String message = companyUserService.sendUserInvitationToCompany(email, companyId);
+
+        return SuccessResponse.success(message);
+    }
 
     @GetMapping("/me")
     @PreAuthorize("hasAnyAuthority('company-user:detail')")
@@ -33,16 +45,16 @@ public class CompanyUserController {
 
     @GetMapping()
     @PreAuthorize("hasAnyAuthority('company-user:detail')")
-    public SuccessResponse<List<UserSummaryResponse>>  findByCompanyId(@PathVariable Long companyId){
-        List<CompanyUser> companyUsers = companyUserService.findByCompanyId(companyId);
-        List<UserSummaryResponse> userSummaryResponses = UserSummaryMapper.mapToUserSummaryResponse(companyUsers);
+    public SuccessResponse<List<UserSummaryWithEmailResponse>>  findUsersByCompanyId(@PathVariable Long companyId){
+        List<CompanyUser> companyUsers = companyUserService.findByUsersCompanyId(companyId);
+        List<UserSummaryWithEmailResponse> userSummaryResponses = UserSummaryWithEmailMapper.mapToUserSummaryWithEmailResponse(companyUsers);
         return SuccessResponse.success(userSummaryResponses);
     }
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('company-user:create')")
     public SuccessResponse<Void> create(@RequestBody @Valid CompanyUserRequest companyUserRequest, @PathVariable Long companyId) {
-        companyUserService.create(companyUserRequest,companyId);
+        companyUserService.addUserToCompany(companyUserRequest,companyId);
         return SuccessResponse.success();
     }
 

@@ -1,6 +1,7 @@
 package management.sedef.company.port.adapter;
 
 import lombok.RequiredArgsConstructor;
+import management.sedef.user.exception.UserNotFoundException;
 import management.sedef.company.model.CompanyUser;
 import management.sedef.company.model.entity.CompanyUserEntity;
 import management.sedef.company.model.mapper.companyusermapper.CompanyUserEntityToDomainMapper;
@@ -12,7 +13,6 @@ import management.sedef.company.repository.CompanyUserRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -23,10 +23,12 @@ public class CompanyUserAdapter implements CompanyUserReadPort, CompanyUserSaveP
    private final   CompanyUserEntityToDomainMapper companyUserEntityToDomainMapper = CompanyUserEntityToDomainMapper.initialize();
 
     @Override
-    public Optional<CompanyUser> findByUserId(Long id) {
+    public CompanyUser findByUserId(Long id) {
         return repository.findByUserId(id)
-                .map(companyUserEntityToDomainMapper::map);
+                .map(companyUserEntityToDomainMapper::map)
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
+
 
     @Override
     public List<CompanyUser> findByCompanyId(Long id) {
