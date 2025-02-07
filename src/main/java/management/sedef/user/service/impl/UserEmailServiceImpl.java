@@ -29,7 +29,7 @@ public class UserEmailServiceImpl implements UserEmailService {
 
 
         final Map<String, Object> parameters = Map.of(
-                "BASE_URL", frontEndUrl + "/auth/verify?verificationId=" + verificationId
+                "BASE_URL", baseUrl
         );
 
         final MailSendRequest mailSendRequest = MailSendRequest.builder()
@@ -41,6 +41,70 @@ public class UserEmailServiceImpl implements UserEmailService {
         mailService.send(mailSendRequest);
     }
 
+
+    @Override
+    public void sendProjectInvitation(String email, String token, String projectName, String fullName) {
+        final String invitationLink = frontEndUrl + "/invite?token=" + token;
+        System.out.println("INVITATION_LINK: " + invitationLink);
+
+        final Map<String, Object> parameters = Map.of(
+                "INVITE_PROJECT_URL", invitationLink,
+                "PROJECT_NAME", projectName,
+                "USERNAME", fullName
+        );
+
+        final MailSendRequest mailSendRequest = MailSendRequest.builder()
+                .to(List.of(email))
+                .template(MailTemplate.PROJECT_INVITATION)
+                .parameters(parameters)
+                .build();
+
+        mailService.send(mailSendRequest);
+    }
+
+    @Override
+    public void sendCompanyInvitation(String email, Long companyId, String companyName, String userName) {
+        final String invitationLink = frontEndUrl + "/invite?email=" + email + "&companyId=" + companyId;
+        System.out.println("INVITATION_LINK: " + invitationLink);
+
+        final Map<String, Object> parameters = Map.of(
+                "INVITE_COMPANY_URL", invitationLink,
+                "COMPANY_NAME", companyName,
+                "USER_NAME",userName // Şirket adını parametre olarak ekliyoruz
+        );
+
+        final MailSendRequest mailSendRequest = MailSendRequest.builder()
+                .to(List.of(email))
+                .template(MailTemplate.COMPANY_INVITATION)
+                .parameters(parameters)
+                .build();
+
+        mailService.send(mailSendRequest);
+    }
+
+    @Override
+    public void sendRegisterInvitation(String email, Long companyId, String companyName) {
+        final String registerLink = frontEndUrl + "/register?email=" + email + "&companyId=" + companyId;
+        System.out.println("REGISTER_LINK: " + registerLink);
+
+        final Map<String, Object> parameters = Map.of(
+                "REGISTER_URL", registerLink,
+                "COMPANY_NAME", companyName
+        );
+
+        final MailSendRequest mailSendRequest = MailSendRequest.builder()
+                .to(List.of(email))
+                .template(MailTemplate.REGISTER_INVITATION)
+                .parameters(parameters)
+                .build();
+
+        mailService.send(mailSendRequest);
+    }
+
+
+
+
+
     @Override
     public void sendWelcome(final String email) {
 
@@ -51,4 +115,8 @@ public class UserEmailServiceImpl implements UserEmailService {
 
         mailService.send(mailSendRequest);
     }
+
+
+
+
 }

@@ -8,7 +8,10 @@ import lombok.RequiredArgsConstructor;
 public enum MailTemplate {
 
     USER_VERIFICATION("user-verification.html"),
-    USER_WELCOME("user-welcome.html");
+    USER_WELCOME("user-welcome.html"),
+    PROJECT_INVITATION("project-invitation.html"),
+    COMPANY_INVITATION("company-invitation.html"),
+    REGISTER_INVITATION("register-invitation.html");
 
     private final String file;
 

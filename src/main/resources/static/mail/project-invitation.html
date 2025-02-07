@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <title>Projeye Davet Edildiniz!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            font-family: Montserrat, Trebuchet MS, Lucida Grande, sans-serif;
+        }
+
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: inherit !important;
+        }
+
+        p {
+            line-height: 1.5;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #52c96a;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 40px;
+            text-align: center;
+            color: #555555;
+            font-size: 18px;
+        }
+
+        .button-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .button {
+            background-color: #52c96a;
+            color: #ffffff;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #888888;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="header">
+        Projeye Davet Edildiniz!
+    </div>
+    <div class="content">
+        <p>Merhaba {USERNAME},</p>
+        <p><strong>{PROJECT_NAME}</strong> adlı proje ekibine katılmanız için size davet gönderildi. Katılmak için aşağıdaki butona tıklayın:</p>
+        <div class="button-container">
+            <a href="${INVITE_PROJECT_URL}" class="button">Projeye Katıl</a>
+        </div>
+        <p>Eğer bu daveti beklemiyorduysanız, lütfen bu e-postayı dikkate almayın.</p>
+    </div>
+    <div class="footer">
+        &copy; 2025 Tüm Hakları Saklıdır.
+    </div>
+</div>
+</body>
+
+</html>
