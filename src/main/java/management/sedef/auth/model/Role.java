@@ -19,6 +19,14 @@ public class Role {
     private List<PermissionEntity> permissions;
 
 
+    public static Role fromRoleName(String roleName) {
+        Role role = new Role();
+        role.setName(roleName);
+        // Eğer roleName üzerinden daha fazla işleme gerek varsa (description vs.) burada ekleyebilirsiniz.
+        return role;
+    }
+
+
     public List<String> getPermissionNames() {
         return permissions.stream()
                 .map(PermissionEntity::getName)
