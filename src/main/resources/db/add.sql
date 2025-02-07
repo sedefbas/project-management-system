@@ -51,7 +51,13 @@ VALUES
     ('subgroup:create', 'Yeni alt grup oluşturma izni', false, 'ACTIVE'),
     ('subgroup:update', 'Alt grup bilgilerini güncelleme izni', false, 'ACTIVE'),
     ('subgroup:delete', 'Alt grup silme izni', false, 'ACTIVE'),
-    ('subgroup:detail', 'sub-grup detaylarını görme izni', false, 'ACTIVE');
+    ('subgroup:detail', 'sub-grup detaylarını görme izni', false, 'ACTIVE'),
+    ('project-status:list', 'Proje durumlarını listeleme izni', false, 'ACTIVE'),
+    ('project-user:delete', 'Proje kullanıcısını silme izni', false, 'ACTIVE'),
+    ('project-user:detail', 'Proje kullanıcısının detaylarını görme izni', false, 'ACTIVE'),
+    ('project-user:create', 'Proje kullanıcısı oluşturma izni', false, 'ACTIVE'),
+    ('project-user:update', 'Proje kullanıcısını güncelleme izni', false, 'ACTIVE');
+
 
 
 
@@ -65,11 +71,11 @@ INSERT INTO role_permission (role_id, permission_id)
 SELECT 8, id
 FROM permission
 WHERE name IN
-      ('company:detail', 'company:list', 'company:create', 'company:update', 'company:delete',
-       'address:create', 'address:delete', 'address:update', 'address:list', 'address:detail',
-       'group:create', 'group:list', 'group:detail', 'group:update', 'group:delete',
-       'subgroup:create', 'subgroup:list', 'subgroup:detail', 'subgroup:update', 'subgroup:delete',
-       'company-user:detail', 'company-user:list', 'company-user:create', 'company-user:update', 'company-user:delete');
+      ('company:detail', 'company:list', 'company:addUserToCompany', 'company:update', 'company:delete',
+       'address:addUserToCompany', 'address:delete', 'address:update', 'address:list', 'address:detail',
+       'group:addUserToCompany', 'group:list', 'group:detail', 'group:update', 'group:delete',
+       'subgroup:addUserToCompany', 'subgroup:list', 'subgroup:detail', 'subgroup:update', 'subgroup:delete',
+       'company-user:detail', 'company-user:list', 'company-user:addUserToCompany', 'company-user:update', 'company-user:delete');
 
 
 INSERT INTO subscription_plan (status, description, max_proje, max_task, max_user, price, features)
@@ -112,6 +118,11 @@ INSERT INTO companies (name, description, phone_number, email, website, status, 
 VALUES
     ('Tech Innovations', 'A leading tech company specializing in innovative solutions.', 1234567890, 'techinnovations@example.com', 'https://techinnovations.com', 'ACTIVE', 1),  -- Şirket 1
     ('Creative Solutions', 'A creative company focused on design and development.', 2345678901, 'creativesolutions@example.com', 'https://creativesolutions.com', 'ACTIVE', 2);  -- Şirket 2
+
+INSERT INTO company_owners (company_id, user_id)
+VALUES
+    (1, 2),  -- Tech Innovations şirketine sahip olan kullanıcı (User 8)
+    (2, 2);  -- Creative Solutions şirketine sahip olan kullanıcı (User 7)
 
 -- Kullanıcıları rastgele şirketlere atama (Her kullanıcıya bir şirket)
 INSERT INTO company_users (company_id, user_id, start_date)
