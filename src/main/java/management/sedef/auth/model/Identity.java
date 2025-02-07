@@ -2,8 +2,6 @@ package management.sedef.auth.model;
 
 import management.sedef.auth.model.enums.RoleName;
 import management.sedef.auth.model.enums.TokenClaims;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
