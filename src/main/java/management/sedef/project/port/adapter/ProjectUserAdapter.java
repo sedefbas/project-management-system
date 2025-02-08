@@ -3,6 +3,7 @@ package management.sedef.project.port.adapter;
 
 import lombok.RequiredArgsConstructor;
 import management.sedef.project.exception.ProjectNotFoundException;
+import management.sedef.project.exception.ProjectUserNotFoundException;
 import management.sedef.project.model.ProjectUser;
 import management.sedef.project.model.entity.ProjectUserEntity;
 import management.sedef.project.model.mapper.projectUser.ProjectUserEntityToDomainMapper;
@@ -67,5 +68,28 @@ public class ProjectUserAdapter implements ProjectUserSavePort, ProjectUserDelet
                 .collect(Collectors.toList());
     }
 
+    public boolean existsByUserIdAndProjectId(Long userId, Long projectId) {
+        return projectUserRepository.existsByUserIdAndProjectId(userId, projectId);
+    }
+
+    @Override
+    public List<ProjectUser> findUsersBySubGroupId(Long subGroupId) {
+        List<ProjectUserEntity> projectUserEntities = projectUserRepository.findBySubGroupId(subGroupId)
+                .orElseThrow(() -> new ProjectUserNotFoundException("Belirtilen subGroupId: " + subGroupId + " için herhangi bir ProjectUser bulunamadı."));
+
+        return projectUserEntities.stream()
+                .map(projectUserEntityToDomainMapper::map)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProjectUser> findUsersByGroupId(Long groupId) {
+        List<ProjectUserEntity> projectUserEntities = projectUserRepository.findBySubGroupId(groupId)
+                .orElseThrow(()-> new ProjectUserNotFoundException("belirtilen grupId: "+ groupId + "bulunamadı."));
+
+        return projectUserEntities.stream()
+                .map(projectUserEntityToDomainMapper::map)
+                .collect(Collectors.toList());
+    }
 
 }

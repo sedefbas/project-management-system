@@ -8,4 +8,6 @@ public interface CompanyUserReadPort {
     CompanyUser findByUserId(Long id);
     List<CompanyUser> findByCompanyId(Long id);
     CompanyUser findByCompanyIdAndUserId(Long companyId, Long userId);
+    boolean existsByUserId(Long userId);
+
 }

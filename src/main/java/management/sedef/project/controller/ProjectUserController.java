@@ -4,8 +4,9 @@ package management.sedef.project.controller;
 import lombok.RequiredArgsConstructor;
 import management.sedef.common.model.entity.response.SuccessResponse;
 import management.sedef.project.model.ProjectUser;
+import management.sedef.project.model.mapper.projectUser.DomainToUserListForProjectResponseMapper;
 import management.sedef.project.model.request.ProjectUserRequest;
-import management.sedef.project.model.request.ProjectUserUpdateRequest;
+import management.sedef.project.model.response.UserListForProjectResponse;
 import management.sedef.project.service.ProjectUserService;
 import management.sedef.user.model.mapper.UserSummaryMapper;
 import management.sedef.user.model.response.UserSummaryResponse;
@@ -21,18 +22,38 @@ public class ProjectUserController {
 
     private final ProjectUserService service;
     private final UserSummaryMapper userSummaryMapper;
+    private final DomainToUserListForProjectResponseMapper userListForProjectResponseMapper;
 
 
-    @PutMapping("/{projectId}/user/{userId}")
-    @PreAuthorize("hasAnyAuthority('project-user:update')")
-    public SuccessResponse<Void> updateUserInProject(@PathVariable Long userId,
-                                                     @PathVariable Long projectId,
-                                                     @PathVariable Long companyId,
-                                                     @RequestBody ProjectUserUpdateRequest request) {
-        service.updateUserInProject(request,userId, projectId, companyId);
-        return SuccessResponse.success();
+    //projeye göre user listeleme
+    @GetMapping("/{projectId}/users")
+    @PreAuthorize("hasAnyAuthority('project-user:detail')")
+    public SuccessResponse<List<UserListForProjectResponse>> getUsersForProject(@PathVariable Long companyId, @PathVariable Long projectId) {
+        List<ProjectUser> users = service.getUsersForProject(projectId);
+        List<UserListForProjectResponse> response = userListForProjectResponseMapper.map(users);
+        return SuccessResponse.success(response);
     }
 
+    // Kullanıcıları grup id'ye göre al
+    @GetMapping("/{projectId}/group/{groupId}/users")
+    @PreAuthorize("hasAnyAuthority('project-user:detail')")
+    public SuccessResponse<List<UserListForProjectResponse>> getUsersByGroupId(@PathVariable Long companyId, @PathVariable Long projectId, @PathVariable Long groupId) {
+        List<ProjectUser> users = service.getUsersBygroupId(groupId);
+        List<UserListForProjectResponse> response = userListForProjectResponseMapper.map(users);
+        return SuccessResponse.success(response);
+    }
+
+    // Kullanıcıları alt grup id'ye göre al
+    @GetMapping("/{projectId}/subgroup/{subgroupId}/users")
+    @PreAuthorize("hasAnyAuthority('project-user:detail')")
+    public SuccessResponse<List<UserListForProjectResponse>> getUsersBySubGroupId(@PathVariable Long companyId, @PathVariable Long projectId, @PathVariable Long subgroupId) {
+        List<ProjectUser> users = service.getUsersBySubGroupId(subgroupId);
+        List<UserListForProjectResponse> response = userListForProjectResponseMapper.map(users);
+        return SuccessResponse.success(response);
+    }
+
+
+   //userın çalıştığı projeler
     @GetMapping("/my-projects")
     @PreAuthorize("hasAnyAuthority('project-user:detail')")
     public SuccessResponse<List<UserSummaryResponse>> getProjectsByToken(@RequestHeader("Authorization") String token,
@@ -43,13 +64,7 @@ public class ProjectUserController {
         return SuccessResponse.success(response);
     }
 
-    @GetMapping("/{projectId}/users")
-    @PreAuthorize("hasAnyAuthority('project-user:detail')")
-    public SuccessResponse<List<UserSummaryResponse>> getUsersForProject(@PathVariable Long companyId, @PathVariable Long projectId) {
-        List<ProjectUser> users = service.getUsersForProject(projectId);
-        List<UserSummaryResponse> response = userSummaryMapper.mapToUserSummaryResponse(users);
-        return SuccessResponse.success(response);
-    }
+
 
 
     @DeleteMapping("/{projectId}/user/{userId}")
@@ -79,6 +94,16 @@ public class ProjectUserController {
         service.addUserToProjectByToken(token);
         return SuccessResponse.success();
     }
+
+//    @PutMapping("/{projectId}/user/{userId}")
+//    @PreAuthorize("hasAnyAuthority('project-user:update')")
+//    public SuccessResponse<Void> updateUserInProject(@PathVariable Long userId,
+//                                                     @PathVariable Long projectId,
+//                                                     @PathVariable Long companyId,
+//                                                     @RequestBody ProjectUserUpdateRequest request) {
+//        service.updateUserInProject(request,userId, projectId, companyId);
+//        return SuccessResponse.success();
+//    }
 
 
 

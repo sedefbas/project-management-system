@@ -10,6 +10,7 @@ import management.sedef.auth.model.enums.RoleName;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProjectUserUpdateRequest {
+
     private Long groupId;
 
     private Long subGroupId;
