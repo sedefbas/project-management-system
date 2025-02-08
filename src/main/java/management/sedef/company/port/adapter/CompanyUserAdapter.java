@@ -42,6 +42,11 @@ public class CompanyUserAdapter implements CompanyUserReadPort, CompanyUserSaveP
     }
 
     @Override
+    public boolean existsByUserId(Long userId) {
+        return repository.existsByUserId(userId);
+    }
+
+    @Override
     public CompanyUser save(CompanyUser companyUser) {
         CompanyUserEntity companyUserEntity = companyUserToEntityMapper.map(companyUser);
         repository.save(companyUserEntity);

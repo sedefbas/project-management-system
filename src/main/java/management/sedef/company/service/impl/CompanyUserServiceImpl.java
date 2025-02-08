@@ -3,6 +3,7 @@ package management.sedef.company.service.impl;
 import lombok.RequiredArgsConstructor;
 import management.sedef.auth.exception.UserNotFoundByEmailException;
 import management.sedef.auth.service.TokenService;
+import management.sedef.company.exception.UserAlreadyAssignedToCompanyException;
 import management.sedef.company.model.Company;
 import management.sedef.company.model.CompanyUser;
 import management.sedef.company.model.request.CompanyUserRequest;
@@ -32,8 +33,6 @@ public class CompanyUserServiceImpl implements CompanyUserService {
     private final UserEmailService userEmailService;
 
 
-
-
     @Override
     public CompanyUser findByToken(String token) {
         String jwt = token.replace("Bearer ", "");
@@ -56,6 +55,11 @@ public class CompanyUserServiceImpl implements CompanyUserService {
     public void addUserToCompany(CompanyUserRequest companyUserRequest,Long companyId) {
          User user = userReadPort.findByEmail(companyUserRequest.getUserEmail()).orElseThrow(() -> new UserNotFoundByEmailException(companyUserRequest.getUserEmail()));
          Company company = companyService.findCompanyById(companyId);
+         boolean exists = companyUserReadPort.existsByUserId(user.getId()); // Burada repository'den gelen methodu kullanıyoruz
+
+        if (exists) {
+            throw new UserAlreadyAssignedToCompanyException("Bu kullanıcı zaten bir şirkete kayıtlı!");
+        }
          CompanyUser companyUser = new CompanyUser();
          companyUser.setUser(user);
          companyUser.setStartDate(companyUserRequest.getStartDate());

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CompanyUserRepository extends JpaRepository<CompanyUserEntity,Long> {
+
     @Query("SELECT c FROM CompanyUserEntity c WHERE c.user.id = :userId")
     Optional<CompanyUserEntity> findByUserId(@Param("userId") Long userId);
 
@@ -18,4 +19,7 @@ public interface CompanyUserRepository extends JpaRepository<CompanyUserEntity,L
 
     @Query("SELECT c FROM CompanyUserEntity c WHERE c.company.id = :companyId AND c.user.id = :userId")
     Optional<CompanyUserEntity> findByCompanyIdAndUserId(@Param("companyId") Long companyId, @Param("userId") Long userId);
+
+    boolean existsByUserId(Long userId);
+
 }
