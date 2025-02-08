@@ -19,6 +19,7 @@ import management.sedef.project.port.ProjectUserPort.ProjectUserReadPort;
 import management.sedef.project.port.ProjectUserPort.ProjectUserSavePort;
 import management.sedef.project.service.ProjectService;
 import management.sedef.project.service.ProjectUserService;
+import management.sedef.user.exception.UserAlreadyExistsException;
 import management.sedef.user.model.User;
 import management.sedef.user.port.adapter.UserAdapter;
 import management.sedef.user.service.UserEmailService;
@@ -78,7 +79,19 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     public void addUserToProjectByToken(String token) {
         ProjectUserClaims projectUserClaims = tokenService.parseProjectInvitationToken(token);
         ProjectUser projectUser = projectUserClaimsToDomainMapper.map(projectUserClaims);
-                savePort.save(projectUser);
+        checkIfUserAlreadyExists(projectUser);
+        savePort.save(projectUser);
+    }
+
+    private void checkIfUserAlreadyExists(ProjectUser projectUser) {
+        boolean exists = readPort.existsByUserIdAndProjectId(
+                projectUser.getUser().getId(),
+                projectUser.getProject().getId()
+        );
+
+        if (exists) {
+            throw new UserAlreadyExistsException("Bu kullanıcı zaten bu projeye eklenmiş.");
+        }
     }
 
     @Override
@@ -114,6 +127,16 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     }
 
     @Override
+    public List<ProjectUser> getUsersBySubGroupId(Long subgroup) {
+        return readPort.findUsersBySubGroupId(subgroup);
+    }
+
+    @Override
+    public List<ProjectUser> getUsersBygroupId(Long groupId) {
+        return readPort.findUsersByGroupId(groupId);
+    }
+
+    @Override
     public List<ProjectUser> getProjectByToken(String token) {
         // "Bearer " kısmını kaldır
         if (token.startsWith("Bearer ")) {
@@ -123,8 +146,6 @@ public class ProjectUserServiceImpl implements ProjectUserService {
         Long userId = tokenService.getUserIdFromToken(token);
         return getProjectsForUser(userId);
     }
-
-
 
     public List<ProjectUser> getProjectsForUser(Long userId) {
         return readPort.findByUserId(userId);

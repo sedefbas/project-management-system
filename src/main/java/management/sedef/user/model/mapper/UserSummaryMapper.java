@@ -1,9 +1,8 @@
 package management.sedef.user.model.mapper;
 
-import management.sedef.company.model.CompanyUser;
+
 import management.sedef.project.model.ProjectUser;
 import management.sedef.user.model.User;
-import management.sedef.user.model.entity.UserEntity;
 import management.sedef.user.model.response.UserSummaryResponse;
 import org.springframework.stereotype.Component;
 
