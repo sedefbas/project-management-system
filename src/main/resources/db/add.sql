@@ -51,14 +51,17 @@ VALUES
     ('subgroup:create', 'Yeni alt grup oluşturma izni', false, 'ACTIVE'),
     ('subgroup:update', 'Alt grup bilgilerini güncelleme izni', false, 'ACTIVE'),
     ('subgroup:delete', 'Alt grup silme izni', false, 'ACTIVE'),
-    ('subgroup:detail', 'sub-grup detaylarını görme izni', false, 'ACTIVE'),
+    ('subgroup:detail', 'Sub-grup detaylarını görme izni', false, 'ACTIVE'),
     ('project-status:list', 'Proje durumlarını listeleme izni', false, 'ACTIVE'),
     ('project-user:delete', 'Proje kullanıcısını silme izni', false, 'ACTIVE'),
     ('project-user:detail', 'Proje kullanıcısının detaylarını görme izni', false, 'ACTIVE'),
     ('project-user:create', 'Proje kullanıcısı oluşturma izni', false, 'ACTIVE'),
-    ('project-user:update', 'Proje kullanıcısını güncelleme izni', false, 'ACTIVE');
-
-
+    ('project-user:update', 'Proje kullanıcısını güncelleme izni', false, 'ACTIVE'),
+    ('company-label:create', 'Şirkete etiket ekleme izni', false, 'ACTIVE'),
+    ('company-label:delete', 'Şirketteki etiketi silme izni', false, 'ACTIVE'),
+    ('label:create', 'Yeni etiket oluşturma izni', false, 'ACTIVE'),
+    ('label:detail', 'Etiket detaylarını görme izni', false, 'ACTIVE'),
+    ('label:delete', 'Etiket silme izni', false, 'ACTIVE');
 
 
 -- ADMIN rolüne yeni izinlerin atanması
