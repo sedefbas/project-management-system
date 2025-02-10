@@ -84,12 +84,17 @@ public class ProjectUserAdapter implements ProjectUserSavePort, ProjectUserDelet
 
     @Override
     public List<ProjectUser> findUsersByGroupId(Long groupId) {
-        List<ProjectUserEntity> projectUserEntities = projectUserRepository.findBySubGroupId(groupId)
+        List<ProjectUserEntity> projectUserEntities = projectUserRepository.findByGroupId(groupId)
                 .orElseThrow(()-> new ProjectUserNotFoundException("belirtilen grupId: "+ groupId + "bulunamadı."));
 
         return projectUserEntities.stream()
                 .map(projectUserEntityToDomainMapper::map)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public int countUsersByProjectId(Long projectId) {
+        return projectUserRepository.countUsersByProjectId(projectId);
     }
 
 }

@@ -15,9 +15,7 @@ import java.util.stream.Collectors;
 public class DomainToUserListForProjectResponseMapper {
 
     public List<UserListForProjectResponse> map(List<ProjectUser> projectUsers) {
-        if (projectUsers == null || projectUsers.isEmpty()) {
-            throw new IllegalArgumentException("ProjectUser listesi boş veya null olamaz.");
-        }
+
 
         return projectUsers.stream()
                 .map(projectUser -> {

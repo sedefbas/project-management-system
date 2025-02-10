@@ -29,7 +29,7 @@ public class ProjectValidator {
 
     public static void validateMaxUsers(SubscriptionPlan subscriptionPlan, int existingUserCount) {
         if (existingUserCount >= subscriptionPlan.getMaxUsers()) {
-            throw new MaxUserLimitReachedException("Bu şirketin ekleyebileceği maksimum kullanıcı sayısına ulaşıldı.");
+            throw new MaxUserLimitReachedException("Bu şirketin projede ekleyebileceği maksimum kullanıcı sayısına ulaşıldı.");
         }
     }
 

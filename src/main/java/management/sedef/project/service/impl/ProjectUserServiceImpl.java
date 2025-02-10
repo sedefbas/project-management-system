@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import management.sedef.auth.model.Token;
 import management.sedef.auth.model.enums.TokenClaims;
 import management.sedef.auth.service.TokenService;
+import management.sedef.company.model.Company;
+import management.sedef.company.service.CompanyService;
 import management.sedef.project.model.Project;
 import management.sedef.project.model.ProjectUser;
 import management.sedef.project.model.claims.ProjectUserClaims;
@@ -19,6 +21,7 @@ import management.sedef.project.port.ProjectUserPort.ProjectUserReadPort;
 import management.sedef.project.port.ProjectUserPort.ProjectUserSavePort;
 import management.sedef.project.service.ProjectService;
 import management.sedef.project.service.ProjectUserService;
+import management.sedef.project.validation.ProjectValidator;
 import management.sedef.user.exception.UserAlreadyExistsException;
 import management.sedef.user.model.User;
 import management.sedef.user.port.adapter.UserAdapter;
@@ -38,6 +41,7 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     private final ProjectUserReadPort readPort;
     private final ProjectUserDeletePort deletePort;
     private final ProjectService projectService;
+    private final CompanyService companyService;
     private final ProjectUserClaimsToDomainMapper projectUserClaimsToDomainMapper;
     private final ProjectUserRequestToDomainMapper projectUserRequestToDomainMapper;
     private final UserAdapter userAdapter;
@@ -68,6 +72,10 @@ public class ProjectUserServiceImpl implements ProjectUserService {
 
     @Override
     public void sendUserInvitationForProject(ProjectUserRequest request, Long projectId, Long companyId, String email) {
+        Company company = companyService.findCompanyById(companyId);
+        int existingUsersCount = readPort.countUsersByProjectId(projectId);
+
+        ProjectValidator.validateMaxUsers(company.getSubscriptionPlan(),existingUsersCount);
         String token = generateInvitationLink(request, projectId, companyId);
         Project project = projectService.findByIdAndCompanyId(projectId,companyId);
         Optional<User> user = userAdapter.findByEmail(email);
