@@ -1,4 +1,4 @@
-package management.sedef.Label.port.port;
+package management.sedef.Label.port.adapter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class LabelAdapter implements LabelReadPort, LabelSavePort, LabelDeletePo
     public List<Label> findLabelsByCompanyId(Long companyId) {
 
         List<LabelEntity> labelEntities = repository.findLabelsByCompanyId(companyId)
-                .orElseThrow(() -> new ProjectUserNotFoundException("label not found"));
+                .orElseThrow(() -> new LabelNotFoundException("label not found"));
 
         List<Label> labels = labelEntities.stream().map(labelEntity -> {
             Label label = labelEntityToDomainMapper.map(labelEntity);

@@ -9,7 +9,6 @@ import java.util.Optional;
 
 public interface CompanyLabelRepository extends JpaRepository<CompanyLabelEntity,Long> {
 
-    void deleteByCompanyIdAndLabelId(Long companyId, Long labelId);
     Optional<CompanyLabelEntity> findByCompanyIdAndLabelId(Long companyId, Long labelId);
 
 }
