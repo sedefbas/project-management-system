@@ -59,6 +59,8 @@ VALUES
     ('project-user:update', 'Proje kullanıcısını güncelleme izni', false, 'ACTIVE'),
     ('company-label:create', 'Şirkete etiket ekleme izni', false, 'ACTIVE'),
     ('company-label:delete', 'Şirketteki etiketi silme izni', false, 'ACTIVE'),
+    ('company-priority:create', 'Şirkete öncelik ekleme izni', false, 'ACTIVE'),
+    ('company-priority:delete', 'Şirketteki öncelik silme izni', false, 'ACTIVE'),
     ('priority:create', 'Yeni öncelik oluşturma izni', false, 'ACTIVE'),
     ('priority:detail', 'Öncelik detaylarını görme izni', false, 'ACTIVE'),
     ('priority:delete', 'Öncelik silme izni', false, 'ACTIVE'),
@@ -239,3 +241,14 @@ INSERT INTO sub_bands (name, group_id)
 VALUES
     ('İşe Alım', 11),
     ('Eğitim & Gelişim', 11);
+
+INSERT INTO Stages (name, context, is_default) VALUES
+                                                   ('To Do', 'Görev oluşturuldu, beklemede', TRUE),
+                                                   ('In Progress', 'Üzerinde çalışılıyor', FALSE),
+                                                   ('In Review', 'Kod gözden geçiriliyor', FALSE),
+                                                   ('Done', 'Tamamlandı', FALSE),
+                                                   ('Blocked', 'Engellendi, devam edilemiyor', FALSE),
+                                                   ('Backlog', 'Gelecekte yapılacaklar', FALSE),
+                                                   ('Testing', 'Test aşamasında', FALSE),
+                                                   ('Deployed', 'Canlıya alındı', FALSE);
+
