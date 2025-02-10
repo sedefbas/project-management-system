@@ -65,8 +65,6 @@ public class ProjectUserController {
     }
 
 
-
-
     @DeleteMapping("/{projectId}/user/{userId}")
     @PreAuthorize("hasAnyAuthority('project:delete')")
     public SuccessResponse<Void> removeUserFromProject(@PathVariable Long userId,
@@ -94,6 +92,8 @@ public class ProjectUserController {
         service.addUserToProjectByToken(token);
         return SuccessResponse.success();
     }
+
+
 
 //    @PutMapping("/{projectId}/user/{userId}")
 //    @PreAuthorize("hasAnyAuthority('project-user:update')")
