@@ -1,4 +1,4 @@
-package management.sedef.Label.port.port;
+package management.sedef.Label.port.adapter;
 
 import lombok.RequiredArgsConstructor;
 import management.sedef.Label.exception.CompanyLabelNotFound;
