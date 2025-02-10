@@ -59,6 +59,9 @@ VALUES
     ('project-user:update', 'Proje kullanıcısını güncelleme izni', false, 'ACTIVE'),
     ('company-label:create', 'Şirkete etiket ekleme izni', false, 'ACTIVE'),
     ('company-label:delete', 'Şirketteki etiketi silme izni', false, 'ACTIVE'),
+    ('priority:create', 'Yeni öncelik oluşturma izni', false, 'ACTIVE'),
+    ('priority:detail', 'Öncelik detaylarını görme izni', false, 'ACTIVE'),
+    ('priority:delete', 'Öncelik silme izni', false, 'ACTIVE'),
     ('label:create', 'Yeni etiket oluşturma izni', false, 'ACTIVE'),
     ('label:detail', 'Etiket detaylarını görme izni', false, 'ACTIVE'),
     ('label:delete', 'Etiket silme izni', false, 'ACTIVE');
