@@ -39,7 +39,6 @@ public class CompanyLabelServiceImpl implements CompanylabelService {
         savePort.save(companyLabel);
     }
 
-
     @Override
     public void removeLabelFromCompany(Long companyId, Long labelId) {
         CompanyLabel companyLabel = readPort.findByCompanyIdAndLabelId(companyId, labelId);

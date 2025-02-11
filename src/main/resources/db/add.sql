@@ -66,7 +66,20 @@ VALUES
     ('priority:delete', 'Öncelik silme izni', false, 'ACTIVE'),
     ('label:create', 'Yeni etiket oluşturma izni', false, 'ACTIVE'),
     ('label:detail', 'Etiket detaylarını görme izni', false, 'ACTIVE'),
-    ('label:delete', 'Etiket silme izni', false, 'ACTIVE');
+    ('label:delete', 'Etiket silme izni', false, 'ACTIVE'),
+
+    ('issue:create', 'Yeni görev oluşturma izni', false, 'ACTIVE'),
+    ('issue:update', 'Görev bilgilerini güncelleme izni', false, 'ACTIVE'),
+    ('issue:delete', 'Görev silme izni', false, 'ACTIVE'),
+    ('issue:detail', 'Görev detaylarını görme izni', false, 'ACTIVE'),
+    ('issue:list', 'Görevleri listeleme izni', false, 'ACTIVE'),
+    ('issue:comment', 'Göreve yorum yapma izni', false, 'ACTIVE'),
+    ('issue:assign', 'Göreve kullanıcı atama izni', false, 'ACTIVE'),
+    ('issue:change-stage', 'Görevin aşamasını değiştirme izni', false, 'ACTIVE'),
+    ('issue:change-priority', 'Görevin önceliğini değiştirme izni', false, 'ACTIVE'),
+    ('issue:add-label', 'Göreve etiket ekleme izni', false, 'ACTIVE'),
+    ('issue:remove-label', 'Görevden etiket kaldırma izni', false, 'ACTIVE');
+
 
 
 -- ADMIN rolüne yeni izinlerin atanması
@@ -145,6 +158,34 @@ VALUES
     (2, 10, '2025-01-28'), -- User 8, Creative Solutions
     (2, 1, '2025-01-28'),  -- Admin, Creative Solutions
     (2, 2, '2025-01-28');  -- Company Owner, Creative Solutions
+
+INSERT INTO projects (name, description, photo, status, start_date, end_date, company_id) VALUES
+                                                                                              ('Finans Yönetim Sistemi', 'Şirketin finansal süreçlerini yöneten sistem.', 'finans.jpg', 'IN_PROGRESS', '2024-01-10', '2024-12-31', 1),
+                                                                                              ('Müşteri Takip Platformu', 'Müşteri ilişkilerini yönetmek için geliştirilmiş bir sistem.', 'musteri.jpg', 'IN_PROGRESS', '2024-02-15', '2024-11-30', 1),
+                                                                                              ('E-Ticaret Entegrasyonu', 'E-ticaret sistemleri ile ERP arasında entegrasyon sağlama projesi.', 'eticaret.jpg', 'IN_PROGRESS', '2024-03-01', '2025-01-15', 2),
+                                                                                              ('İçerik Yönetim Sistemi', 'Şirket içi içerik yönetimi ve dokümantasyon platformu.', 'icerik.jpg', 'IN_PROGRESS', '2024-04-20', '2024-10-05', 2);
+
+INSERT INTO stages (name, context, is_default) VALUES
+                                                   ('To Do', 'Görev oluşturuldu, beklemede', TRUE),
+                                                   ('In Progress', 'Üzerinde çalışılıyor', FALSE),
+                                                   ('In Review', 'Kod gözden geçiriliyor', FALSE),
+                                                   ('Done', 'Tamamlandı', FALSE),
+                                                   ('Blocked', 'Engellendi, devam edilemiyor', FALSE),
+                                                   ('Backlog', 'Gelecekte yapılacaklar', FALSE),
+                                                   ('Testing', 'Test aşamasında', FALSE),
+                                                   ('Deployed', 'Canlıya alındı', FALSE);
+
+INSERT INTO priorities (name, photo, is_default) VALUES
+                                                     ('Low', 'low-priority.png', TRUE),
+                                                     ('Medium', 'medium-priority.png', TRUE),
+                                                     ('High', 'high-priority.png', FALSE),
+                                                     ('Critical', 'critical-priority.png', FALSE);
+
+INSERT INTO labels (name, photo, is_default) VALUES
+                                                 ('Bug', 'bug-icon.png', TRUE),
+                                                 ('Feature', 'feature-icon.png', FALSE),
+                                                 ('Improvement', 'improvement-icon.png', FALSE),
+                                                 ('Documentation', 'documentation-icon.png', TRUE);
 
 
 -- Grupları ekleme
@@ -241,14 +282,4 @@ INSERT INTO sub_bands (name, group_id)
 VALUES
     ('İşe Alım', 11),
     ('Eğitim & Gelişim', 11);
-
-INSERT INTO Stages (name, context, is_default) VALUES
-                                                   ('To Do', 'Görev oluşturuldu, beklemede', TRUE),
-                                                   ('In Progress', 'Üzerinde çalışılıyor', FALSE),
-                                                   ('In Review', 'Kod gözden geçiriliyor', FALSE),
-                                                   ('Done', 'Tamamlandı', FALSE),
-                                                   ('Blocked', 'Engellendi, devam edilemiyor', FALSE),
-                                                   ('Backlog', 'Gelecekte yapılacaklar', FALSE),
-                                                   ('Testing', 'Test aşamasında', FALSE),
-                                                   ('Deployed', 'Canlıya alındı', FALSE);
 
