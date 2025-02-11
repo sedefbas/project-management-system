@@ -3,15 +3,18 @@ package management.sedef.issue.Service.ımpl;
 import lombok.RequiredArgsConstructor;
 import management.sedef.issue.Service.IssueLinkService;
 import management.sedef.issue.exception.IssueLinkNotFoundException;
+import management.sedef.issue.model.Issue;
 import management.sedef.issue.model.IssueLink;
+import management.sedef.issue.model.enums.IssueLinkType;
 import management.sedef.issue.model.mapper.issueLink.IssueLinkRequestToDomainMapper;
 import management.sedef.issue.model.request.IssueLinkRequest;
 import management.sedef.issue.port.issueLinkPort.IssueLinkDeletePort;
 import management.sedef.issue.port.issueLinkPort.IssueLinkReadPort;
 import management.sedef.issue.port.issueLinkPort.IssueLinkSavePort;
+import management.sedef.issue.port.issuePort.IssueReadPort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +24,7 @@ public class IssueLinkServiceImpl implements IssueLinkService {
     private final IssueLinkSavePort savePort;
     private final IssueLinkReadPort readPort;
     private final IssueLinkRequestToDomainMapper issueLinkRequestToDomainMapper;
+    private final IssueReadPort issueReadPort;
 
 
     @Override
@@ -44,6 +48,23 @@ public class IssueLinkServiceImpl implements IssueLinkService {
     public void removeDependency(Long issueId, Long dependentIssueId) {
         IssueLink issueLink =  readPort.findByIssueIdAndLinkedIssueId(issueId,dependentIssueId);
         deletePort.removeDependency(issueLink);
+    }
+
+    @Override
+    public Map<IssueLinkType, Set<Issue>> getLinkedIssues(Long issueId) {
+        Issue issue = issueReadPort.findById(issueId);
+        List<IssueLink> issueLinks = readPort.findAllByIssue(issue);
+
+
+        Map<IssueLinkType, Set<Issue>> linkedIssues = new HashMap<>();
+
+        for (IssueLink link : issueLinks) {
+            linkedIssues
+                    .computeIfAbsent(link.getLinkType(), k -> new HashSet<>())
+                    .add(link.getLinkedIssue());
+        }
+
+        return linkedIssues;
     }
 
 }
