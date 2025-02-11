@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface IssueLinkService {
     List<IssueLink>getDependencies(Long issueId);
-    void addDependency(IssueLinkRequest request );
+    void addDependency(IssueLinkRequest request);
     void removeDependency(Long issueId,Long dependentIssueId);
 }

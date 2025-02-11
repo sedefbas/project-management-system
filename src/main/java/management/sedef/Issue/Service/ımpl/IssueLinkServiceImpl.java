@@ -35,6 +35,7 @@ public class IssueLinkServiceImpl implements IssueLinkService {
         if (existingLink != null) {
             throw new IssueLinkNotFoundException("This dependency already exists.");
         }
+
         IssueLink issueLink = issueLinkRequestToDomainMapper.toDomain(request);
         savePort.save(issueLink);
     }

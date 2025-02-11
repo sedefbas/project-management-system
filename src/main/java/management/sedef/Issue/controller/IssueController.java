@@ -24,8 +24,8 @@ public class IssueController {
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('issue:create')")
-    public SuccessResponse<Void> create(@RequestBody IssueRequest request) {
-        issueService.create(request);
+    public SuccessResponse<Void> create(@RequestBody IssueRequest request,@PathVariable Long companyId, @PathVariable Long projectId) {
+        issueService.create(request,companyId,projectId);
         return SuccessResponse.success();
     }
 

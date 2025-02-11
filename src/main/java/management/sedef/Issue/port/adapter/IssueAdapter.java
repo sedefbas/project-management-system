@@ -58,6 +58,11 @@ public class IssueAdapter implements IssueReadPort, IssueDeletePort, IssueSavePo
     }
 
     @Override
+    public Long countByProjectId(Long projectId) {
+        return repository.countByProjectId(projectId);
+    }
+
+    @Override
     public Issue save(Issue issue) {
         IssueEntity issueEntity = issueToEntityMapper.map(issue);
         repository.save(issueEntity);
