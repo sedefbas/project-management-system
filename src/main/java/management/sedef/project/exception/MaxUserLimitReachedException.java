@@ -1,6 +1,9 @@
 package management.sedef.project.exception;
 
-public class MaxUserLimitReachedException extends RuntimeException {
+import management.sedef.common.exception.AbstractMaxLimitExceededException;
+
+
+public class MaxUserLimitReachedException extends AbstractMaxLimitExceededException {
     public MaxUserLimitReachedException(String message) {
         super(message);
     }

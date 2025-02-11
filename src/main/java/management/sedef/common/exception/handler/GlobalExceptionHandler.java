@@ -3,10 +3,7 @@ package management.sedef.common.exception.handler;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
-import management.sedef.common.exception.AbstractAuthException;
-import management.sedef.common.exception.AbstractConflictException;
-import management.sedef.common.exception.AbstractNotFoundException;
-import management.sedef.common.exception.AbstractServerException;
+import management.sedef.common.exception.*;
 import management.sedef.common.model.ErrorResponse;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -49,6 +46,17 @@ public class GlobalExceptionHandler {
 
         return ErrorResponse.subErrors(exception)
                 .header(ErrorResponse.Header.VALIDATION_ERROR.getName())
+                .build();
+    }
+
+    @ExceptionHandler(AbstractMaxLimitExceededException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ErrorResponse handleMaxLimitExceededError(final AbstractMaxLimitExceededException exception) {
+        log.error(exception.getMessage(), exception);
+
+        return ErrorResponse.builder()
+                .message(exception.getMessage())
+                .header("MAX_LIMIT_EXCEEDED")
                 .build();
     }
 
