@@ -67,7 +67,6 @@ VALUES
     ('label:create', 'Yeni etiket oluşturma izni', false, 'ACTIVE'),
     ('label:detail', 'Etiket detaylarını görme izni', false, 'ACTIVE'),
     ('label:delete', 'Etiket silme izni', false, 'ACTIVE'),
-
     ('issue:create', 'Yeni görev oluşturma izni', false, 'ACTIVE'),
     ('issue:update', 'Görev bilgilerini güncelleme izni', false, 'ACTIVE'),
     ('issue:delete', 'Görev silme izni', false, 'ACTIVE'),
@@ -166,14 +165,15 @@ INSERT INTO projects (name, description, photo, status, start_date, end_date, co
                                                                                               ('İçerik Yönetim Sistemi', 'Şirket içi içerik yönetimi ve dokümantasyon platformu.', 'icerik.jpg', 'IN_PROGRESS', '2024-04-20', '2024-10-05', 2);
 
 INSERT INTO stages (name, context, is_default) VALUES
-                                                   ('To Do', 'Görev oluşturuldu, beklemede', TRUE),
-                                                   ('In Progress', 'Üzerinde çalışılıyor', FALSE),
-                                                   ('In Review', 'Kod gözden geçiriliyor', FALSE),
-                                                   ('Done', 'Tamamlandı', FALSE),
-                                                   ('Blocked', 'Engellendi, devam edilemiyor', FALSE),
-                                                   ('Backlog', 'Gelecekte yapılacaklar', FALSE),
-                                                   ('Testing', 'Test aşamasında', FALSE),
-                                                   ('Deployed', 'Canlıya alındı', FALSE);
+                                                         ('TODO', 'Görev oluşturuldu, beklemede', true),
+                                                         ('IN_PROGRESS', 'Üzerinde çalışılıyor', false),
+                                                         ('IN_REVIEW', 'Kod gözden geçiriliyor', false),
+                                                         ('DONE', 'Tamamlandı', false),
+                                                         ('BLOCKED', 'Engellendi, devam edilemiyor', false),
+                                                         ('BACKLOG', 'Gelecekte yapılacaklar', false),
+                                                         ('TESTING', 'Test aşamasında', false),
+                                                         ('DEPLOYED', 'Canlıya alındı', false);
+
 
 INSERT INTO priorities (name, photo, is_default) VALUES
                                                      ('Low', 'low-priority.png', TRUE),
