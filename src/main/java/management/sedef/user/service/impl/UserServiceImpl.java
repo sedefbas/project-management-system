@@ -8,6 +8,8 @@ import management.sedef.user.model.User;
 import management.sedef.user.model.entity.UserEntity;
 import management.sedef.user.model.mapper.UserEntityToUserMapper;
 import management.sedef.user.model.request.UserUpdateRequest;
+import management.sedef.user.port.UserReadPort;
+import management.sedef.user.port.adapter.UserAdapter;
 import management.sedef.user.repository.UserRepository;
 import management.sedef.user.service.UserService;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserEntityToUserMapper userEntityToUserMapper = UserEntityToUserMapper.initialize();
     private final TokenService tokenService;
+    private final UserReadPort readPort;
 
     @Transactional
     public User update(UserUpdateRequest updateRequest) {
@@ -51,6 +54,13 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("User not found");
         }
     }
+
+    public User getUserFromToken(String token) {
+        Long userId = tokenService.getUserIdFromToken(token);
+        return readPort.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+
 
 }
 

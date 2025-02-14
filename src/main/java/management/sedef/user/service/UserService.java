@@ -5,4 +5,5 @@ import management.sedef.user.model.request.UserUpdateRequest;
 
 public interface UserService {
     User update(UserUpdateRequest updateRequest) ;
+    User getUserFromToken(String token);
 }

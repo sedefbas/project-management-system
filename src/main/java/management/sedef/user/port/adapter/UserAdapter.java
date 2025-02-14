@@ -16,7 +16,6 @@ import java.util.Optional;
 public class UserAdapter implements UserReadPort, UserSavePort {
 
     private final UserRepository userRepository;
-
     private final UserEntityToUserMapper userEntityToUserMapper =UserEntityToUserMapper.initialize();
     private final UserToUserEntityMapper userToUserEntityMapper = UserToUserEntityMapper.initialize();
 
@@ -26,16 +25,20 @@ public class UserAdapter implements UserReadPort, UserSavePort {
                 map(userEntityToUserMapper::map);
     }
 
+
     @Override
     public Optional<User> findByEmail(final String email) {
         return userRepository.findByEmail(email)
                 .map(userEntityToUserMapper::map);
     }
 
+
+
     @Override
     public boolean existsByEmail(final String email) {
         return userRepository.existsByEmail(email);
     }
+
 
     @Override
     public User save(User user) {
@@ -43,4 +46,5 @@ public class UserAdapter implements UserReadPort, UserSavePort {
         final UserEntity savedUserEntity = userRepository.save(userEntity);
         return userEntityToUserMapper.map(savedUserEntity);
     }
+
 }
