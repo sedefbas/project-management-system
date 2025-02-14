@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import management.sedef.stage.model.enums.StageType;
 
 @Entity
 @Getter
@@ -21,7 +22,8 @@ public class StageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private StageType name;
 
     private String context;
 

@@ -2,6 +2,7 @@ package management.sedef.stage.model;
 
 
 import lombok.*;
+import management.sedef.stage.model.enums.StageType;
 
 @Builder
 @AllArgsConstructor
@@ -12,7 +13,7 @@ public class Stage {
 
     private Long id;
 
-    private String name;
+    private StageType name;
 
     private String context;
 
