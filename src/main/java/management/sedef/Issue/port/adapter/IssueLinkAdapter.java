@@ -7,6 +7,7 @@ import management.sedef.issue.model.Issue;
 import management.sedef.issue.model.IssueLink;
 import management.sedef.issue.model.entity.IssueEntity;
 import management.sedef.issue.model.entity.IssueLinkEntity;
+import management.sedef.issue.model.enums.IssueLinkType;
 import management.sedef.issue.model.mapper.issue.IssueToEntityMapper;
 import management.sedef.issue.model.mapper.issueLink.IssueLinkEntityToDomainMapper;
 import management.sedef.issue.model.mapper.issueLink.IssueLinkToEntityMapper;
@@ -26,7 +27,6 @@ public class IssueLinkAdapter implements IssueLinkSavePort, IssueLinkDeletePort,
     private final IssueLinkRepository issueLinkRepository;
     private final IssueLinkEntityToDomainMapper issueLinkEntityToDomainMapper = IssueLinkEntityToDomainMapper.initialize();
     private final IssueLinkToEntityMapper issueLinkToEntityMapper = IssueLinkToEntityMapper.initialize();
-    private final IssueToEntityMapper issueToEntityMapper = IssueToEntityMapper.initialize();
 
 
     @Override
@@ -46,23 +46,12 @@ public class IssueLinkAdapter implements IssueLinkSavePort, IssueLinkDeletePort,
     }
 
 
-    //todo sıkıntılara davetiye çıkartacak bir kod yazdığımın gayet farkındayım.
+    //todo sıkıntılara davetiye çıkartacak bir kod yazdığımın gayet farkındayım null dönmemeli .
     @Override
     public IssueLink findByIssueIdAndLinkedIssueId(Long issueId, Long linkedIssueId) {
         return issueLinkRepository.findByIssueIdAndLinkedIssueId(issueId, linkedIssueId)
                 .map(issueLinkEntity -> issueLinkEntityToDomainMapper.map(issueLinkEntity))
                 .orElse(null);
-    }
-
-
-    @Override
-    public List<IssueLink> findAllByIssue(Issue issue) {
-        IssueEntity issueEntity = issueToEntityMapper.map(issue);
-        List<IssueLinkEntity> issueLinkEntities = issueLinkRepository.findAllByIssue(issueEntity);
-
-        return issueLinkEntities.stream()
-                .map(issueLinkEntity -> issueLinkEntityToDomainMapper.map(issueLinkEntity))
-                .collect(Collectors.toList());
     }
 
 

@@ -24,13 +24,31 @@ public class IssueLinkServiceImpl implements IssueLinkService {
     private final IssueLinkSavePort savePort;
     private final IssueLinkReadPort readPort;
     private final IssueLinkRequestToDomainMapper issueLinkRequestToDomainMapper;
-    private final IssueReadPort issueReadPort;
+
 
 
     @Override
     public List<IssueLink> getDependencies(Long issueId) {
        return readPort.getDependencies(issueId);
     }
+
+    @Override
+    public Map<IssueLinkType, Set<Issue>> getLinkedIssues(Long issueId) {
+
+        List<IssueLink> issueLinks = readPort.getDependencies(issueId);
+
+
+        Map<IssueLinkType, Set<Issue>> linkedIssues = new HashMap<>();
+
+        for (IssueLink link : issueLinks) {
+            linkedIssues
+                    .computeIfAbsent(link.getLinkType(), k -> new HashSet<>())
+                    .add(link.getLinkedIssue());
+        }
+
+        return linkedIssues;
+    }
+
 
     @Override
     public void addDependency(IssueLinkRequest request) {
@@ -50,21 +68,7 @@ public class IssueLinkServiceImpl implements IssueLinkService {
         deletePort.removeDependency(issueLink);
     }
 
-    @Override
-    public Map<IssueLinkType, Set<Issue>> getLinkedIssues(Long issueId) {
-        Issue issue = issueReadPort.findById(issueId);
-        List<IssueLink> issueLinks = readPort.findAllByIssue(issue);
 
 
-        Map<IssueLinkType, Set<Issue>> linkedIssues = new HashMap<>();
-
-        for (IssueLink link : issueLinks) {
-            linkedIssues
-                    .computeIfAbsent(link.getLinkType(), k -> new HashSet<>())
-                    .add(link.getLinkedIssue());
-        }
-
-        return linkedIssues;
-    }
 
 }

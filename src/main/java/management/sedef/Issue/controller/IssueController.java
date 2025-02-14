@@ -1,6 +1,7 @@
 package management.sedef.issue.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import management.sedef.common.model.entity.response.SuccessResponse;
 import management.sedef.issue.Service.IssueService;
@@ -8,6 +9,7 @@ import management.sedef.issue.model.Issue;
 import management.sedef.issue.model.mapper.issue.IssueToResponseMapper;
 import management.sedef.issue.model.request.IssueRequest;
 import management.sedef.issue.model.response.IssueResponse;
+import management.sedef.stage.model.enums.StageType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -24,8 +26,13 @@ public class IssueController {
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('issue:create')")
-    public SuccessResponse<Void> create(@RequestBody IssueRequest request,@PathVariable Long companyId, @PathVariable Long projectId) {
-        issueService.create(request,companyId,projectId);
+    public SuccessResponse<Void> create(
+            @Valid @RequestBody IssueRequest request,
+            @PathVariable Long companyId,
+            @PathVariable Long projectId,
+            @RequestHeader("Authorization") String token) {
+
+        issueService.create(request, companyId, projectId, token);
         return SuccessResponse.success();
     }
 
@@ -64,6 +71,33 @@ public class IssueController {
                 .map(issueToResponseMapper::map)
                 .collect(Collectors.toList());
         return SuccessResponse.success(issueResponses);
+    }
+
+    @PatchMapping("/{issueId}/update-stage")
+    @PreAuthorize("hasAnyAuthority('issue:update')")
+    public SuccessResponse<Void> updateStage(
+            @PathVariable Long issueId,
+            @RequestParam StageType type) {
+        issueService.updateStage(issueId, type);
+        return SuccessResponse.success();
+    }
+
+    @PatchMapping("/{issueId}/update-label")
+    @PreAuthorize("hasAnyAuthority('issue:update')")
+    public SuccessResponse<Void> updateLabel(
+            @PathVariable Long issueId,
+            @RequestParam Long labelId) {
+        issueService.updateLabel(issueId, labelId);
+        return SuccessResponse.success();
+    }
+
+    @PatchMapping("/{issueId}/update-priority")
+    @PreAuthorize("hasAnyAuthority('issue:update')")
+    public SuccessResponse<Void> updatePriority(
+            @PathVariable Long issueId,
+            @RequestParam Long priorityId) {
+        issueService.updatePriority(issueId, priorityId);
+        return SuccessResponse.success();
     }
 
 

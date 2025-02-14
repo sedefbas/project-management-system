@@ -3,6 +3,8 @@ package management.sedef.issue.model.response;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import management.sedef.user.model.response.UserSummaryResponse;
+
 import java.util.Date;
 
 @Getter
@@ -14,6 +16,7 @@ public class IssueResponse {
     private String explanation;
     private Date startDate;
     private Date deadLineDate;
+    private UserSummaryResponse createdBy;
     private Long stageId;
     private Long projectId;
     private Long priorityId;

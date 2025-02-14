@@ -6,6 +6,7 @@ import management.sedef.Label.model.Label;
 import management.sedef.priority.model.Priority;
 import management.sedef.project.model.Project;
 import management.sedef.stage.model.Stage;
+import management.sedef.user.model.User;
 
 import java.util.Date;
 
@@ -25,6 +26,8 @@ public class Issue {
     private Date startDate;
 
     private Date deadLineDate;
+
+    private User createdBy;
 
     private Stage stage;
 

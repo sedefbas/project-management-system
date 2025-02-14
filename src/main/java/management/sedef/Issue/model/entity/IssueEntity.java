@@ -10,6 +10,9 @@ import management.sedef.Label.model.entity.LabelEntity;
 import management.sedef.priority.model.entity.PriorityEntity;
 import management.sedef.project.model.entity.ProjectEntity;
 import management.sedef.stage.model.entity.StageEntity;
+import management.sedef.user.model.User;
+import management.sedef.user.model.entity.UserEntity;
+
 import java.util.Date;
 
 @Entity
@@ -32,6 +35,9 @@ public class IssueEntity {
     private Date startDate;
 
     private Date deadLineDate;
+
+    @ManyToOne
+    private UserEntity createdBy;
 
     @ManyToOne
     private StageEntity stage;

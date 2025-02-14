@@ -69,8 +69,6 @@ public class IssueLinkController {
 
             linkedIssuesSummary.put(entry.getKey(), summaryResponses);
         }
-
-        // Sonuç olarak dönüyoruz
         return SuccessResponse.success(linkedIssuesSummary);
     }
 

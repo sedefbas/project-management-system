@@ -1,6 +1,8 @@
 package management.sedef.issue.Service.ımpl;
 
 import lombok.RequiredArgsConstructor;
+import management.sedef.Label.model.Label;
+import management.sedef.Label.service.LabelService;
 import management.sedef.company.model.Company;
 import management.sedef.company.service.CompanyService;
 import management.sedef.issue.Service.IssueService;
@@ -11,6 +13,13 @@ import management.sedef.issue.port.issuePort.IssueDeletePort;
 import management.sedef.issue.port.issuePort.IssueReadPort;
 import management.sedef.issue.port.issuePort.IssueSavePort;
 import management.sedef.issue.validation.IssueValidator;
+import management.sedef.priority.model.Priority;
+import management.sedef.priority.service.PriorityService;
+import management.sedef.stage.model.Stage;
+import management.sedef.stage.model.enums.StageType;
+import management.sedef.stage.service.StageService;
+import management.sedef.user.model.User;
+import management.sedef.user.service.UserService;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -23,16 +32,34 @@ public class IssueServiceImpl implements IssueService {
     private final IssueReadPort readPort;
     private final IssueRequestToDomainMapper issueRequestToDomainMapper;
     private final CompanyService companyService;
+    private final UserService userService;
+    private final StageService stageService;
+    private final LabelService labelService;
+    private final PriorityService priorityService;
+    private final IssueValidator validator;
 
     @Override
-    public void create(IssueRequest request,Long companyId, Long projectId ) {
+    public void create(IssueRequest request, Long companyId, Long projectId, String token) {
 
-      Long count = readPort.countByProjectId(projectId);
-      Company company = companyService.findCompanyById(companyId);
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7); // "Bearer " kısmını atla
+        }
 
-      IssueValidator.validateMaxIssues(company.getSubscriptionPlan(),count);
-      Issue issue = issueRequestToDomainMapper.map(request);
-      savePort.save(issue);
+        Long count = readPort.countByProjectId(projectId);
+        Company company = companyService.findCompanyById(companyId);
+        User user = userService.getUserFromToken(token);
+
+        validator.validateMaxIssues(company.getSubscriptionPlan(), count);
+
+        Issue issue = issueRequestToDomainMapper.map(request);
+        issue.setCreatedBy(user);
+
+        if (request.getStageId() == null) {
+            Stage stage = stageService.findByName(StageType.TODO); // Varsayılan olarak
+            issue.setStage(stage);
+        }
+
+            savePort.save(issue);
     }
 
     @Override
@@ -54,6 +81,33 @@ public class IssueServiceImpl implements IssueService {
     @Override
     public Issue findById(Long issueId) {
         return readPort.findById(issueId);
+    }
+
+    @Override
+    public void updateStage(Long issueId, StageType type) {
+        Stage stage = stageService.findByName(type);
+        Issue issue = readPort.findById(issueId);
+
+        validator.validateIssueStageChange(issueId,type);
+
+        issue.setStage(stage);
+        savePort.save(issue);
+    }
+
+    @Override
+    public void updateLabel(Long issueId, Long labelId ) {
+        Issue issue = readPort.findById(issueId);
+        Label label = labelService.findById(labelId);
+        issue.setLabel(label);
+        savePort.save(issue);
+    }
+
+    @Override
+    public void updatePriority(Long issueId, Long priorityId ) {
+        Issue issue = readPort.findById(issueId);
+        Priority priority = priorityService.findById(priorityId);
+        issue.setPriority(priority);
+        savePort.save(issue);
     }
 
 }
