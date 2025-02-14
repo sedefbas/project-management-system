@@ -178,4 +178,15 @@ public class GlobalExceptionHandler {
                 .header(ErrorResponse.Header.PROCESS_ERROR.getName())
                 .build();
     }
+
+    @ExceptionHandler(AbstractValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleValidationException(final AbstractValidationException exception) {
+        log.error(exception.getMessage(), exception);
+
+        return ErrorResponse.builder()
+                .header(ErrorResponse.Header.VALIDATION_ERROR.getName())
+                .message(exception.getMessage())
+                .build();
+    }
 }
