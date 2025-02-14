@@ -40,4 +40,9 @@ public class PriorityServiceImpl implements PriorityService {
         priorityDeletePort.delete(priority);
     }
 
+    @Override
+    public Priority findById(Long priorityId) {
+        return priorityReadPort.findById(priorityId);
+    }
+
 }

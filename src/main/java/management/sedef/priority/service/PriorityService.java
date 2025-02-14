@@ -9,4 +9,5 @@ public interface PriorityService {
     List<Priority> findPrioritiesByCompanyId(Long companyId);
     void save(PriorityRequest request);
     void delete(Long priorityId);
+    Priority findById(Long priorityId);
 }
