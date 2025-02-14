@@ -10,4 +10,5 @@ public interface LabelService {
     List<Label> findLabelsByCompanyId(Long companyId);
     void save(LabelRequest request);
     void delete(Long labelId);
+    Label findById(Long labelId);
 }

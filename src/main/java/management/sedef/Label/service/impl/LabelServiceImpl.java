@@ -41,4 +41,9 @@ public class LabelServiceImpl implements LabelService {
         labelDeletePort.delete(label);
     }
 
+    @Override
+    public Label findById(Long labelId) {
+        return labelReadPort.findById(labelId);
+    }
+
 }
