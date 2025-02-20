@@ -41,10 +41,6 @@ public class IssueServiceImpl implements IssueService {
     @Override
     public void create(IssueRequest request, Long companyId, Long projectId, String token) {
 
-        if (token.startsWith("Bearer ")) {
-            token = token.substring(7); // "Bearer " kısmını atla
-        }
-
         Long count = readPort.countByProjectId(projectId);
         Company company = companyService.findCompanyById(companyId);
         User user = userService.getUserFromToken(token);

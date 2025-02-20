@@ -56,6 +56,11 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getUserFromToken(String token) {
+
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7); // "Bearer " kısmını atla
+        }
+
         Long userId = tokenService.getUserIdFromToken(token);
         return readPort.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
     }

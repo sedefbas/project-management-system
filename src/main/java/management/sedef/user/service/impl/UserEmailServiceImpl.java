@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import management.sedef.common.model.enums.MailTemplate;
 import management.sedef.common.model.request.MailSendRequest;
 import management.sedef.common.service.MailService;
+import management.sedef.issue.model.IssueAssignment;
 import management.sedef.user.service.UserEmailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -83,6 +84,32 @@ public class UserEmailServiceImpl implements UserEmailService {
     }
 
     @Override
+    public void reportIssue(IssueAssignment issueAssignment) {
+
+        final String userName = issueAssignment.getUserfullName();
+        final String role = issueAssignment.getRole().getName();
+        final String assignedBy = issueAssignment.getAssignedByfullName();
+        final String issueName = issueAssignment.getIssue().getName();
+
+        final Map<String, Object> parameters = Map.of(
+                "USER_NAME", userName,
+                "ROLE", role,
+                "ASSIGNED_BY", assignedBy,
+                "ISSUE_NAME", issueName
+        );
+
+
+        final MailSendRequest mailSendRequest = MailSendRequest.builder()
+                .to(List.of(issueAssignment.getAssignedUser().getEmail()))
+                .template(MailTemplate.REPORT_MAİL)
+                .parameters(parameters)
+                .build();
+
+        mailService.send(mailSendRequest);
+    }
+
+
+    @Override
     public void sendRegisterInvitation(String email, Long companyId, String companyName) {
         final String registerLink = frontEndUrl + "/register?email=" + email + "&companyId=" + companyId;
         System.out.println("REGISTER_LINK: " + registerLink);
@@ -115,6 +142,8 @@ public class UserEmailServiceImpl implements UserEmailService {
 
         mailService.send(mailSendRequest);
     }
+
+
 
 
 

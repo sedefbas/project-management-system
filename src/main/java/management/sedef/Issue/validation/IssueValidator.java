@@ -34,7 +34,7 @@ public class IssueValidator {
     }
 
 
-
+ //todo eger done olmussa depencedyden silinmesi gerekir. yada done olmayanları getir dicez.
     public void validateIssueStageChange(Long issueId, StageType newStage) {
 
         Map<IssueLinkType, Set<Issue>> linkedIssues = issueLinkService.getLinkedIssues(issueId);

@@ -7,9 +7,10 @@ VALUES
     ('TESTER', 'Test süreçlerini yürüten kişi', 'ACTIVE'),
     ('SCRUM_MASTER', 'Scrum süreçlerini yöneten kişi', 'ACTIVE'),
     ('ADMIN', 'Sistem yöneticisi, tüm yetkilere sahip', 'ACTIVE'),
-    ('VIEWER', 'Yalnızca okuma yetkisi olan kullanıcı', 'ACTIVE'),
     ('COMPANY_OWNER', 'Şirket sahibi', 'ACTIVE'),
-    ('MEMBER', 'Yalnızca okuma yetkisi olan kullanıcı', 'ACTIVE');
+    ('MEMBER', 'Yalnızca okuma yetkisi olan kullanıcı', 'ACTIVE'),
+    ('PAIR_ASSIGNE', 'Çift olarak görev alan geliştirici', 'ACTIVE'),
+    ('QA_ASSIGNE', 'Test görevlerini atanan kişi', 'ACTIVE');
 
 
 -- Yeni izinleri küçük harflerle ekle
@@ -67,6 +68,10 @@ VALUES
     ('label:create', 'Yeni etiket oluşturma izni', false, 'ACTIVE'),
     ('label:detail', 'Etiket detaylarını görme izni', false, 'ACTIVE'),
     ('label:delete', 'Etiket silme izni', false, 'ACTIVE'),
+    ('issue-assignment:delete', 'Görev atamasını silme izni', false, 'ACTIVE'),
+    ('issue-assignment:detail', 'Görev atama detaylarını görme izni', false, 'ACTIVE'),
+    ('issue-assignment:update', 'Görev atamasını güncelleme izni', false, 'ACTIVE'),
+    ('issue-assignment:create', 'Yeni görev ataması oluşturma izni', false, 'ACTIVE'),
     ('issue:create', 'Yeni görev oluşturma izni', false, 'ACTIVE'),
     ('issue:update', 'Görev bilgilerini güncelleme izni', false, 'ACTIVE'),
     ('issue:delete', 'Görev silme izni', false, 'ACTIVE'),
