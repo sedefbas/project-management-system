@@ -18,6 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Service;
+import management.sedef.company.model.claims.CompanyUserClaims;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -150,6 +151,16 @@ public class TokenServiceImp implements TokenService {
         }
 
         return new ProjectUserClaims(userId, groupId, role, projectId, companyId);
+    }
+
+    @Override
+    public CompanyUserClaims parseCompanyInvitationToken(String token) {
+        Claims claims = getPayload(token);
+        
+        String email = claims.get(TokenClaims.USER_MAIL.getValue(), String.class);
+        Long companyId = convertToLong(claims.get(TokenClaims.COMPANY_ID.getValue()));
+        
+        return new CompanyUserClaims(email, companyId);
     }
 
     // Dönüştürme yardımcı metodu

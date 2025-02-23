@@ -2,6 +2,7 @@ package management.sedef.auth.service;
 
 import io.jsonwebtoken.Claims;
 import management.sedef.auth.model.Token;
+import management.sedef.company.model.claims.CompanyUserClaims;
 import management.sedef.project.model.claims.ProjectUserClaims;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
@@ -20,4 +21,5 @@ public interface TokenService {
 
     ProjectUserClaims parseProjectInvitationToken(String token);
 
+    CompanyUserClaims parseCompanyInvitationToken(String token);
 }

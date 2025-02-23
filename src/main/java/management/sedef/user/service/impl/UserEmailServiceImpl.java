@@ -8,8 +8,6 @@ import management.sedef.issue.model.IssueAssignment;
 import management.sedef.user.service.UserEmailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +16,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserEmailServiceImpl implements UserEmailService {
 
-    private static final Logger log = LoggerFactory.getLogger(UserEmailServiceImpl.class);
 
     @Value(value = "${application.front-end.url}")
     private String frontEndUrl;
@@ -68,8 +65,8 @@ public class UserEmailServiceImpl implements UserEmailService {
     }
 
     @Override
-    public void sendCompanyInvitation(String email, Long companyId, String companyName, String userName) {
-        final String invitationLink = frontEndUrl + "/invite?email=" + email + "&companyId=" + companyId;
+    public void sendCompanyInvitation(String email, Long companyId, String companyName, String userName, String token) {
+        final String invitationLink = frontEndUrl + "/invite?token=" + token;
         System.out.println("INVITATION_LINK: " + invitationLink);
 
         final Map<String, Object> parameters = Map.of(
@@ -115,8 +112,9 @@ public class UserEmailServiceImpl implements UserEmailService {
 
 
     @Override
-    public void sendRegisterInvitation(String email, Long companyId, String companyName) {
-        final String registerLink = frontEndUrl + "/register?email=" + email + "&companyId=" + companyId;
+    public void sendRegisterInvitation(String email, Long companyId, String companyName, String token
+    ) {
+        final String registerLink = frontEndUrl + "/register?token=" + token;
         System.out.println("REGISTER_LINK: " + registerLink);
 
         final Map<String, Object> parameters = Map.of(

@@ -1,20 +1,17 @@
 package management.sedef.company.controller;
 
-import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 import management.sedef.common.model.entity.response.SuccessResponse;
 import management.sedef.company.model.CompanyUser;
 import management.sedef.company.model.mapper.companymapper.CompanyUserMapper;
-import management.sedef.company.model.request.CompanyUserRequest;
 import management.sedef.company.model.response.CompanyUserResponse;
 import management.sedef.company.service.CompanyUserService;
-import management.sedef.user.model.User;
 import management.sedef.user.model.mapper.UserSummaryWithEmailMapper;
 import management.sedef.user.model.response.UserSummaryWithEmailResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/v1/company/{companyId}/users")
@@ -53,8 +50,8 @@ public class CompanyUserController {
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('company-user:create')")
-    public SuccessResponse<Void> create(@RequestBody @Valid CompanyUserRequest companyUserRequest, @PathVariable Long companyId) {
-        companyUserService.addUserToCompany(companyUserRequest,companyId);
+    public SuccessResponse<Void> create(@RequestParam String token ) {
+        companyUserService.addUserToCompany(token);
         return SuccessResponse.success();
     }
 
