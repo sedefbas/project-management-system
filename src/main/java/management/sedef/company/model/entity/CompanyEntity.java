@@ -9,9 +9,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import management.sedef.company.model.enums.CompanyStatus;
 
-import management.sedef.subscriptionPlan.model.SubscriptionPlan;
 import management.sedef.subscriptionPlan.model.entity.SubscriptionPlanEntity;
-import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
 import management.sedef.user.model.entity.UserEntity;
 
 import java.util.List;
@@ -32,6 +30,9 @@ public class CompanyEntity  {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "logo")
+    private String logo;
 
     @Column(name = "description")
     private String description;

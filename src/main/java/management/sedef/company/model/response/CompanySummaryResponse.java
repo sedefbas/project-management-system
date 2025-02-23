@@ -11,4 +11,5 @@ import lombok.*;
 public class CompanySummaryResponse {
     private Long id;
     private String name;
+    private String logo;
 }

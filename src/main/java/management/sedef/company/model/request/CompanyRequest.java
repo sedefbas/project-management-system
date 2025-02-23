@@ -17,6 +17,8 @@ public class CompanyRequest {
     @NotNull
     private String name;
 
+    private String logo;
+
     private String description;
 
     @NotNull

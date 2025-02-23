@@ -13,6 +13,7 @@ public interface GroupToExtendedGroupResponseMapper {
 
     @Mapping(source = "company.id", target = "companySummaryResponse.id")
     @Mapping(source = "company.name", target = "companySummaryResponse.name")
+    @Mapping(source = "company.logo", target = "companySummaryResponse.logo")
     ExtendedGroupResponse toExtendedGroupResponse(Group group);
 
 }

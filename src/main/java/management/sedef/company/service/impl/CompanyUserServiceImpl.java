@@ -9,7 +9,6 @@ import management.sedef.company.exception.UserAlreadyAssignedToCompanyException;
 import management.sedef.company.model.Company;
 import management.sedef.company.model.CompanyUser;
 import management.sedef.company.model.claims.CompanyUserClaims;
-import management.sedef.company.model.request.CompanyUserRequest;
 import management.sedef.company.port.companyUserPort.CompanyUserDeletePort;
 import management.sedef.company.port.companyUserPort.CompanyUserReadPort;
 import management.sedef.company.port.companyUserPort.CompanyUserSavePort;
@@ -118,9 +117,6 @@ public class CompanyUserServiceImpl implements CompanyUserService {
     public List<CompanyUser> findByUsersCompanyId(Long companyId) {
         return companyUserReadPort.findByCompanyId(companyId).stream().toList();
     }
-
-
-
 
 
     @Override

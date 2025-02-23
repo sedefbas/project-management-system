@@ -3,8 +3,6 @@ package management.sedef.project.model.response;
 
 import lombok.Getter;
 import lombok.Setter;
-import management.sedef.company.model.Company;
-import management.sedef.company.model.Group;
 import management.sedef.company.model.response.CompanySummaryResponse;
 import management.sedef.company.model.response.GroupResponse;
 import management.sedef.project.model.enums.ProjectStatus;

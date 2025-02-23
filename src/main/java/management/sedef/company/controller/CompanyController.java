@@ -82,6 +82,7 @@ public class CompanyController {
                     CompanySummaryResponse response = CompanySummaryResponse.builder()
                             .id(company.getId())
                             .name(company.getName())
+                            .logo(company.getLogo())
                             .build();
                     return response;
                 })

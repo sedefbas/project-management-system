@@ -5,7 +5,6 @@ import management.sedef.company.model.Company;
 import management.sedef.company.model.entity.CompanyEntity;
 import management.sedef.company.model.mapper.companymapper.CompanyEntityToDomainMapper;
 import management.sedef.company.model.mapper.companymapper.CompanyToEntityMapper;
-import management.sedef.company.model.response.CompanySummaryResponse;
 import management.sedef.company.port.companyport.CompanyDeletePort;
 import management.sedef.company.port.companyport.CompanyReadPort;
 import management.sedef.company.port.companyport.CompanySavePort;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor

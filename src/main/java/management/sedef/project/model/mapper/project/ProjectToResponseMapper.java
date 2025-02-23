@@ -22,6 +22,7 @@ public abstract class ProjectToResponseMapper {
         CompanySummaryResponse companySummaryResponse = new CompanySummaryResponse();
         companySummaryResponse.setId(company.getId());
         companySummaryResponse.setName(company.getName());
+        companySummaryResponse.setLogo(company.getLogo());
         return companySummaryResponse;
     }
 

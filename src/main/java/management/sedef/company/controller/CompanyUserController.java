@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/v1/company/{companyId}/users")
+@RequestMapping(path = "/api/v1/company")
 @RequiredArgsConstructor
 public class CompanyUserController {
 
      private  final CompanyUserService companyUserService;
 
-    @PostMapping("/invite")
+    @PostMapping("/{companyId}/users/invite")
     @PreAuthorize("hasAnyAuthority('company-user:detail')")
     public SuccessResponse<Void> sendUserInvitationToCompany(
             @PathVariable Long companyId,
@@ -31,7 +31,7 @@ public class CompanyUserController {
         return SuccessResponse.success(message);
     }
 
-    @GetMapping("/me")
+    @GetMapping("/{companyId}/users/me")
     @PreAuthorize("hasAnyAuthority('company-user:detail')")
     public SuccessResponse<CompanyUserResponse>  findByToken(@RequestHeader("Authorization") String token){
         CompanyUser companyUser = companyUserService.findByToken(token);
@@ -40,7 +40,7 @@ public class CompanyUserController {
     }
 
 
-    @GetMapping()
+    @GetMapping("/{companyId}/users")
     @PreAuthorize("hasAnyAuthority('company-user:detail')")
     public SuccessResponse<List<UserSummaryWithEmailResponse>>  findUsersByCompanyId(@PathVariable Long companyId){
         List<CompanyUser> companyUsers = companyUserService.findByUsersCompanyId(companyId);
@@ -48,14 +48,14 @@ public class CompanyUserController {
         return SuccessResponse.success(userSummaryResponses);
     }
 
-    @PostMapping
+    @PostMapping("/add/user")
     @PreAuthorize("hasAnyAuthority('company-user:create')")
     public SuccessResponse<Void> create(@RequestParam String token ) {
         companyUserService.addUserToCompany(token);
         return SuccessResponse.success();
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{companyId}/users/{userId}")
     @PreAuthorize("hasAnyAuthority('company-user:delete')")
     public SuccessResponse<Void> delete(@PathVariable Long companyId, @PathVariable Long userId) {
         companyUserService.delete(companyId,userId);
