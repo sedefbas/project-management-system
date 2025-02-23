@@ -20,11 +20,14 @@ public class IssueAssignment {
     private Role role;
 
     public String getUserfullName() {
-        return assignedUser.getFirstName() + assignedUser.getLastName();
+        if (assignedUser == null) return null;
+        return assignedUser.getFirstName() + " " + assignedUser.getLastName();
     }
 
     public String getAssignedByfullName() {
-        return assignedBy.getFirstName() + assignedBy.getLastName();
+        if (assignedBy == null) return null;
+        return assignedBy.getFirstName() + " " + assignedBy.getLastName();
     }
+
 
 }

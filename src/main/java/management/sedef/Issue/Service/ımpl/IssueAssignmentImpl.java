@@ -1,6 +1,7 @@
 package management.sedef.issue.Service.ımpl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import management.sedef.auth.exception.RoleNotFoundByNameException;
 import management.sedef.auth.model.Role;
 import management.sedef.auth.port.RoleReadPort;
@@ -15,9 +16,13 @@ import management.sedef.user.model.User;
 import management.sedef.user.service.UserEmailService;
 import management.sedef.user.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class IssueAssignmentImpl implements IssueAssignmentService {
 
     private final IssueAssignmentDeletePort deletePort;
@@ -29,9 +34,10 @@ public class IssueAssignmentImpl implements IssueAssignmentService {
     private final UserEmailService userEmailService;
 
 
+    //todo kayıtlıysa tekrar kaydetmemeli.
     @Override
+    @Transactional
     public void addIssueAssignment(IssueAssignmentRequest request, String token) {
-
         User assignedBy = userService.getUserFromToken(token);
 
         Role role = roleReadPort.findByName(request.getRole())
@@ -41,8 +47,24 @@ public class IssueAssignmentImpl implements IssueAssignmentService {
         issueAssignment.setAssignedBy(assignedBy);
         issueAssignment.setRole(role);
 
-        savePort.save(issueAssignment);
-        userEmailService.reportIssue(issueAssignment);
+        IssueAssignment savedIssueAssignment = savePort.save(issueAssignment);
+
+        log.info("IssueAssignment Kaydedildi: \n" +
+                        "ID: {}\n" +
+                        "Issue ID: {}\n" +
+                        "Assigned User: {}\n" +
+                        "Assignment Date: {}\n" +
+                        "Assigned By: {}\n" +
+                        "Role: {}",
+                savedIssueAssignment.getId(),
+                savedIssueAssignment.getIssue() != null ? savedIssueAssignment.getIssue().getId() : "N/A",
+                savedIssueAssignment.getUserfullName(),
+                savedIssueAssignment.getAssignmentDate(),
+                savedIssueAssignment.getAssignedByfullName(),
+                savedIssueAssignment.getRole() != null ? savedIssueAssignment.getRole().getName() : "N/A"
+        );
+        
+        userEmailService.reportIssue(savedIssueAssignment);
     }
 
     @Override

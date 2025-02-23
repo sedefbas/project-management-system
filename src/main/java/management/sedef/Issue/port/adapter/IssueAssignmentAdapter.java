@@ -31,7 +31,8 @@ public class IssueAssignmentAdapter implements IssueAssignmentSavePort, IssueAss
     }
 
     @Override
-    public IssueAssignment save(IssueAssignment issueAssignment ) {
+    public IssueAssignment save(IssueAssignment issueAssignment) {
+
         IssueAssignmentEntity entity = assignmentToEntityMapper.map(issueAssignment);
         IssueAssignmentEntity savedEntity = repository.save(entity);
         return assignmentEntityToDomainMapper.map(savedEntity);

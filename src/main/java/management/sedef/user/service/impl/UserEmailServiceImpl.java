@@ -8,6 +8,8 @@ import management.sedef.issue.model.IssueAssignment;
 import management.sedef.user.service.UserEmailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,8 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class UserEmailServiceImpl implements UserEmailService {
+
+    private static final Logger log = LoggerFactory.getLogger(UserEmailServiceImpl.class);
 
     @Value(value = "${application.front-end.url}")
     private String frontEndUrl;
@@ -86,18 +90,17 @@ public class UserEmailServiceImpl implements UserEmailService {
     @Override
     public void reportIssue(IssueAssignment issueAssignment) {
 
-        final String userName = issueAssignment.getUserfullName();
-        final String role = issueAssignment.getRole().getName();
-        final String assignedBy = issueAssignment.getAssignedByfullName();
-        final String issueName = issueAssignment.getIssue().getName();
+        String userName = issueAssignment.getUserfullName();
+        String role = issueAssignment.getRole() != null ? issueAssignment.getRole().getName() : null;
+        String assignedBy = issueAssignment.getAssignedByfullName();
+
 
         final Map<String, Object> parameters = Map.of(
                 "USER_NAME", userName,
                 "ROLE", role,
                 "ASSIGNED_BY", assignedBy,
-                "ISSUE_NAME", issueName
+                "ISSUE_NAME", issueAssignment.getIssue().getName()
         );
-
 
         final MailSendRequest mailSendRequest = MailSendRequest.builder()
                 .to(List.of(issueAssignment.getAssignedUser().getEmail()))
@@ -105,8 +108,10 @@ public class UserEmailServiceImpl implements UserEmailService {
                 .parameters(parameters)
                 .build();
 
-        mailService.send(mailSendRequest);
+            mailService.send(mailSendRequest);
+
     }
+
 
 
     @Override

@@ -13,6 +13,8 @@ VALUES
     ('QA_ASSIGNE', 'Test görevlerini atanan kişi', 'ACTIVE');
 
 
+
+
 -- Yeni izinleri küçük harflerle ekle
 INSERT INTO permission (name, description, is_hidden, status)
 VALUES

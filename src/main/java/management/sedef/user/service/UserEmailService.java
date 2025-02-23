@@ -14,6 +14,7 @@ public interface UserEmailService {
 
     void sendCompanyInvitation(String email, Long companyId, String companyName, String userName);
 
-    void reportIssue(final IssueAssignment issueAssignment);
+    void reportIssue(IssueAssignment issueAssignment);
 
 }
+    
