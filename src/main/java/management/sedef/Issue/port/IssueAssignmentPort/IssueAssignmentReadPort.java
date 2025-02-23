@@ -8,5 +8,7 @@ import java.util.List;
 public interface IssueAssignmentReadPort {
    List<IssueAssignment>  findByIssueId(Long issueId);
    IssueAssignment findByIssueIdAndAssignedUserId(Long issueId, Long userId);
+   List<IssueAssignment> findAllByIssueId(Long issueId);
+
 
 }

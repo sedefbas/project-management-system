@@ -12,5 +12,6 @@ public interface IssueAssignmentRepository extends JpaRepository<IssueAssignment
 
     List<IssueAssignmentEntity> findByIssueId(Long issueId);
     Optional<IssueAssignmentEntity> findByIssueIdAndAssignedUserId(Long issueId, Long userId);
+    List<IssueAssignmentEntity> findAllByIssueId(Long issueId);
 
 }

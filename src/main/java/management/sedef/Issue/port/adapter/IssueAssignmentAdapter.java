@@ -53,4 +53,12 @@ public class IssueAssignmentAdapter implements IssueAssignmentSavePort, IssueAss
         return assignmentEntityToDomainMapper.map(issueAssignmentEntity);
     }
 
+    @Override
+    public List<IssueAssignment> findAllByIssueId(Long issueId) {
+        List<IssueAssignmentEntity> issueAssignmentEntity = repository.findAllByIssueId(issueId);                    
+        return issueAssignmentEntity.stream()
+                .map(assignmentEntityToDomainMapper::map)
+                .collect(Collectors.toList());
+    }
+
 }

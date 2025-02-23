@@ -29,7 +29,7 @@ public class IssueAssignmentEntity {
     private IssueEntity issue;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "assigned_user_id")
     private UserEntity assignedUser;
 
     private Date assignmentDate;
