@@ -11,7 +11,6 @@ import management.sedef.issue.model.request.IssueLinkRequest;
 import management.sedef.issue.port.issueLinkPort.IssueLinkDeletePort;
 import management.sedef.issue.port.issueLinkPort.IssueLinkReadPort;
 import management.sedef.issue.port.issueLinkPort.IssueLinkSavePort;
-import management.sedef.issue.port.issuePort.IssueReadPort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
