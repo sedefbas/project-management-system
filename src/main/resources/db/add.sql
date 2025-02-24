@@ -92,6 +92,14 @@ VALUES
 INSERT INTO role_permission (role_id, permission_id)
 SELECT 6, id FROM permission;
 
+-- USER rolüne (role_id = 1) izinlerin atanması
+INSERT INTO role_permission (role_id, permission_id)
+SELECT 1, id
+FROM permission
+WHERE name IN ('user:detail', 'user:list', 'company:create');
+
+
+
 
 -- COMPANY_OWNER rolüne yeni izinlerin atanması
 INSERT INTO role_permission (role_id, permission_id)
