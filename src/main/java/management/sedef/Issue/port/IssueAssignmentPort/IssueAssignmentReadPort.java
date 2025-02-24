@@ -4,11 +4,13 @@ import management.sedef.issue.model.IssueAssignment;
 
 import java.util.List;
 
-
 public interface IssueAssignmentReadPort {
-   List<IssueAssignment>  findByIssueId(Long issueId);
+   List<IssueAssignment> findByIssueId(Long issueId);
+
    IssueAssignment findByIssueIdAndAssignedUserId(Long issueId, Long userId);
+
    List<IssueAssignment> findAllByIssueId(Long issueId);
 
+   List<IssueAssignment> findByAssignedUserIdAndProjectId(Long userId, Long projectId);
 
 }

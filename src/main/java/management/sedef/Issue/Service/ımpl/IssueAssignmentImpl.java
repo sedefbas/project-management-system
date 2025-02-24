@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -113,4 +112,9 @@ public class IssueAssignmentImpl implements IssueAssignmentService {
         return assignedUsers;
     }
 
+    @Override
+    public List<IssueAssignment> getAssignmentsByUserIdAndProjectId(Long userId, Long projectId) {
+        return readPort.findByAssignedUserIdAndProjectId(userId, projectId);
+    }
+    
 }

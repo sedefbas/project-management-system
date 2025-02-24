@@ -28,7 +28,7 @@ public class IssueAssignmentAdapter implements IssueAssignmentSavePort, IssueAss
     public void delete(IssueAssignment issueAssignment) {
         IssueAssignmentEntity entity = assignmentToEntityMapper.map(issueAssignment);
         repository.delete(entity);
-    }
+    }   
 
     @Override
     public IssueAssignment save(IssueAssignment issueAssignment) {
@@ -61,4 +61,11 @@ public class IssueAssignmentAdapter implements IssueAssignmentSavePort, IssueAss
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<IssueAssignment> findByAssignedUserIdAndProjectId(Long userId, Long projectId) {
+        List<IssueAssignmentEntity> issueAssignmentEntity = repository.findAllByAssignedUserIdAndIssueProjectId(userId, projectId);
+        return issueAssignmentEntity.stream()
+                .map(assignmentEntityToDomainMapper::map)
+                .collect(Collectors.toList());
+    }
 }
