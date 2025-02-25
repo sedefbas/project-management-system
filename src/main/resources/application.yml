@@ -1,9 +1,10 @@
 server:
-  port: 8085
+  port: 8080
+  address: 0.0.0.0
 
 spring:
   application:
-    name: sedef
+    name: springboot-app
 
   jpa:
     hibernate:
@@ -55,3 +56,12 @@ iyzico:
   apiKey: "sandbox-YIeS7SDwadvQXUY26824xOfVp2utB1Fg"
   secretKey: "sandbox-mWT88UW4eOKknM3KLim3As2yuCWd1xiM"
   baseUrl: "https://sandbox-api.iyzipay.com"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

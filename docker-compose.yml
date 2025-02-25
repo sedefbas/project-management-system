@@ -5,6 +5,10 @@ services:
   mysql:
     image: mysql:8.0
     container_name: mysql-container
+    volumes:
+      - ./src/main/resources/db/mysql.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      - ./src/main/resources/db/add.sql:/docker-entrypoint-initdb.d/2-data.sql
+      - mongo-data:/data/db
     environment:
       MYSQL_ROOT_PASSWORD: 1234       # root şifresini belirtiyoruz
       MYSQL_DATABASE: yonetim         # Başlangıç veritabanı adı
@@ -12,6 +16,11 @@ services:
       - "3307:3306"   # Host ile container arasında 3306 portu üzerinden bağlantı
     networks:
       - mynetwork
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # Spring Boot uygulamanız
   app:
@@ -20,14 +29,22 @@ services:
     ports:
       - "8085:8080"  # Spring Boot uygulamanızın 8080 portu
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     environment:
       MYSQL_HOST: mysql
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/yonetim
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 1234
+      SERVER_PORT: 8080  # Port'u environment variable olarak da belirtelim
+      SPRING_PROFILES_ACTIVE: docker
     networks:
       - mynetwork
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   mongodb:
     image: mongo:latest
