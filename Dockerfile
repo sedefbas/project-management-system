@@ -1,24 +1,23 @@
 # 1. Aşama: Derleme aşaması (Build Stage)
-FROM maven:3.9.8-eclipse-temurin-21 AS build
+FROM maven:3.9-amazoncorretto-21 as builder
 
 # Çalışma dizinini ayarla
 WORKDIR /app
-
-# Maven yapılandırma dosyalarını ve kaynakları kopyala
+# Önce sadece pom.xml'i kopyala
 COPY pom.xml .
-COPY src ./src
+# Bağımlılıkları indir
+RUN mvn dependency:go-offline
 
-# Maven ile projenin derlenmesini sağla
-RUN mvn clean package
+# Sonra kaynak kodları kopyala
+COPY src ./src
+RUN mvn clean package -DskipTests
 
 # 2. Aşama: Çalıştırma aşaması (Runtime Stage)
-FROM eclipse-temurin:21-jdk-jammy
+FROM amazoncorretto:21-alpine
 
 # Çalışma dizinini ayarla
 WORKDIR /app
-
-# Derleme aşamasından oluşan jar dosyasını kopyala
-COPY --from=build /app/target/sedef-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=builder /app/target/*.jar app.jar
 
 # Port belirle
 EXPOSE 8080

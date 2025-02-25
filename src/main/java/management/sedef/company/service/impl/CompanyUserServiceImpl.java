@@ -56,24 +56,26 @@ public class CompanyUserServiceImpl implements CompanyUserService {
         return claimsBuilder.build();
     }
 
+ 
 
-    
     @Override
     public String sendUserInvitationToCompany(String email, Long companyId) {
         Company company = companyService.findCompanyById(companyId);
         Optional<User> user = userReadPort.findByEmail(email);
-        String userFullName = user.get().getFirstName() + user.get().getLastName();
-        String token = generateInvitationLink(email,companyId);
-
-
+        
+        // Eğer kullanıcı varsa, adı alıyoruz
+        String userFullName = user.map(u -> u.getFirstName() + " " + u.getLastName()).orElse(""); 
+        String token = generateInvitationLink(email, companyId);
+    
         if (user.isEmpty()) {
-            userEmailService.sendRegisterInvitation(email, companyId, company.getName(),token);
+            userEmailService.sendRegisterInvitation(email, companyId, company.getName(), token);
             return "Kayıt linki gönderildi"; // Kayıt linki gönderildi
         } else {
-            userEmailService.sendCompanyInvitation(email, companyId, company.getName(),userFullName,token);
+            userEmailService.sendCompanyInvitation(email, companyId, company.getName(), userFullName, token);
             return "Davet linki gönderildi"; // Davet linki gönderildi
         }
     }
+    
 
 
     @Override

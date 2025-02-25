@@ -9,7 +9,7 @@ services:
       MYSQL_ROOT_PASSWORD: 1234       # root şifresini belirtiyoruz
       MYSQL_DATABASE: yonetim         # Başlangıç veritabanı adı
     ports:
-      - "3308:3306"   # Host ile container arasında 3306 portu üzerinden bağlantı
+      - "3307:3306"   # Host ile container arasında 3306 portu üzerinden bağlantı
     networks:
       - mynetwork
 
@@ -22,13 +22,45 @@ services:
     depends_on:
       - mysql
     environment:
-      MYSQL_HOST: host.docker.internal  # Bu ayar ile yerel MySQL'e bağlanabilirsiniz
-      SPRING_DATASOURCE_URL: jdbc:mysql://${MYSQL_HOST}:3306/yonetim
+      MYSQL_HOST: mysql
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/yonetim
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 1234
+    networks:
+      - mynetwork
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    networks:
+      - mynetwork
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: pass
+    depends_on:
+      - mongodb
     networks:
       - mynetwork
 
 networks:
   mynetwork:
     driver: bridge
+
+volumes:
+  mongo-data:

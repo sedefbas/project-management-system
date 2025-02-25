@@ -49,7 +49,6 @@ public class CompanyUserController {
     }
 
     @PostMapping("/add/user")
-    @PreAuthorize("hasAnyAuthority('company-user:create')")
     public SuccessResponse<Void> create(@RequestParam String token ) {
         companyUserService.addUserToCompany(token);
         return SuccessResponse.success();

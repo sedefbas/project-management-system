@@ -38,26 +38,23 @@ class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {
             "/swagger-ui.html",
-            "/swagger-ui.html",// Swagger UI'nin giriş URL'si
-            "/swagger-ui/**",    // Swagger UI'nin tüm alt URL'leri
-            "/v3/api-docs",      // Swagger Docs
-            "/v3/api-docs/**",   // Swagger Docs'in tüm alt URL'leri
+            "/swagger-ui.html", // Swagger UI'nin giriş URL'si
+            "/swagger-ui/**", // Swagger UI'nin tüm alt URL'leri
+            "/v3/api-docs", // Swagger Docs
+            "/v3/api-docs/**", // Swagger Docs'in tüm alt URL'leri
             "/swagger-resources/**",
             "/webjars/**",
             "/configuration/ui",
             "/configuration/security"
     };
 
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity,
-                                           CustomBearerTokenAuthenticationFilter bearerTokenAuthenticationFilter) throws Exception {
+            CustomBearerTokenAuthenticationFilter bearerTokenAuthenticationFilter) throws Exception {
 
         httpSecurity.cors(customizer -> customizer.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(customizer ->
-                        customizer.requestMatchers(WHITE_LIST_URL)
+                .authorizeHttpRequests(customizer -> customizer.requestMatchers(WHITE_LIST_URL)
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/public/**")
                         .permitAll()
@@ -67,12 +64,12 @@ class SecurityConfiguration {
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/user/*/followers", "/api/v1/user/*/followings")
                         .permitAll()
+                        .requestMatchers("/api/v1/company/add/user")
+                        .permitAll()
                         .anyRequest()
-                        .authenticated()
-                )
+                        .authenticated())
                 .sessionManagement(customizer -> customizer
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(bearerTokenAuthenticationFilter, BearerTokenAuthenticationFilter.class);
 
         return httpSecurity.build();
@@ -81,7 +78,8 @@ class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:5173")); // Bu, izin verilen domain
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Yalnızca izin verilen metodlar
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Yalnızca izin verilen
+                                                                                             // metodlar
         configuration.setAllowedHeaders(List.of("Content-Type", "Authorization")); // İzin verilen başlıklar
         configuration.setAllowCredentials(true); // Kimlik doğrulama bilgileri ile izin ver
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -95,4 +93,3 @@ class SecurityConfiguration {
     }
 
 }
-
