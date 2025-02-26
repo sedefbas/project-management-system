@@ -1,6 +1,7 @@
 # Project Managment System
 
-[A short description of the project. Explain what the project does and its main purpose.]
+The Project Management System aims to enhance communication and collaboration within development teams by providing a Help Package feature. This feature allows team members to request help, share solutions, and improve teamwork during the software development lifecycle. 
+
 
 ## Table of Contents
 
@@ -10,9 +11,6 @@
 - [Contributing](#contributing)
 - [License](#license)
 
-## About the Project
-
-[The Project Management System aims to enhance communication and collaboration within development teams by providing a Help Package feature. This feature allows team members to request help, share solutions, and improve teamwork during the software development lifecycle. ]
 
 ### Features
 
@@ -57,36 +55,6 @@ To set up this project locally, follow these steps:
     ```bash
     git clone https://github.com/sedefbas/project-management-system.git
     ```
-
-2. Navigate into the project directory:
-    ```bash
-    cd project-management-system
-    ```
-
-3. Install the dependencies:
-    ```bash
-    npm install  # For the frontend
-    mvn install  # For the backend
-    ```
-
-4. Set up the MySQL database:
-    - Create a new database in MySQL:
-      ```sql
-      CREATE DATABASE yonetim;
-      ```
-    - Update the `application.properties` (Spring Boot) or `config.json` (Node.js) file with your database credentials.
-
-5. Start the application:
-    - For the frontend:
-        ```bash
-        npm start
-        ```
-    - For the backend:
-        ```bash
-        mvn spring-boot:run
-        ```
-
-6. Your app should now be running! Access it at [http://localhost:8085](http://localhost:8085).
 
 ## Postman
 
