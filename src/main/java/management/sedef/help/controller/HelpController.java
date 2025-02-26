@@ -1,50 +1,58 @@
 package management.sedef.help.controller;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import management.sedef.help.model.Help;
 import management.sedef.help.model.HelpComment;
 import management.sedef.help.service.HelpService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/helps")
+@RequiredArgsConstructor
 public class HelpController {
 
     private final HelpService helpService;
 
-    public HelpController(HelpService helpService) {
-        this.helpService = helpService;
-    }
-
-    // 🔹 1. Belirli proje ID'ye göre tüm help'leri getir
+    @PreAuthorize("hasAuthority('help:list')")
     @GetMapping("/project/{projectId}")
-    public List<Help> getHelpsByProjectId(@PathVariable Integer projectId) {
-        return helpService.getHelpsByProjectId(projectId);
+    public ResponseEntity<List<Help>> getHelpsByProjectId(@PathVariable Integer projectId) {
+        List<Help> helps = helpService.getHelpsByProjectId(projectId);
+        return ResponseEntity.ok(helps);
     }
 
-    // 🔹 2. Yeni bir help oluştur
+    @PreAuthorize("hasAuthority('help:detail')")
+    @GetMapping("/{id}")
+    public ResponseEntity<Help> getHelpById(@PathVariable String id) {
+        Help help = helpService.getHelpById(id);
+        return ResponseEntity.ok(help);
+    }
+
+    @PreAuthorize("hasAuthority('help:create')")
     @PostMapping
-    public Help createHelp(@RequestBody Help help) {
-        return helpService.createHelp(help);
+    public ResponseEntity<Help> createHelp(@RequestBody @Valid Help help) {
+        Help createdHelp = helpService.createHelp(help);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdHelp);
     }
 
-    // 🔹 3. Belirli help ID'ye göre veriyi getir
-    @GetMapping("/{helpId}")
-    public Help getHelpById(@PathVariable String helpId) {
-        return helpService.getHelpById(helpId);
-    }
-
-    // 🔹 4. Belirli bir help'e yorum ekle
+    @PreAuthorize("hasAuthority('help:update')")
     @PostMapping("/{helpId}/comments")
-    public Help addCommentToHelp(@PathVariable String helpId, @RequestBody HelpComment comment) {
-        return helpService.addCommentToHelp(helpId, comment);
+    public ResponseEntity<Help> addCommentToHelp(
+            @PathVariable String helpId,
+            @RequestBody @Valid HelpComment comment) {
+        Help updatedHelp = helpService.addCommentToHelp(helpId, comment);
+        return ResponseEntity.ok(updatedHelp);
     }
 
-    // 🔹 5. Belirli help ID'yi sil
-    @DeleteMapping("/{helpId}")
-    public void deleteHelp(@PathVariable String helpId) {
-        helpService.deleteHelp(helpId);
+    @PreAuthorize("hasAuthority('help:delete')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteHelp(@PathVariable String id) {
+        helpService.deleteHelp(id);
+        return ResponseEntity.noContent().build();
     }
 }

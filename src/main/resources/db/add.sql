@@ -84,7 +84,12 @@ VALUES
     ('issue:change-stage', 'Görevin aşamasını değiştirme izni', false, 'ACTIVE'),
     ('issue:change-priority', 'Görevin önceliğini değiştirme izni', false, 'ACTIVE'),
     ('issue:add-label', 'Göreve etiket ekleme izni', false, 'ACTIVE'),
-    ('issue:remove-label', 'Görevden etiket kaldırma izni', false, 'ACTIVE');
+    ('issue:remove-label', 'Görevden etiket kaldırma izni', false, 'ACTIVE'),
+    ('help:detail', 'Yardım detaylarını görme izni', false, 'ACTIVE'),
+    ('help:list', 'Yardım listesini görüntüleme izni', false, 'ACTIVE'),
+    ('help:create', 'Yeni yardım dokümanı oluşturma izni', false, 'ACTIVE'),
+    ('help:update', 'Yardım dokümanı güncelleme izni', false, 'ACTIVE'),
+    ('help:delete', 'Yardım dokümanı silme izni', false, 'ACTIVE');
 
 
 
