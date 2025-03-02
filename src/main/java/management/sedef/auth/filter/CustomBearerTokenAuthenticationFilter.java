@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import management.sedef.auth.model.Token;
+import management.sedef.auth.service.InvalidTokenService;
 import management.sedef.auth.service.TokenService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +22,7 @@ import java.io.IOException;
 public class CustomBearerTokenAuthenticationFilter  extends OncePerRequestFilter {
 
     private final TokenService tokenService;
+    private final InvalidTokenService invalidTokenService;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest httpServletRequest,
@@ -36,6 +38,7 @@ public class CustomBearerTokenAuthenticationFilter  extends OncePerRequestFilter
             tokenService.verifyAndValidate(jwt);
 
             final String tokenId = tokenService.getPayload(jwt).getId();
+            invalidTokenService.checkForInvalidityOfToken(tokenId);
 
             final var authentication = tokenService.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
