@@ -1,21 +1,4 @@
--- Insert roles into 'role' table
-INSERT INTO role (name, description, status)
-VALUES
-    ('USER', 'Sistemi temel düzeyde kullanabilen kullanıcı', 'ACTIVE'),
-    ('PROJECT_MANAGER', 'Projeleri yönetme yetkisine sahip kişi', 'ACTIVE'),
-    ('DEVELOPER', 'Geliştirme yapan kişi (kod yazan)', 'ACTIVE'),
-    ('TESTER', 'Test süreçlerini yürüten kişi', 'ACTIVE'),
-    ('SCRUM_MASTER', 'Scrum süreçlerini yöneten kişi', 'ACTIVE'),
-    ('ADMIN', 'Sistem yöneticisi, tüm yetkilere sahip', 'ACTIVE'),
-    ('COMPANY_OWNER', 'Şirket sahibi', 'ACTIVE'),
-    ('MEMBER', 'Yalnızca okuma yetkisi olan kullanıcı', 'ACTIVE'),
-    ('PAIR_ASSIGNE', 'Çift olarak görev alan geliştirici', 'ACTIVE'),
-    ('QA_ASSIGNE', 'Test görevlerini atanan kişi', 'ACTIVE');
 
-
-
-
--- Yeni izinleri küçük harflerle ekle
 INSERT INTO permission (name, description, is_hidden, status)
 VALUES
     ('subscription:detail', 'Abonelik detaylarını görme izni', false, 'ACTIVE'),
@@ -92,6 +75,27 @@ VALUES
     ('help:delete', 'Yardım dokümanı silme izni', false, 'ACTIVE');
 
 
+INSERT INTO `role` (name, description, status)
+VALUES
+    ('USER', 'Basic system user', 'ACTIVE'),
+    ('PROJECT_MANAGER', 'Person with project management authority', 'ACTIVE'),
+    ('DEVELOPER', 'Person who develops (writes code)', 'ACTIVE'),
+    ('TESTER', 'Person who conducts testing processes', 'ACTIVE'),
+    ('SCRUM_MASTER', 'Person who manages Scrum processes', 'ACTIVE'),
+    ('ADMIN', 'System administrator with full permissions', 'ACTIVE'),
+    ('COMPANY_OWNER', 'Company owner', 'ACTIVE'),
+    ('MEMBER', 'User with read-only permissions', 'ACTIVE'),
+    ('PAIR_ASSIGNE', 'Developer assigned as a pair', 'ACTIVE'),
+    ('QA_ASSIGNE', 'Person assigned to testing tasks', 'ACTIVE');
+
+CREATE TABLE IF NOT EXISTS role_permission (
+                                               role_id BIGINT NOT NULL,
+                                               permission_id BIGINT NOT NULL,
+                                               PRIMARY KEY (role_id, permission_id),
+                                               FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE,
+                                               FOREIGN KEY (permission_id) REFERENCES permission(id) ON DELETE CASCADE
+);
+
 
 -- ADMIN rolüne yeni izinlerin atanması
 INSERT INTO role_permission (role_id, permission_id)
@@ -126,7 +130,8 @@ VALUES
 
 
 -- Kullanıcıları eklemek için INSERT INTO komutları
-INSERT INTO user (email, first_name, last_name, password, phone, photo, status, role_id, last_login_time, created_at, updated_at)
+-- Kullanıcıları eklemek için INSERT INTO komutları
+INSERT INTO users (email, first_name, last_name, password, phone, photo, status, role_id, last_login_time, created_at, updated_at)
 VALUES
     ('admin@example.com', 'Admin', 'User', 'adminpassword', 1234567890, 'adminphoto.jpg', 'VERIFIED', 8, NOW(), NOW(), NOW()),  -- Admin
     ('companyowner@example.com', 'Company', 'Owner', 'ownerpassword', 2345678901, 'ownerphoto.jpg', 'VERIFIED', 6, NOW(), NOW(), NOW()),  -- Company Owner
@@ -183,6 +188,27 @@ INSERT INTO projects (name, description, photo, status, start_date, end_date, co
                                                                                               ('Müşteri Takip Platformu', 'Müşteri ilişkilerini yönetmek için geliştirilmiş bir sistem.', 'musteri.jpg', 'IN_PROGRESS', '2024-02-15', '2024-11-30', 1),
                                                                                               ('E-Ticaret Entegrasyonu', 'E-ticaret sistemleri ile ERP arasında entegrasyon sağlama projesi.', 'eticaret.jpg', 'IN_PROGRESS', '2024-03-01', '2025-01-15', 2),
                                                                                               ('İçerik Yönetim Sistemi', 'Şirket içi içerik yönetimi ve dokümantasyon platformu.', 'icerik.jpg', 'IN_PROGRESS', '2024-04-20', '2024-10-05', 2);
+
+-- Projeler için kullanıcı ekleme işlemi-- Projeler için kullanıcı ekleme
+INSERT INTO project_users (user_id, project_id, role_id)
+VALUES
+    -- Project 1, Tech Innovations, User 1, User 2
+    (3, 1, 1),  -- User 1, Project 1, Role 1
+    (4, 1, 1),  -- User 2, Project 1, Role 1
+
+    -- Project 2, Tech Innovations, User 3, User 4
+    (5, 2, 1),  -- User 3, Project 2, Role 1
+    (6, 2, 1),  -- User 4, Project 2, Role 1
+
+    -- Project 3, Creative Solutions, User 5, User 6
+    (7, 3, 1),  -- User 5, Project 3, Role 1
+    (8, 3, 1),  -- User 6, Project 3, Role 1
+
+    -- Project 4, Creative Solutions, User 7, User 8
+    (9, 4, 1),  -- User 7, Project 4, Role 1
+    (10, 4, 1); -- User 8, Project 4, Role 1
+
+
 
 INSERT INTO stages (name, context, is_default) VALUES
                                                          ('TODO', 'Görev oluşturuldu, beklemede', true),

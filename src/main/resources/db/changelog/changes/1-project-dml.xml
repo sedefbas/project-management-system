@@ -1,0 +1,1284 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Add roles -->
+    <changeSet id="1" author="sedef">
+        <insert tableName="role">
+            <column name="name" value="USER"/>
+            <column name="description" value="Basic system user"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="role">
+            <column name="name" value="PROJECT_MANAGER"/>
+            <column name="description" value="Person with project management authority"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="role">
+            <column name="name" value="DEVELOPER"/>
+            <column name="description" value="Person who develops (writes code)"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="role">
+            <column name="name" value="TESTER"/>
+            <column name="description" value="Person who conducts testing processes"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="role">
+            <column name="name" value="SCRUM_MASTER"/>
+            <column name="description" value="Person who manages Scrum processes"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="role">
+            <column name="name" value="ADMIN"/>
+            <column name="description" value="System administrator with full permissions"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="role">
+            <column name="name" value="COMPANY_OWNER"/>
+            <column name="description" value="Company owner"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="role">
+            <column name="name" value="MEMBER"/>
+            <column name="description" value="User with read-only permissions"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="role">
+            <column name="name" value="PAIR_ASSIGNE"/>
+            <column name="description" value="Developer assigned as a pair"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="role">
+            <column name="name" value="QA_ASSIGNE"/>
+            <column name="description" value="Person assigned to testing tasks"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+    </changeSet>
+
+    <!-- Add permissions -->
+    <changeSet id="2" author="sedef">
+        <insert tableName="permission">
+            <column name="name" value="subscription:detail"/>
+            <column name="description" value="Permission to view subscription details"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="subscription:list"/>
+            <column name="description" value="Permission to list all subscriptions"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="subscription:create"/>
+            <column name="description" value="Permission to create a new subscription"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="subscription:update"/>
+            <column name="description" value="Permission to update subscription information"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="subscription:delete"/>
+            <column name="description" value="Permission to delete a subscription"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="company:detail"/>
+            <column name="description" value="Permission to view company details"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="company:list"/>
+            <column name="description" value="Permission to list companies"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="company:create"/>
+            <column name="description" value="Yeni bir şirket oluşturma izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="company:update"/>
+            <column name="description" value="Şirket bilgilerini güncelleme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="company:delete"/>
+            <column name="description" value="Şirket silme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="company-user:detail"/>
+            <column name="description" value="Şirket kullanıcısının detaylarını görme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="company-user:list"/>
+            <column name="description" value="Şirket kullanıcılarını listeleme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="company-user:create"/>
+            <column name="description" value="Şirket kullanıcısı oluşturma izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="company-user:update"/>
+            <column name="description" value="Şirket kullanıcısı güncelleme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="company-user:delete"/>
+            <column name="description" value="Şirket kullanıcısını silme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="address:create"/>
+            <column name="description" value="Adres oluşturma izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="address:delete"/>
+            <column name="description" value="Adres silme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="address:update"/>
+            <column name="description" value="Adres güncelleme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="address:list"/>
+            <column name="description" value="Adresleri listeleme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="address:detail"/>
+            <column name="description" value="Adres detaylarını görme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="user:detail"/>
+            <column name="description" value="Kullanıcı detaylarını görme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="user:list"/>
+            <column name="description" value="Kullanıcıları listeleme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="user:create"/>
+            <column name="description" value="Yeni bir kullanıcı oluşturma izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="user:update"/>
+            <column name="description" value="Kullanıcı bilgilerini güncelleme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="user:delete"/>
+            <column name="description" value="Kullanıcı silme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="project:create"/>
+            <column name="description" value="Yeni proje oluşturma izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="project:update"/>
+            <column name="description" value="Proje bilgilerini güncelleme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="project:delete"/>
+            <column name="description" value="Proje silme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="project:detail"/>
+            <column name="description" value="Proje detaylarını görme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="group:create"/>
+            <column name="description" value="Yeni grup oluşturma izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="group:update"/>
+            <column name="description" value="Grup bilgilerini güncelleme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="group:delete"/>
+            <column name="description" value="Grup silme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="group:detail"/>
+            <column name="description" value="Grup detaylarını görme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="subgroup:create"/>
+            <column name="description" value="Yeni alt grup oluşturma izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="subgroup:update"/>
+            <column name="description" value="Alt grup bilgilerini güncelleme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="subgroup:delete"/>
+            <column name="description" value="Alt grup silme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="subgroup:detail"/>
+            <column name="description" value="Sub-grup detaylarını görme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="project-status:list"/>
+            <column name="description" value="Proje durumlarını listeleme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="project-user:delete"/>
+            <column name="description" value="Proje kullanıcısını silme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="project-user:detail"/>
+            <column name="description" value="Proje kullanıcısının detaylarını görme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="project-user:create"/>
+            <column name="description" value="Proje kullanıcısı oluşturma izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="project-user:update"/>
+            <column name="description" value="Proje kullanıcısını güncelleme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="company-label:create"/>
+            <column name="description" value="Şirkete etiket ekleme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="company-label:delete"/>
+            <column name="description" value="Şirketteki etiketi silme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="company-priority:create"/>
+            <column name="description" value="Şirkete öncelik ekleme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="company-priority:delete"/>
+            <column name="description" value="Şirketteki öncelik silme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="priority:create"/>
+            <column name="description" value="Yeni öncelik oluşturma izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="priority:detail"/>
+            <column name="description" value="Öncelik detaylarını görme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="priority:delete"/>
+            <column name="description" value="Öncelik silme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="label:create"/>
+            <column name="description" value="Yeni etiket oluşturma izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="label:detail"/>
+            <column name="description" value="Etiket detaylarını görme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="name" value="label:delete"/>
+            <column name="description" value="Etiket silme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+
+    </changeSet>
+
+    <!-- Add role_permission mappings -->
+    <!-- Add role_permission mappings -->
+    <!-- Add role_permission mappings -->
+    <!-- Add role_permission mappings -->
+
+        <changeSet id="3" author="sedef">
+            <!-- USER role permissions -->
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'USER')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'subscription:detail')"/>
+            </insert>
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'USER')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'subscription:list')"/>
+            </insert>
+
+            <!-- PROJECT_MANAGER role permissions -->
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'PROJECT_MANAGER')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'subscription:create')"/>
+            </insert>
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'PROJECT_MANAGER')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'subscription:update')"/>
+            </insert>
+
+            <!-- DEVELOPER role permissions -->
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'DEVELOPER')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'subscription:delete')"/>
+            </insert>
+
+            <!-- TESTER role permissions -->
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'TESTER')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'company:detail')"/>
+            </insert>
+
+            <!-- SCRUM_MASTER role permissions -->
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'SCRUM_MASTER')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'company:list')"/>
+            </insert>
+
+            <!-- ADMIN role permissions (full access) -->
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'ADMIN')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'subscription:detail')"/>
+            </insert>
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'ADMIN')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'subscription:list')"/>
+            </insert>
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'ADMIN')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'subscription:create')"/>
+            </insert>
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'ADMIN')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'subscription:update')"/>
+            </insert>
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'ADMIN')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'subscription:delete')"/>
+            </insert>
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'ADMIN')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'company:detail')"/>
+            </insert>
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'ADMIN')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'company:list')"/>
+            </insert>
+
+            <!-- COMPANY_OWNER role permissions -->
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'COMPANY_OWNER')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'company:detail')"/>
+            </insert>
+            <insert tableName="role_permission">
+                <column name="role_id" valueComputed="(SELECT id FROM role WHERE name = 'COMPANY_OWNER')"/>
+                <column name="permission_id" valueComputed="(SELECT id FROM permission WHERE name = 'company:list')"/>
+            </insert><insert tableName="permission">
+            <column name="name" value="issue-assignment:delete"/>
+            <column name="description" value="Görev atamasını silme izni"/>
+            <column name="is_hidden" valueBoolean="false"/>
+            <column name="status" value="ACTIVE"/>
+        </insert>
+            <insert tableName="permission">
+                <column name="name" value="issue-assignment:detail"/>
+                <column name="description" value="Görev atama detaylarını görme izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="issue-assignment:update"/>
+                <column name="description" value="Görev atamasını güncelleme izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="issue-assignment:create"/>
+                <column name="description" value="Yeni görev ataması oluşturma izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="issue:create"/>
+                <column name="description" value="Yeni görev oluşturma izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="issue:update"/>
+                <column name="description" value="Görev bilgilerini güncelleme izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="issue:delete"/>
+                <column name="description" value="Görev silme izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="issue:detail"/>
+                <column name="description" value="Görev detaylarını görme izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="issue:list"/>
+                <column name="description" value="Görevleri listeleme izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="issue:comment"/>
+                <column name="description" value="Göreve yorum yapma izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="issue:assign"/>
+                <column name="description" value="Göreve kullanıcı atama izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="issue:change-stage"/>
+                <column name="description" value="Görevin aşamasını değiştirme izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="issue:change-priority"/>
+                <column name="description" value="Görevin önceliğini değiştirme izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="issue:add-label"/>
+                <column name="description" value="Göreve etiket ekleme izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="issue:remove-label"/>
+                <column name="description" value="Görevden etiket kaldırma izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="help:detail"/>
+                <column name="description" value="Yardım detaylarını görme izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="help:list"/>
+                <column name="description" value="Yardım listesini görüntüleme izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="help:create"/>
+                <column name="description" value="Yeni yardım dokümanı oluşturma izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="help:update"/>
+                <column name="description" value="Yardım dokümanı güncelleme izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+            <insert tableName="permission">
+                <column name="name" value="help:delete"/>
+                <column name="description" value="Yardım dokümanı silme izni"/>
+                <column name="is_hidden" valueBoolean="false"/>
+                <column name="status" value="ACTIVE"/>
+            </insert>
+        </changeSet>
+
+
+    <changeSet id="4" author="sedef">
+        <sql>
+            INSERT INTO role_permission (role_id, permission_id)
+            SELECT 6, id FROM permission;
+        </sql>
+    </changeSet>
+
+    <changeSet id="5" author="sedef">
+        <sql>
+            INSERT INTO role_permission (role_id, permission_id)
+            SELECT 1, id
+            FROM permission
+            WHERE name IN ('user:detail', 'user:list', 'company:create');
+        </sql>
+    </changeSet>
+
+    <changeSet id="6" author="sedef">
+        <sql>
+            INSERT INTO role_permission (role_id, permission_id)
+            SELECT 8, id
+            FROM permission
+            WHERE name IN (
+                           'company:detail', 'company:list', 'company:addUserToCompany', 'company:update', 'company:delete',
+                           'address:addUserToCompany', 'address:delete', 'address:update', 'address:list', 'address:detail',
+                           'group:addUserToCompany', 'group:list', 'group:detail', 'group:update', 'group:delete',
+                           'subgroup:addUserToCompany', 'subgroup:list', 'subgroup:detail', 'subgroup:update', 'subgroup:delete',
+                           'company-user:detail', 'company-user:list', 'company-user:addUserToCompany', 'company-user:update', 'company-user:delete'
+                );
+        </sql>
+    </changeSet>
+
+
+    <changeSet id="7" author="sedef">
+        <insert tableName="subscription_plan">
+            <column name="status" value="FREE"/>
+            <column name="description" value="Temel özelliklere sahip plan"/>
+            <column name="max_proje" value="1"/>
+            <column name="max_task" value="10"/>
+            <column name="max_user" value="5"/>
+            <column name="price" value="0.00"/>
+            <column name="features" value="Sadece temel proje, görev ve kullanıcı desteği"/>
+        </insert>
+        <insert tableName="subscription_plan">
+            <column name="status" value="PREMIUM"/>
+            <column name="description" value="Gelişmiş özellikler ve sınırsız proje desteği"/>
+            <column name="max_proje" value="10"/>
+            <column name="max_task" value="100"/>
+            <column name="max_user" value="50"/>
+            <column name="price" value="149.99"/>
+            <column name="features" value="Sınırsız proje, 100 görev, 50 kullanıcı desteği"/>
+        </insert>
+        <insert tableName="subscription_plan">
+            <column name="status" value="ENTERPRISE"/>
+            <column name="description" value="Kurumsal seviyede tüm özellikler"/>
+            <column name="max_proje" value="NULL"/>
+            <column name="max_task" value="NULL"/>
+            <column name="max_user" value="NULL"/>
+            <column name="price" value="499.99"/>
+            <column name="features" value="Sınırsız proje, görev ve kullanıcı desteği"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="8" author="sedef">
+        <insert tableName="users">
+            <column name="email" value="admin@example.com"/>
+            <column name="first_name" value="Admin"/>
+            <column name="last_name" value="User"/>
+            <column name="password" value="adminpassword"/>
+            <column name="phone" value="1234567890"/>
+            <column name="photo" value="adminphoto.jpg"/>
+            <column name="status" value="VERIFIED"/>
+            <column name="role_id" value="8"/>
+            <column name="last_login_time" valueComputed="NOW()"/>
+            <column name="created_at" valueComputed="NOW()"/>
+            <column name="updated_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="companyowner@example.com"/>
+            <column name="first_name" value="Company"/>
+            <column name="last_name" value="Owner"/>
+            <column name="password" value="ownerpassword"/>
+            <column name="phone" value="2345678901"/>
+            <column name="photo" value="ownerphoto.jpg"/>
+            <column name="status" value="VERIFIED"/>
+            <column name="role_id" value="6"/>
+            <column name="last_login_time" valueComputed="NOW()"/>
+            <column name="created_at" valueComputed="NOW()"/>
+            <column name="updated_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="user1@example.com"/>
+            <column name="first_name" value="User"/>
+            <column name="last_name" value="One"/>
+            <column name="password" value="user1password"/>
+            <column name="phone" value="3456789012"/>
+            <column name="photo" value="user1photo.jpg"/>
+            <column name="status" value="VERIFIED"/>
+            <column name="role_id" value="1"/>
+            <column name="last_login_time" valueComputed="NOW()"/>
+            <column name="created_at" valueComputed="NOW()"/>
+            <column name="updated_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="user2@example.com"/>
+            <column name="first_name" value="User"/>
+            <column name="last_name" value="Two"/>
+            <column name="password" value="user2password"/>
+            <column name="phone" value="4567890123"/>
+            <column name="photo" value="user2photo.jpg"/>
+            <column name="status" value="VERIFIED"/>
+            <column name="role_id" value="1"/>
+            <column name="last_login_time" valueComputed="NOW()"/>
+            <column name="created_at" valueComputed="NOW()"/>
+            <column name="updated_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="user3@example.com"/>
+            <column name="first_name" value="User"/>
+            <column name="last_name" value="Three"/>
+            <column name="password" value="user3password"/>
+            <column name="phone" value="5678901234"/>
+            <column name="photo" value="user3photo.jpg"/>
+            <column name="status" value="VERIFIED"/>
+            <column name="role_id" value="1"/>
+            <column name="last_login_time" valueComputed="NOW()"/>
+            <column name="created_at" valueComputed="NOW()"/>
+            <column name="updated_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="user4@example.com"/>
+            <column name="first_name" value="User"/>
+            <column name="last_name" value="Four"/>
+            <column name="password" value="user4password"/>
+            <column name="phone" value="6789012345"/>
+            <column name="photo" value="user4photo.jpg"/>
+            <column name="status" value="VERIFIED"/>
+            <column name="role_id" value="1"/>
+            <column name="last_login_time" valueComputed="NOW()"/>
+            <column name="created_at" valueComputed="NOW()"/>
+            <column name="updated_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="user5@example.com"/>
+            <column name="first_name" value="User"/>
+            <column name="last_name" value="Five"/>
+            <column name="password" value="user5password"/>
+            <column name="phone" value="7890123456"/>
+            <column name="photo" value="user5photo.jpg"/>
+            <column name="status" value="VERIFIED"/>
+            <column name="role_id" value="1"/>
+            <column name="last_login_time" valueComputed="NOW()"/>
+            <column name="created_at" valueComputed="NOW()"/>
+            <column name="updated_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="user6@example.com"/>
+            <column name="first_name" value="User"/>
+            <column name="last_name" value="Six"/>
+            <column name="password" value="user6password"/>
+            <column name="phone" value="8901234567"/>
+            <column name="photo" value="user6photo.jpg"/>
+            <column name="status" value="VERIFIED"/>
+            <column name="role_id" value="1"/>
+            <column name="last_login_time" valueComputed="NOW()"/>
+            <column name="created_at" valueComputed="NOW()"/>
+            <column name="updated_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="user7@example.com"/>
+            <column name="first_name" value="User"/>
+            <column name="last_name" value="Seven"/>
+            <column name="password" value="user7password"/>
+            <column name="phone" value="9012345678"/>
+            <column name="photo" value="user7photo.jpg"/>
+            <column name="status" value="VERIFIED"/>
+            <column name="role_id" value="1"/>
+            <column name="last_login_time" valueComputed="NOW()"/>
+            <column name="created_at" valueComputed="NOW()"/>
+            <column name="updated_at" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="users">
+            <column name="email" value="user8@example.com"/>
+            <column name="first_name" value="User"/>
+            <column name="last_name" value="Eight"/>
+            <column name="password" value="user8password"/>
+            <column name="phone" value="1234987650"/>
+            <column name="photo" value="user8photo.jpg"/>
+            <column name="status" value="VERIFIED"/>
+            <column name="role_id" value="1"/>
+            <column name="last_login_time" valueComputed="NOW()"/>
+            <column name="created_at" valueComputed="NOW()"/>
+            <column name="updated_at" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+    <changeSet id="9" author="sedef">
+        <insert tableName="user_verification">
+            <column name="user_id" value="1"/>
+            <column name="status" value="COMPLETED"/>
+            <column name="type" value="EMAIL"/>
+        </insert>
+        <insert tableName="user_verification">
+            <column name="user_id" value="2"/>
+            <column name="status" value="COMPLETED"/>
+            <column name="type" value="EMAIL"/>
+        </insert>
+        <insert tableName="user_verification">
+            <column name="user_id" value="3"/>
+            <column name="status" value="COMPLETED"/>
+            <column name="type" value="EMAIL"/>
+        </insert>
+        <insert tableName="user_verification">
+            <column name="user_id" value="4"/>
+            <column name="status" value="COMPLETED"/>
+            <column name="type" value="EMAIL"/>
+        </insert>
+        <insert tableName="user_verification">
+            <column name="user_id" value="5"/>
+            <column name="status" value="COMPLETED"/>
+            <column name="type" value="EMAIL"/>
+        </insert>
+        <insert tableName="user_verification">
+            <column name="user_id" value="6"/>
+            <column name="status" value="COMPLETED"/>
+            <column name="type" value="EMAIL"/>
+        </insert>
+        <insert tableName="user_verification">
+            <column name="user_id" value="7"/>
+            <column name="status" value="COMPLETED"/>
+            <column name="type" value="EMAIL"/>
+        </insert>
+        <insert tableName="user_verification">
+            <column name="user_id" value="8"/>
+            <column name="status" value="COMPLETED"/>
+            <column name="type" value="EMAIL"/>
+        </insert>
+        <insert tableName="user_verification">
+            <column name="user_id" value="9"/>
+            <column name="status" value="COMPLETED"/>
+            <column name="type" value="EMAIL"/>
+        </insert>
+        <insert tableName="user_verification">
+            <column name="user_id" value="10"/>
+            <column name="status" value="COMPLETED"/>
+            <column name="type" value="EMAIL"/>
+        </insert>
+    </changeSet>
+
+
+    <changeSet id="10" author="sedef">
+        <insert tableName="companies">
+            <column name="name" value="Tech Innovations"/>
+            <column name="description" value="A leading tech company specializing in innovative solutions."/>
+            <column name="phone_number" value="1234567890"/>
+            <column name="email" value="techinnovations@example.com"/>
+            <column name="website" value="https://techinnovations.com"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="subscription_plan_id" value="1"/>
+        </insert>
+        <insert tableName="companies">
+            <column name="name" value="Creative Solutions"/>
+            <column name="description" value="A creative company focused on design and development."/>
+            <column name="phone_number" value="2345678901"/>
+            <column name="email" value="creativesolutions@example.com"/>
+            <column name="website" value="https://creativesolutions.com"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="subscription_plan_id" value="2"/>
+        </insert>
+    </changeSet>
+
+
+    <changeSet id="11" author="sedef">
+        <insert tableName="company_owners">
+            <column name="company_id" value="1"/>
+            <column name="user_id" value="2"/>
+        </insert>
+        <insert tableName="company_owners">
+            <column name="company_id" value="2"/>
+            <column name="user_id" value="2"/>
+        </insert>
+    </changeSet>
+
+
+    <changeSet id="12" author="sedef">
+        <insert tableName="company_users">
+            <column name="company_id" value="1"/>
+            <column name="user_id" value="3"/>
+            <column name="start_date" value="2025-01-28"/>
+        </insert>
+        <insert tableName="company_users">
+            <column name="company_id" value="1"/>
+            <column name="user_id" value="4"/>
+            <column name="start_date" value="2025-01-28"/>
+        </insert>
+        <insert tableName="company_users">
+            <column name="company_id" value="1"/>
+            <column name="user_id" value="5"/>
+            <column name="start_date" value="2025-01-28"/>
+        </insert>
+        <insert tableName="company_users">
+            <column name="company_id" value="1"/>
+            <column name="user_id" value="6"/>
+            <column name="start_date" value="2025-01-28"/>
+        </insert>
+        <insert tableName="company_users">
+            <column name="company_id" value="1"/>
+            <column name="user_id" value="7"/>
+            <column name="start_date" value="2025-01-28"/>
+        </insert>
+        <insert tableName="company_users">
+            <column name="company_id" value="2"/>
+            <column name="user_id" value="8"/>
+            <column name="start_date" value="2025-01-28"/>
+        </insert>
+        <insert tableName="company_users">
+            <column name="company_id" value="2"/>
+            <column name="user_id" value="9"/>
+            <column name="start_date" value="2025-01-28"/>
+        </insert>
+        <insert tableName="company_users">
+            <column name="company_id" value="2"/>
+            <column name="user_id" value="10"/>
+            <column name="start_date" value="2025-01-28"/>
+        </insert>
+        <insert tableName="company_users">
+            <column name="company_id" value="2"/>
+            <column name="user_id" value="1"/>
+            <column name="start_date" value="2025-01-28"/>
+        </insert>
+        <insert tableName="company_users">
+            <column name="company_id" value="2"/>
+            <column name="user_id" value="2"/>
+            <column name="start_date" value="2025-01-28"/>
+        </insert>
+    </changeSet>
+    <changeSet id="13" author="sedef">
+        <insert tableName="projects">
+            <column name="name" value="Finans Yönetim Sistemi"/>
+            <column name="description" value="Şirketin finansal süreçlerini yöneten sistem."/>
+            <column name="photo" value="finans.jpg"/>
+            <column name="status" value="IN_PROGRESS"/>
+            <column name="start_date" value="2024-01-10"/>
+            <column name="end_date" value="2024-12-31"/>
+            <column name="company_id" value="1"/>
+        </insert>
+        <insert tableName="projects">
+            <column name="name" value="Müşteri Takip Platformu"/>
+            <column name="description" value="Müşteri ilişkilerini yönetmek için geliştirilmiş bir sistem."/>
+            <column name="photo" value="musteri.jpg"/>
+            <column name="status" value="IN_PROGRESS"/>
+            <column name="start_date" value="2024-02-15"/>
+            <column name="end_date" value="2024-11-30"/>
+            <column name="company_id" value="1"/>
+        </insert>
+        <insert tableName="projects">
+            <column name="name" value="E-Ticaret Entegrasyonu"/>
+            <column name="description" value="E-ticaret sistemleri ile ERP arasında entegrasyon sağlama projesi."/>
+            <column name="photo" value="eticaret.jpg"/>
+            <column name="status" value="IN_PROGRESS"/>
+            <column name="start_date" value="2024-03-01"/>
+            <column name="end_date" value="2025-01-15"/>
+            <column name="company_id" value="2"/>
+        </insert>
+        <insert tableName="projects">
+            <column name="name" value="İçerik Yönetim Sistemi"/>
+            <column name="description" value="Şirket içi içerik yönetimi ve dokümantasyon platformu."/>
+            <column name="photo" value="icerik.jpg"/>
+            <column name="status" value="IN_PROGRESS"/>
+            <column name="start_date" value="2024-04-20"/>
+            <column name="end_date" value="2024-10-05"/>
+            <column name="company_id" value="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="14" author="sedef">
+        <insert tableName="project_users">
+            <column name="user_id" value="3"/>
+            <column name="project_id" value="1"/>
+            <column name="role_id" value="1"/>
+        </insert>
+        <insert tableName="project_users">
+            <column name="user_id" value="4"/>
+            <column name="project_id" value="1"/>
+            <column name="role_id" value="1"/>
+        </insert>
+        <insert tableName="project_users">
+            <column name="user_id" value="5"/>
+            <column name="project_id" value="2"/>
+            <column name="role_id" value="1"/>
+        </insert>
+        <insert tableName="project_users">
+            <column name="user_id" value="6"/>
+            <column name="project_id" value="2"/>
+            <column name="role_id" value="1"/>
+        </insert>
+        <insert tableName="project_users">
+            <column name="user_id" value="7"/>
+            <column name="project_id" value="3"/>
+            <column name="role_id" value="1"/>
+        </insert>
+        <insert tableName="project_users">
+            <column name="user_id" value="8"/>
+            <column name="project_id" value="3"/>
+            <column name="role_id" value="1"/>
+        </insert>
+        <insert tableName="project_users">
+            <column name="user_id" value="9"/>
+            <column name="project_id" value="4"/>
+            <column name="role_id" value="1"/>
+        </insert>
+        <insert tableName="project_users">
+            <column name="user_id" value="10"/>
+            <column name="project_id" value="4"/>
+            <column name="role_id" value="1"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="15" author="sedef">
+        <insert tableName="stages">
+            <column name="name" value="TODO"/>
+            <column name="context" value="Görev oluşturuldu, beklemede"/>
+            <column name="is_default" valueBoolean="true"/>
+        </insert>
+        <insert tableName="stages">
+            <column name="name" value="IN_PROGRESS"/>
+            <column name="context" value="Üzerinde çalışılıyor"/>
+            <column name="is_default" valueBoolean="false"/>
+        </insert>
+        <insert tableName="stages">
+            <column name="name" value="IN_REVIEW"/>
+            <column name="context" value="Kod gözden geçiriliyor"/>
+            <column name="is_default" valueBoolean="false"/>
+        </insert>
+        <insert tableName="stages">
+            <column name="name" value="DONE"/>
+            <column name="context" value="Tamamlandı"/>
+            <column name="is_default" valueBoolean="false"/>
+        </insert>
+        <insert tableName="stages">
+            <column name="name" value="BLOCKED"/>
+            <column name="context" value="Engellendi, devam edilemiyor"/>
+            <column name="is_default" valueBoolean="false"/>
+        </insert>
+        <insert tableName="stages">
+            <column name="name" value="BACKLOG"/>
+            <column name="context" value="Gelecekte yapılacaklar"/>
+            <column name="is_default" valueBoolean="false"/>
+        </insert>
+        <insert tableName="stages">
+            <column name="name" value="TESTING"/>
+            <column name="context" value="Test aşamasında"/>
+            <column name="is_default" valueBoolean="false"/>
+        </insert>
+        <insert tableName="stages">
+            <column name="name" value="DEPLOYED"/>
+            <column name="context" value="Canlıya alındı"/>
+            <column name="is_default" valueBoolean="false"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="16" author="sedef">
+        <insert tableName="priorities">
+            <column name="name" value="Low"/>
+            <column name="photo" value="low-priority.png"/>
+            <column name="is_default" valueBoolean="true"/>
+        </insert>
+        <insert tableName="priorities">
+            <column name="name" value="Medium"/>
+            <column name="photo" value="medium-priority.png"/>
+            <column name="is_default" valueBoolean="true"/>
+        </insert>
+        <insert tableName="priorities">
+            <column name="name" value="High"/>
+            <column name="photo" value="high-priority.png"/>
+            <column name="is_default" valueBoolean="false"/>
+        </insert>
+        <insert tableName="priorities">
+            <column name="name" value="Critical"/>
+            <column name="photo" value="critical-priority.png"/>
+            <column name="is_default" valueBoolean="false"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="17" author="sedef">
+        <insert tableName="labels">
+            <column name="name" value="Bug"/>
+            <column name="photo" value="bug-icon.png"/>
+            <column name="is_default" valueBoolean="true"/>
+        </insert>
+        <insert tableName="labels">
+            <column name="name" value="Feature"/>
+            <column name="photo" value="feature-icon.png"/>
+            <column name="is_default" valueBoolean="false"/>
+        </insert>
+        <insert tableName="labels">
+            <column name="name" value="Improvement"/>
+            <column name="photo" value="improvement-icon.png"/>
+            <column name="is_default" valueBoolean="false"/>
+        </insert>
+        <insert tableName="labels">
+            <column name="name" value="Documentation"/>
+            <column name="photo" value="documentation-icon.png"/>
+            <column name="is_default" valueBoolean="true"/>
+        </insert>
+    </changeSet>
+
+
+    <changeSet id="18" author="sedef">
+        <!-- Tech Innovations (company_id = 1) -->
+        <insert tableName="bands">
+            <column name="name" value="Yazılım Geliştirme"/>
+            <column name="company_id" value="1"/>
+        </insert>
+        <insert tableName="bands">
+            <column name="name" value="Pazarlama"/>
+            <column name="company_id" value="1"/>
+        </insert>
+        <insert tableName="bands">
+            <column name="name" value="Destek"/>
+            <column name="company_id" value="1"/>
+        </insert>
+        <insert tableName="bands">
+            <column name="name" value="Tasarım"/>
+            <column name="company_id" value="1"/>
+        </insert>
+        <insert tableName="bands">
+            <column name="name" value="Satış"/>
+            <column name="company_id" value="1"/>
+        </insert>
+        <insert tableName="bands">
+            <column name="name" value="İnsan Kaynakları"/>
+            <column name="company_id" value="1"/>
+        </insert>
+
+        <!-- Creative Solutions (company_id = 2) -->
+        <insert tableName="bands">
+            <column name="name" value="Yazılım Geliştirme"/>
+            <column name="company_id" value="2"/>
+        </insert>
+        <insert tableName="bands">
+            <column name="name" value="Pazarlama"/>
+            <column name="company_id" value="2"/>
+        </insert>
+        <insert tableName="bands">
+            <column name="name" value="Tasarım"/>
+            <column name="company_id" value="2"/>
+        </insert>
+        <insert tableName="bands">
+            <column name="name" value="Satış"/>
+            <column name="company_id" value="2"/>
+        </insert>
+        <insert tableName="bands">
+            <column name="name" value="İnsan Kaynakları"/>
+            <column name="company_id" value="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="19" author="sedef">
+        <!-- Tech Innovations -->
+        <!-- Yazılım Geliştirme (group_id = 1) -->
+        <insert tableName="sub_bands">
+            <column name="name" value="Frontend"/>
+            <column name="group_id" value="1"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="Backend"/>
+            <column name="group_id" value="1"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="Fullstack"/>
+            <column name="group_id" value="1"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="Android"/>
+            <column name="group_id" value="1"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="iOS"/>
+            <column name="group_id" value="1"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="DevOps"/>
+            <column name="group_id" value="1"/>
+        </insert>
+
+        <!-- Pazarlama (group_id = 2) -->
+        <insert tableName="sub_bands">
+            <column name="name" value="Dijital Pazarlama"/>
+            <column name="group_id" value="2"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="SEO"/>
+            <column name="group_id" value="2"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="İçerik Pazarlama"/>
+            <column name="group_id" value="2"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="Sosyal Medya"/>
+            <column name="group_id" value="2"/>
+        </insert>
+
+        <!-- Destek (group_id = 3) -->
+        <insert tableName="sub_bands">
+            <column name="name" value="Müşteri Hizmetleri"/>
+            <column name="group_id" value="3"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="Teknik Destek"/>
+            <column name="group_id" value="3"/>
+        </insert>
+
+        <!-- Tasarım (group_id = 4) -->
+        <insert tableName="sub_bands">
+            <column name="name" value="UI/UX Tasarım"/>
+            <column name="group_id" value="4"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="Grafik Tasarım"/>
+            <column name="group_id" value="4"/>
+        </insert>
+
+        <!-- Satış (group_id = 5) -->
+        <insert tableName="sub_bands">
+            <column name="name" value="Satış Temsilcileri"/>
+            <column name="group_id" value="5"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="İş Geliştirme"/>
+            <column name="group_id" value="5"/>
+        </insert>
+
+        <!-- İnsan Kaynakları (group_id = 6) -->
+        <insert tableName="sub_bands">
+            <column name="name" value="İşe Alım"/>
+            <column name="group_id" value="6"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="Eğitim"/>
+            <column name="group_id" value="6"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="Çalışan Deneyimi"/>
+            <column name="group_id" value="6"/>
+        </insert>
+
+        <!-- Creative Solutions -->
+        <!-- Yazılım Geliştirme (group_id = 7) -->
+        <insert tableName="sub_bands">
+            <column name="name" value="Frontend"/>
+            <column name="group_id" value="7"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="Backend"/>
+            <column name="group_id" value="7"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="DevOps"/>
+            <column name="group_id" value="7"/>
+        </insert>
+
+        <!-- Pazarlama (group_id = 8) -->
+        <insert tableName="sub_bands">
+            <column name="name" value="Dijital Pazarlama"/>
+            <column name="group_id" value="8"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="SEO"/>
+            <column name="group_id" value="8"/>
+        </insert>
+
+        <!-- Tasarım (group_id = 9) -->
+        <insert tableName="sub_bands">
+            <column name="name" value="UI/UX Tasarım"/>
+            <column name="group_id" value="9"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="Grafik Tasarım"/>
+            <column name="group_id" value="9"/>
+        </insert>
+
+        <!-- Satış (group_id = 10) -->
+        <insert tableName="sub_bands">
+            <column name="name" value="Satış Temsilcileri"/>
+            <column name="group_id" value="10"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="İş Geliştirme"/>
+            <column name="group_id" value="10"/>
+        </insert>
+
+        <!-- İnsan Kaynakları (group_id = 11) -->
+        <insert tableName="sub_bands">
+            <column name="name" value="İşe Alım"/>
+            <column name="group_id" value="11"/>
+        </insert>
+        <insert tableName="sub_bands">
+            <column name="name" value="Eğitim"/>
+            <column name="group_id" value="11"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

@@ -35,6 +35,10 @@ spring:
           starttls:
             enable: true
 
+liquibase:
+  enabled: true
+  changeLog: "classpath:db/changelog/db.changelog-master.yaml"
+  drop-first: ${PRJ_LIQUIBASE_ENABLE_DROP_FIRST:false}
 
   data:
     mongodb:
