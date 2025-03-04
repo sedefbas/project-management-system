@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ClaimsBuilder;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import management.sedef.auth.exception.UserNotFoundByEmailException;
 import management.sedef.auth.exception.UserNotVerifiedException;
 import management.sedef.auth.exception.UserPasswordNotValidException;
@@ -16,6 +17,7 @@ import management.sedef.auth.service.AuthenticationService;
 import management.sedef.auth.service.InvalidTokenService;
 import management.sedef.auth.service.TokenService;
 import management.sedef.user.model.User;
+import management.sedef.user.model.entity.UserEntity;
 import management.sedef.user.port.UserReadPort;
 import management.sedef.user.port.UserSavePort;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -48,14 +50,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //            throw new UserPasswordNotValidException();
 //        }
 
+
         if (!user.isVerified()) {
             throw new UserNotVerifiedException(request.getEmail());
         }
 
         user.setLastLoginDate(LocalDateTime.now());
-        userSavePort.save(user);
+        User usersaved = userSavePort.save(user);
 
-        final Claims claims = this.generateClaims(user);
+
+        final Claims claims = this.generateClaims(usersaved);
         return tokenService.generate(claims);
     }
 
