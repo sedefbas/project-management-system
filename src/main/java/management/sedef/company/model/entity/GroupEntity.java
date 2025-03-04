@@ -22,6 +22,9 @@ public class GroupEntity {
 
     private String name;
 
+    @Column(length = 7)
+    private String color;
+
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)
     private CompanyEntity company;

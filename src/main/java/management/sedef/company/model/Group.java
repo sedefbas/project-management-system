@@ -11,5 +11,6 @@ public class Group {
 
     private Long id;
     private String name;
+    private String color;
     private Company company;
 }

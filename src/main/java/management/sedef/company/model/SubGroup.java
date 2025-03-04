@@ -15,5 +15,6 @@ public class SubGroup {
 
     private Long id;
     private String name;
+    private String color;
     private Group group;
 }

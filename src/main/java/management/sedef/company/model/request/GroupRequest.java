@@ -9,4 +9,5 @@ import lombok.*;
 @NoArgsConstructor
 public class GroupRequest {
     private String name;
+    private String color;
 }

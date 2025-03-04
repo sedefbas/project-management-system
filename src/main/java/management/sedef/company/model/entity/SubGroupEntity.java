@@ -22,6 +22,9 @@ public class SubGroupEntity {
 
     private String name;
 
+    @Column(length = 7)
+    private String color;
+
     @ManyToOne
     @JoinColumn(name = "group_id", nullable = false)
     private GroupEntity group;

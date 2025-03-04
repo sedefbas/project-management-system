@@ -72,7 +72,13 @@ VALUES
     ('help:list', 'Yardım listesini görüntüleme izni', false, 'ACTIVE'),
     ('help:create', 'Yeni yardım dokümanı oluşturma izni', false, 'ACTIVE'),
     ('help:update', 'Yardım dokümanı güncelleme izni', false, 'ACTIVE'),
-    ('help:delete', 'Yardım dokümanı silme izni', false, 'ACTIVE');
+    ('help:delete', 'Yardım dokümanı silme izni', false, 'ACTIVE'),
+    ('help-comment:list', 'Yardım yorumlarını listeleme izni', false, 'ACTIVE'),
+    ('help-comment:create', 'Yardım yorumu oluşturma izni', false, 'ACTIVE'),
+    ('help-comment:delete', 'Yardım yorumunu silme izni', false, 'ACTIVE'),
+    ('help-comment:upvote', 'Yardım yorumuna oylama yapma izni', false, 'ACTIVE'),
+    ('help-comment:downvote', 'Yardım yorumuna olumsuz oy verme izni', false, 'ACTIVE');
+
 
 
 INSERT INTO `role` (name, description, status)
@@ -87,14 +93,6 @@ VALUES
     ('MEMBER', 'User with read-only permissions', 'ACTIVE'),
     ('PAIR_ASSIGNE', 'Developer assigned as a pair', 'ACTIVE'),
     ('QA_ASSIGNE', 'Person assigned to testing tasks', 'ACTIVE');
-
-CREATE TABLE IF NOT EXISTS role_permission (
-                                               role_id BIGINT NOT NULL,
-                                               permission_id BIGINT NOT NULL,
-                                               PRIMARY KEY (role_id, permission_id),
-                                               FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE,
-                                               FOREIGN KEY (permission_id) REFERENCES permission(id) ON DELETE CASCADE
-);
 
 
 -- ADMIN rolüne yeni izinlerin atanması
@@ -233,99 +231,98 @@ INSERT INTO labels (name, photo, is_default) VALUES
                                                  ('Improvement', 'improvement-icon.png', FALSE),
                                                  ('Documentation', 'documentation-icon.png', TRUE);
 
-
 -- Grupları ekleme
-INSERT INTO bands (name, company_id)
+INSERT INTO bands (name, company_id, color)
 VALUES
 -- Tech Innovations (company_id = 1)
-('Yazılım Geliştirme', 1),
-('Pazarlama', 1),
-('Destek', 1),
-('Tasarım', 1),
-('Satış', 1),
-('İnsan Kaynakları', 1),
+('Yazılım Geliştirme', 1, '#FF5733'),
+('Pazarlama', 1, '#33FF57'),
+('Destek', 1, '#3357FF'),
+('Tasarım', 1, '#FF33A1'),
+('Satış', 1, '#FFD700'),
+('İnsan Kaynakları', 1, '#8A2BE2'),
 
 -- Creative Solutions (company_id = 2)
-('Yazılım Geliştirme', 2),
-('Pazarlama', 2),
-('Tasarım', 2),
-('Satış', 2),
-('İnsan Kaynakları', 2);
+('Yazılım Geliştirme', 2, '#FF4500'),
+('Pazarlama', 2, '#32CD32'),
+('Tasarım', 2, '#00CED1'),
+('Satış', 2, '#DC143C'),
+('İnsan Kaynakları', 2, '#4169E1');
+
 
 -- Alt Grupları ekleme
 -- Tech Innovations
 -- Yazılım Geliştirme (group_id = 1)
-INSERT INTO sub_bands (name, group_id)
+INSERT INTO sub_bands (name, group_id, color)
 VALUES
-    ('Frontend', 1),
-    ('Backend', 1),
-    ('Fullstack', 1),
-    ('Android', 1),
-    ('iOS', 1),
-    ('DevOps', 1);
+    ('Frontend', 1, '#FFB6C1'),
+    ('Backend', 1, '#20B2AA'),
+    ('Fullstack', 1, '#FFA07A'),
+    ('Android', 1, '#8A2BE2'),
+    ('iOS', 1, '#5F9EA0'),
+    ('DevOps', 1, '#7FFF00');
 
 -- Pazarlama (group_id = 2)
-INSERT INTO sub_bands (name, group_id)
+INSERT INTO sub_bands (name, group_id, color)
 VALUES
-    ('Dijital Pazarlama', 2),
-    ('SEO', 2),
-    ('İçerik Pazarlama', 2),
-    ('Sosyal Medya', 2);
+    ('Dijital Pazarlama', 2, '#FF4500'),
+    ('SEO', 2, '#32CD32'),
+    ('İçerik Pazarlama', 2, '#4682B4'),
+    ('Sosyal Medya', 2, '#FF1493');
 
 -- Destek (group_id = 3)
-INSERT INTO sub_bands (name, group_id)
+INSERT INTO sub_bands (name, group_id, color)
 VALUES
-    ('Müşteri Hizmetleri', 3),
-    ('Teknik Destek', 3);
+    ('Müşteri Hizmetleri', 3, '#B22222'),
+    ('Teknik Destek', 3, '#4B0082');
 
 -- Tasarım (group_id = 4)
-INSERT INTO sub_bands (name, group_id)
+INSERT INTO sub_bands (name, group_id, color)
 VALUES
-    ('UI/UX Tasarım', 4),
-    ('Grafik Tasarım', 4);
+    ('UI/UX Tasarım', 4, '#FF69B4'),
+    ('Grafik Tasarım', 4, '#8B4513');
 
 -- Satış (group_id = 5)
-INSERT INTO sub_bands (name, group_id)
+INSERT INTO sub_bands (name, group_id, color)
 VALUES
-    ('Satış Temsilcileri', 5),
-    ('İş Geliştirme', 5);
+    ('Satış Temsilcileri', 5, '#FFD700'),
+    ('İş Geliştirme', 5, '#D2691E');
 
 -- İnsan Kaynakları (group_id = 6)
-INSERT INTO sub_bands (name, group_id)
+INSERT INTO sub_bands (name, group_id, color)
 VALUES
-    ('İşe Alım', 6),
-    ('Eğitim & Gelişim', 6),
-    ('Çalışan Deneyimi', 6);
+    ('İşe Alım', 6, '#2E8B57'),
+    ('Eğitim & Gelişim', 6, '#800000'),
+    ('Çalışan Deneyimi', 6, '#000080');
 
 -- Creative Solutions
 -- Yazılım Geliştirme (group_id = 7)
-INSERT INTO sub_bands (name, group_id)
+INSERT INTO sub_bands (name, group_id, color)
 VALUES
-    ('Frontend', 7),
-    ('Backend', 7),
-    ('DevOps', 7);
+    ('Frontend', 7, '#E9967A'),
+    ('Backend', 7, '#8FBC8F'),
+    ('DevOps', 7, '#708090');
 
 -- Pazarlama (group_id = 8)
-INSERT INTO sub_bands (name, group_id)
+INSERT INTO sub_bands (name, group_id, color)
 VALUES
-    ('Dijital Pazarlama', 8),
-    ('SEO', 8);
+    ('Dijital Pazarlama', 8, '#A52A2A'),
+    ('SEO', 8, '#556B2F');
 
 -- Tasarım (group_id = 9)
-INSERT INTO sub_bands (name, group_id)
+INSERT INTO sub_bands (name, group_id, color)
 VALUES
-    ('UI/UX Tasarım', 9),
-    ('Grafik Tasarım', 9);
+    ('UI/UX Tasarım', 9, '#9932CC'),
+    ('Grafik Tasarım', 9, '#B8860B');
 
 -- Satış (group_id = 10)
-INSERT INTO sub_bands (name, group_id)
+INSERT INTO sub_bands (name, group_id, color)
 VALUES
-    ('Satış Temsilcileri', 10),
-    ('İş Geliştirme', 10);
+    ('Satış Temsilcileri', 10, '#C71585'),
+    ('İş Geliştirme', 10, '#FF6347');
 
 -- İnsan Kaynakları (group_id = 11)
-INSERT INTO sub_bands (name, group_id)
+INSERT INTO sub_bands (name, group_id, color)
 VALUES
-    ('İşe Alım', 11),
-    ('Eğitim & Gelişim', 11);
-
+    ('İşe Alım', 11, '#8B0000'),
+    ('Eğitim & Gelişim', 11, '#191970');
