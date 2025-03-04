@@ -2,11 +2,11 @@ package management.sedef.help.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import management.sedef.common.model.entity.response.SuccessResponse;
 import management.sedef.help.model.Help;
-import management.sedef.help.model.HelpComment;
+import management.sedef.help.model.enums.HelpStatus;
+import management.sedef.help.model.request.HelpRequest;
 import management.sedef.help.service.HelpService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,40 +19,42 @@ public class HelpController {
 
     private final HelpService helpService;
 
+
     @PreAuthorize("hasAuthority('help:list')")
     @GetMapping("/project/{projectId}")
-    public ResponseEntity<List<Help>> getHelpsByProjectId(@PathVariable Integer projectId) {
+    public SuccessResponse<List<Help>> getHelpsByProjectId(@PathVariable Integer projectId) {
         List<Help> helps = helpService.getHelpsByProjectId(projectId);
-        return ResponseEntity.ok(helps);
+        return SuccessResponse.success(helps);
     }
+
+    @PreAuthorize("hasAuthority('help:list')")
+    @GetMapping("/project/{projectId}/status/{status}")
+    public SuccessResponse<List<Help>> getHelpsByProjectIdAndStatus(
+            @PathVariable Integer projectId,
+            @PathVariable HelpStatus status) {
+        List<Help> helps = helpService.getHelpsByProjectIdAndStatus(projectId, status);
+        return SuccessResponse.success(helps);
+    }
+
 
     @PreAuthorize("hasAuthority('help:detail')")
     @GetMapping("/{id}")
-    public ResponseEntity<Help> getHelpById(@PathVariable String id) {
+    public SuccessResponse<Help> getHelpById(@PathVariable String id) {
         Help help = helpService.getHelpById(id);
-        return ResponseEntity.ok(help);
+        return SuccessResponse.success(help);
     }
 
     @PreAuthorize("hasAuthority('help:create')")
     @PostMapping
-    public ResponseEntity<Help> createHelp(@RequestBody @Valid Help help) {
-        Help createdHelp = helpService.createHelp(help);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdHelp);
-    }
-
-    @PreAuthorize("hasAuthority('help:update')")
-    @PostMapping("/{helpId}/comments")
-    public ResponseEntity<Help> addCommentToHelp(
-            @PathVariable String helpId,
-            @RequestBody @Valid HelpComment comment) {
-        Help updatedHelp = helpService.addCommentToHelp(helpId, comment);
-        return ResponseEntity.ok(updatedHelp);
+    public SuccessResponse<Help> createHelp(@RequestBody @Valid HelpRequest helpRequest) {
+        Help createdHelp = helpService.createHelp(helpRequest);
+        return SuccessResponse.success(createdHelp);
     }
 
     @PreAuthorize("hasAuthority('help:delete')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteHelp(@PathVariable String id) {
+    public SuccessResponse<Void> deleteHelp(@PathVariable String id) {
         helpService.deleteHelp(id);
-        return ResponseEntity.noContent().build();
+        return SuccessResponse.success();
     }
 }

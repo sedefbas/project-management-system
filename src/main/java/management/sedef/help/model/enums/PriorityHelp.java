@@ -1,4 +1,4 @@
-package management.sedef.help.model;
+package management.sedef.help.model.enums;
 
 public enum PriorityHelp {
     LOW,

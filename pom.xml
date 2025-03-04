@@ -31,7 +31,7 @@
 		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
 		<jsonwebtoken.version>0.12.6</jsonwebtoken.version>
 		<org.slf4j.version>2.0.7</org.slf4j.version>
-		<liquibase.version>4.29.2</liquibase.version>
+<!--		<liquibase.version>4.29.2</liquibase.version>-->
 		<org.apache.logging.log4j.version>2.20.0</org.apache.logging.log4j.version>
 	</properties>
 	<dependencies>
@@ -69,17 +69,18 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-			<version>${liquibase.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.commons</groupId>
-					<artifactId>commons-text</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+
+<!--		<dependency>-->
+<!--			<groupId>org.liquibase</groupId>-->
+<!--			<artifactId>liquibase-core</artifactId>-->
+<!--			<version>${liquibase.version}</version>-->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<groupId>org.apache.commons</groupId>-->
+<!--					<artifactId>commons-text</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -99,6 +100,7 @@
 			<version>${jsonwebtoken.version}</version>
 			<scope>runtime</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
@@ -196,6 +198,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -212,11 +215,6 @@
 
 		<!-- Eğer başka plugin'ler varsa, onları da burada ekleyebilirsiniz -->
 		<plugins>
-			<plugin>
-				<groupId>org.liquibase</groupId>
-				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>${liquibase.version}</version>
-			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
