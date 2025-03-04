@@ -76,9 +76,6 @@
     <changeSet id="41" author="author">
         <!-- role_permission tablosunu oluştur -->
         <createTable tableName="role_permission">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
             <column name="role_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
@@ -103,6 +100,7 @@
                                  referencedColumnNames="id"
                                  onDelete="CASCADE"/>
     </changeSet>
+
 
     <!-- ADDRESS-1 -->
     <changeSet id="1" author="author">
@@ -262,7 +260,6 @@
                                  referencedColumnNames="id"
                                  onDelete="CASCADE"/>
     </changeSet>
-
     <changeSet id="23" author="author">
         <createTable tableName="users">
             <column name="id" type="BIGINT" autoIncrement="true">
@@ -299,16 +296,9 @@
                 <constraints nullable="false"/>
             </column>
             <column name="updated_at" type="TIMESTAMP">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
         </createTable>
-
-        <!-- Default values for created_at and updated_at -->
-        <sql>
-            ALTER TABLE users
-                MODIFY created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                MODIFY updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
-        </sql>
 
         <!-- Foreign key constraint for role_id -->
         <addForeignKeyConstraint
@@ -319,7 +309,6 @@
                 referencedColumnNames="id"
                 onDelete="CASCADE"/>
     </changeSet>
-
 
     <!-- COMPANY-OWNERS TABLE -->
     <changeSet id="5" author="author">

@@ -35,10 +35,10 @@ spring:
           starttls:
             enable: true
 
-liquibase:
-  enabled: true
-  changeLog: "classpath:db/changelog/db.changelog-master.yaml"
-  drop-first: ${PRJ_LIQUIBASE_ENABLE_DROP_FIRST:false}
+#liquibase:
+#  enabled: true
+#  changeLog: "classpath:db/changelog/db.changelog-master.yaml"
+#  drop-first: ${PRJ_LIQUIBASE_ENABLE_DROP_FIRST:false}
 
   data:
     mongodb:
@@ -71,3 +71,10 @@ management:
   endpoint:
     health:
       show-details: always
+
+
+project:
+  scheduler:
+    invalid-tokens-deletion:
+      cron: ${INVALID_TOKENS_DELETION_CRON:0 0 */3 * * ?}
+      enable: ${INVALID_TOKENS_DELETION_ENABLED:true}

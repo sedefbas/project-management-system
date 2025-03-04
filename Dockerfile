@@ -20,7 +20,7 @@ WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
 
 # Port belirle
-EXPOSE 8080
+EXPOSE 8085
 
 # Uygulamayı çalıştır
 ENTRYPOINT ["java", "-jar", "app.jar"]
