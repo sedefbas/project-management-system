@@ -33,13 +33,14 @@ public class RoleEntity  {
     @Column(name = "status")
     private RoleStatus status;
 
-    //Bir rolün sahip olduğu izinleri belirten ilişki tablosu:
-    @ManyToMany
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_permission",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
     private List<PermissionEntity> permissions;
+
 
 }

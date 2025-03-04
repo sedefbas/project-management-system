@@ -1,6 +1,7 @@
 package management.sedef.auth.model.request;
 
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -16,6 +17,7 @@ public class RegisterRequest {
 
     @NotBlank
     @Size(min = 8, max = 255)
+    @Email
     private String email;
 
     @NotBlank

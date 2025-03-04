@@ -26,7 +26,6 @@ public class Role {
         return role;
     }
 
-
     public List<String> getPermissionNames() {
         return permissions.stream()
                 .map(PermissionEntity::getName)
