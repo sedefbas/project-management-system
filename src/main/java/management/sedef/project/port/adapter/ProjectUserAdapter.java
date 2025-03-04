@@ -12,6 +12,9 @@ import management.sedef.project.port.ProjectUserPort.ProjectUserDeletePort;
 import management.sedef.project.port.ProjectUserPort.ProjectUserReadPort;
 import management.sedef.project.port.ProjectUserPort.ProjectUserSavePort;
 import management.sedef.project.repository.ProjectUserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -96,5 +99,13 @@ public class ProjectUserAdapter implements ProjectUserSavePort, ProjectUserDelet
     public int countUsersByProjectId(Long projectId) {
         return projectUserRepository.countUsersByProjectId(projectId);
     }
+
+    @Override
+    public Page<ProjectUser> searchProjectUsers(Long projectId, String searchTerm, Pageable pageable) {
+        Page<ProjectUserEntity> projectUserEntities = projectUserRepository.findProjectUsersByProjectIdAndFirstName(projectId, searchTerm, pageable);
+        return projectUserEntities.map(projectUserEntityToDomainMapper::map);
+    }
+
+
 
 }

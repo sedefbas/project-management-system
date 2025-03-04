@@ -26,6 +26,8 @@ import management.sedef.user.exception.UserAlreadyExistsException;
 import management.sedef.user.model.User;
 import management.sedef.user.port.adapter.UserAdapter;
 import management.sedef.user.service.UserEmailService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -144,6 +146,8 @@ public class ProjectUserServiceImpl implements ProjectUserService {
         return readPort.findUsersByGroupId(groupId);
     }
 
+
+
     @Override
     public List<ProjectUser> getProjectByToken(String token) {
         // "Bearer " kısmını kaldır
@@ -159,5 +163,8 @@ public class ProjectUserServiceImpl implements ProjectUserService {
         return readPort.findByUserId(userId);
     }
 
+    public Page<ProjectUser> getUsersForProjectWithSearch(Long projectId, String searchTerm, Pageable pageable) {
+        return readPort.searchProjectUsers(projectId, searchTerm, pageable);
+    }
 
 }

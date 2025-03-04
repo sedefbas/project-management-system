@@ -1,6 +1,8 @@
 package management.sedef.project.port.ProjectUserPort;
 
 import management.sedef.project.model.ProjectUser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -15,4 +17,5 @@ public interface ProjectUserReadPort {
     List<ProjectUser> findUsersBySubGroupId(Long subGroupId);
     List<ProjectUser> findUsersByGroupId(Long groupId);
     int countUsersByProjectId(Long projectId);
+    Page<ProjectUser> searchProjectUsers(Long projectId, String searchTerm, Pageable pageable);
 }

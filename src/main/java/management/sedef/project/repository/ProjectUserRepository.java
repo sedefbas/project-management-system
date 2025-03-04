@@ -1,9 +1,12 @@
 package management.sedef.project.repository;
 
 import management.sedef.project.model.entity.ProjectUserEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -19,5 +22,15 @@ public interface ProjectUserRepository extends JpaRepository<ProjectUserEntity,L
 
     @Query("SELECT COUNT(pu) FROM ProjectUserEntity pu WHERE pu.project.id = :projectId")
     int countUsersByProjectId(@Param("projectId") Long projectId);
+
+    @Query("SELECT pu FROM ProjectUserEntity pu " +
+            "WHERE pu.project.id = :projectId " +
+            "AND LOWER(pu.user.firstName) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
+    Page<ProjectUserEntity> findProjectUsersByProjectIdAndFirstName(
+            @Param("projectId") Long projectId,
+            @Param("searchTerm") String searchTerm,
+            Pageable pageable);
+
+
 
 }

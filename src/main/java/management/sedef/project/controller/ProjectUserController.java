@@ -10,6 +10,10 @@ import management.sedef.project.model.response.UserListForProjectResponse;
 import management.sedef.project.service.ProjectUserService;
 import management.sedef.user.model.mapper.UserSummaryMapper;
 import management.sedef.user.model.response.UserSummaryResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -93,7 +97,20 @@ public class ProjectUserController {
         return SuccessResponse.success();
     }
 
+    @GetMapping("/search")
+    @PreAuthorize("hasAnyAuthority('project-user:detail')")
+    public SuccessResponse<Page<UserSummaryResponse>> searchProjectUsers(
+            @RequestParam Long projectId,
+            @RequestParam String searchTerm,
+            @RequestParam(defaultValue = "0") int page,  // Varsayılan değer 0
+            @RequestParam(defaultValue = "10") int size) {  // Varsayılan değer 10
 
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ProjectUser> usersPage = service.getUsersForProjectWithSearch(projectId, searchTerm, pageable);
+        List<UserSummaryResponse> userSummaryList = userSummaryMapper.mapToUserSummaryResponse(usersPage.getContent());
+        Page<UserSummaryResponse> responsePage = new PageImpl<>(userSummaryList, pageable, usersPage.getTotalElements());
+        return SuccessResponse.success(responsePage);
+    }
 
 //    @PutMapping("/{projectId}/user/{userId}")
 //    @PreAuthorize("hasAnyAuthority('project-user:update')")
