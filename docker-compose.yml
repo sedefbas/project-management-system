@@ -2,49 +2,49 @@ version: '3.8'
 
 services:
   # MySQL servisi
-  mysql:
-    image: mysql:8.0
-    container_name: mysql-container
-    volumes:
-      - ./src/main/resources/db/mysql.sql:/docker-entrypoint-initdb.d/1-schema.sql
-      - ./src/main/resources/db/add.sql:/docker-entrypoint-initdb.d/2-data.sql
-      - mongo-data:/data/db
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234       # root şifresini belirtiyoruz
-      MYSQL_DATABASE: yonetim         # Başlangıç veritabanı adı
-    ports:
-      - "3307:3306"   # Host ile container arasında 3306 portu üzerinden bağlantı
-    networks:
-      - mynetwork
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # Spring Boot uygulamanız
-  app:
-    build: .
-    container_name: springboot-app
-    ports:
-      - "8086:8080"  # Spring Boot uygulamanızın 8080 portu
-    depends_on:
-      mysql:
-        condition: service_healthy
-    environment:
-      MYSQL_HOST: mysql
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/yonetim
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 1234
-      SERVER_PORT: 8080  # Port'u environment variable olarak da belirtelim
-      SPRING_PROFILES_ACTIVE: docker
-    networks:
-      - mynetwork
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
+#  mysql:
+#    image: mysql:8.0
+#    container_name: mysql-container
+#    volumes:
+#      - ./src/main/resources/db/mysql.sql:/docker-entrypoint-initdb.d/1-schema.sql
+#      - ./src/main/resources/db/add.sql:/docker-entrypoint-initdb.d/2-data.sql
+#      - mongo-data:/data/db
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 1234       # root şifresini belirtiyoruz
+#      MYSQL_DATABASE: yonetim         # Başlangıç veritabanı adı
+#    ports:
+#      - "3307:3306"   # Host ile container arasında 3306 portu üzerinden bağlantı
+#    networks:
+#      - mynetwork
+#    healthcheck:
+#      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+#
+#  # Spring Boot uygulamanız
+#  app:
+#    build: .
+#    container_name: springboot-app
+#    ports:
+#      - "8086:8080"  # Spring Boot uygulamanızın 8080 portu
+#    depends_on:
+#      mysql:
+#        condition: service_healthy
+#    environment:
+#      MYSQL_HOST: mysql
+#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/yonetim
+#      SPRING_DATASOURCE_USERNAME: root
+#      SPRING_DATASOURCE_PASSWORD: 1234
+#      SERVER_PORT: 8080  # Port'u environment variable olarak da belirtelim
+#      SPRING_PROFILES_ACTIVE: docker
+#    networks:
+#      - mynetwork
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 3
 
   mongo:
     image: mongo:latest
@@ -74,6 +74,46 @@ services:
       - mongo
     networks:
       - mynetwork
+
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+    networks:
+      - mynetwork
+
+  kafka:
+      image: confluentinc/cp-kafka:latest
+      depends_on:
+        - zookeeper
+      ports:
+        - 29092:29092
+      environment:
+        KAFKA_BROKER_ID: 1
+        KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+        KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+        KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+        KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      networks:
+        - mynetwork
+
+  kafka-ui:
+      image: provectuslabs/kafka-ui:latest
+      depends_on:
+        - kafka
+      ports:
+        - 8090:8080
+      environment:
+        KAFKA_CLUSTERS_0_NAME: local
+        KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+        KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+      networks:
+        - mynetwork
 
 networks:
   mynetwork:

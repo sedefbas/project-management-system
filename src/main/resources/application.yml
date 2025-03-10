@@ -6,6 +6,22 @@ spring:
   application:
     name: project_yonetim_sistemi
 
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      bootstrap-servers: localhost:29092
+      group-id: kafka-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    producer:
+      acks: -1
+      bootstrap-servers: localhost:29092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    template:
+      notification-created-topic: notification-created
+
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -35,10 +51,10 @@ spring:
           starttls:
             enable: true
 
-#liquibase:
-#  enabled: true
-#  changeLog: "classpath:db/changelog/db.changelog-master.yaml"
-#  drop-first: ${PRJ_LIQUIBASE_ENABLE_DROP_FIRST:false}
+  # liquibase:
+  #   enabled: true
+  #   changeLog: "classpath:db/changelog/db.changelog-master.yaml"
+  #   drop-first: ${PRJ_LIQUIBASE_ENABLE_DROP_FIRST:false}
 
   data:
     mongodb:
@@ -71,7 +87,6 @@ management:
   endpoint:
     health:
       show-details: always
-
 
 project:
   scheduler:
