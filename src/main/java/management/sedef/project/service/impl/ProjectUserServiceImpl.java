@@ -9,6 +9,9 @@ import management.sedef.auth.model.enums.TokenClaims;
 import management.sedef.auth.service.TokenService;
 import management.sedef.company.model.Company;
 import management.sedef.company.service.CompanyService;
+import management.sedef.notification.config.NotificationEvent;
+import management.sedef.notification.kafka.KafkaProducer;
+import management.sedef.notification.service.NotificationService;
 import management.sedef.project.model.Project;
 import management.sedef.project.model.ProjectUser;
 import management.sedef.project.model.claims.ProjectUserClaims;
@@ -47,6 +50,7 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     private final ProjectUserClaimsToDomainMapper projectUserClaimsToDomainMapper;
     private final ProjectUserRequestToDomainMapper projectUserRequestToDomainMapper;
     private final UserAdapter userAdapter;
+    private final KafkaProducer kafkaProducer;
 
 
     public String generateInvitationLink(ProjectUserRequest request,Long projectId, Long companyId) {
@@ -91,6 +95,13 @@ public class ProjectUserServiceImpl implements ProjectUserService {
         ProjectUser projectUser = projectUserClaimsToDomainMapper.map(projectUserClaims);
         checkIfUserAlreadyExists(projectUser);
         savePort.save(projectUser);
+
+        NotificationEvent notificationEvent = NotificationEvent.builder()
+                .userId(projectUser.getUser().getId())
+                .projeId(projectUser.getProject().getId())
+                .build();
+
+        kafkaProducer.sendMessage(notificationEvent);
     }
 
     private void checkIfUserAlreadyExists(ProjectUser projectUser) {

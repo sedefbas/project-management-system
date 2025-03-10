@@ -1,0 +1,16 @@
+###
+POST http://localhost:8085/notifications/save
+Authorization: Bearer
+Content-Type: application/json
+
+{
+  "message": "Notification message here",
+  "type": "SOME_TYPE",
+  "eventType": "SOME_EVENT",
+  "senderId": 123,
+  "isGeneral": false,
+  "createdAt": "2025-03-07T12:00:00Z",
+  "recipientIds": { "1": "SENT" },
+  "projectId": 1,
+  "issueId": 1001
+}
