@@ -1,9 +1,6 @@
-package management.sedef.Label.service;
+package management.sedef.label.service;
 
-import management.sedef.Label.model.Label;
-import management.sedef.Label.model.request.CompanyLabelRequest;
-
-import java.util.List;
+import management.sedef.label.model.request.CompanyLabelRequest;
 
 public interface CompanylabelService {
    void addLabelToCompany(Long companyId, CompanyLabelRequest request);

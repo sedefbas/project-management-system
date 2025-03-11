@@ -58,13 +58,14 @@ public class CompanyEntity  {
     @JoinColumn(name = "subscription_plan_id")
     private SubscriptionPlanEntity subscriptionPlan;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "company_owners",
             joinColumns = @JoinColumn(name = "company_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private List<UserEntity> owners;
+
 
 }
 
