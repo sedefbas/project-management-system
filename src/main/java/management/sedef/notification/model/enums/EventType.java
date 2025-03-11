@@ -1,19 +1,21 @@
 package management.sedef.notification.model.enums;
 
 public enum EventType {
-    ISSUE_CREATED("Issue Created"),       // Yeni bir issue oluşturuldu
-    ISSUE_UPDATED("Issue Updated"),       // Mevcut bir issue güncellendi
-    ISSUE_ASSIGNED("Issue Assigned"),     // Bir issue bir kullanıcıya atandı
-    ISSUE_COMMENTED("Issue Commented"),   // Bir issue'ye yorum yapıldı
+    ISSUE_CREATED("Issue Created"),
+    ISSUE_UPDATED("Issue Updated"),
+    ISSUE_ASSIGNED("Issue Assigned"),
+    ISSUE_ASSIGNED_TO_USER("Issue Assigned to User"),
+    ISSUE_COMMENTED("Issue Commented"),
 
-    PROJECT_CREATED("Project Created"),   // Yeni bir proje oluşturuldu
-    PROJECT_UPDATED("Project Updated"),   // Projede değişiklik yapıldı
-    PROJECT_DELETED("Project Deleted"),   // Proje silindi
+    PROJECT_CREATED("Project Created"),
+    PROJECT_UPDATED("Project Updated"),
+    PROJECT_DELETED("Project Deleted"),
+    PROJECT_ASSIGNED_TO_USER("Project Assigned to User"),
 
-    USER_INVITED("User Invited"),         // Kullanıcı bir projeye davet edildi
-    USER_REMOVED("User Removed"),         // Kullanıcı bir projeden çıkarıldı
+    USER_INVITED("User Invited"),
+    USER_REMOVED("User Removed"),
 
-    GENERAL_ANNOUNCEMENT("General Announcement"); // Genel bir duyuru yapıldı
+    GENERAL_ANNOUNCEMENT("General Announcement");
 
     private final String value;
 

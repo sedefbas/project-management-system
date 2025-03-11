@@ -1,6 +1,5 @@
 package management.sedef.priority.port.companypriority;
 
-import management.sedef.Label.model.CompanyLabel;
 import management.sedef.priority.model.CompanyPriority;
 
 public interface CompanyPriorityReadPort {

@@ -1,6 +1,5 @@
 package management.sedef.priority.repository;
 
-import management.sedef.Label.model.entity.CompanyLabelEntity;
 import management.sedef.priority.model.entity.CompanyPriorityEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

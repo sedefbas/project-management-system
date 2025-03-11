@@ -53,8 +53,8 @@ public class CompanyServiceImpl implements CompanyService {
     @Transactional
     @Override
     public void create(CompanyRequest request, String token) {
-        String jwt = token.replace("Bearer ", ""); // "Bearer " kısmını kaldır
-        Long userId = tokenService.getUserIdFromToken(jwt);
+
+        Long userId = tokenService.getUserIdFromToken(token);
         SubscriptionPlan subscriptionPlan = subscriptionPlanService.findByStatus(SubscriptionPlanStatus.FREE);
 
         Company company = companyRequestToDomainMapper.map(request);
@@ -99,8 +99,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<Company> findCompaniesByToken(String token) {
-        String jwt = token.replace("Bearer ", ""); // "Bearer " kısmını kaldır
-        Long userId = tokenService.getUserIdFromToken(jwt);
+        Long userId = tokenService.getUserIdFromToken(token);
         return findCompaniesByUserId(userId);
     }
 
