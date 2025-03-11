@@ -28,7 +28,14 @@ public class IssueAssignmentAdapter implements IssueAssignmentSavePort, IssueAss
     public void delete(IssueAssignment issueAssignment) {
         IssueAssignmentEntity entity = assignmentToEntityMapper.map(issueAssignment);
         repository.delete(entity);
-    }   
+    }
+
+    @Override
+    public IssueAssignment findById(Long id) {
+        return repository.findById(id)
+                .map(assignmentEntityToDomainMapper::map)
+                .orElseThrow(() -> new IssueAssignmentNotFoundException("IssueAssignment not found with id: " + id));
+    }
 
     @Override
     public IssueAssignment save(IssueAssignment issueAssignment) {
@@ -39,8 +46,8 @@ public class IssueAssignmentAdapter implements IssueAssignmentSavePort, IssueAss
     }
 
     @Override
-    public List<IssueAssignment> findByIssueId(Long issueId) {
-        List<IssueAssignmentEntity> issueAssignmentEntity = repository.findByIssueId(issueId);
+    public List<IssueAssignment> findAllByIssueId(Long issueId) {
+        List<IssueAssignmentEntity> issueAssignmentEntity = repository.findAllByIssueId(issueId);
         return issueAssignmentEntity.stream()
                 .map(assignmentEntityToDomainMapper::map)
                 .collect(Collectors.toList());
@@ -53,13 +60,6 @@ public class IssueAssignmentAdapter implements IssueAssignmentSavePort, IssueAss
         return assignmentEntityToDomainMapper.map(issueAssignmentEntity);
     }
 
-    @Override
-    public List<IssueAssignment> findAllByIssueId(Long issueId) {
-        List<IssueAssignmentEntity> issueAssignmentEntity = repository.findAllByIssueId(issueId);                    
-        return issueAssignmentEntity.stream()
-                .map(assignmentEntityToDomainMapper::map)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public List<IssueAssignment> findByAssignedUserIdAndProjectId(Long userId, Long projectId) {
@@ -68,4 +68,5 @@ public class IssueAssignmentAdapter implements IssueAssignmentSavePort, IssueAss
                 .map(assignmentEntityToDomainMapper::map)
                 .collect(Collectors.toList());
     }
+
 }

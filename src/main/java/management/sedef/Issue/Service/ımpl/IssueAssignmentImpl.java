@@ -7,6 +7,10 @@ import management.sedef.auth.model.Role;
 import management.sedef.auth.model.enums.RoleName;
 import management.sedef.auth.port.RoleReadPort;
 import management.sedef.issue.Service.IssueAssignmentService;
+import management.sedef.issue.kafka.event.IssueMailEvent;
+import management.sedef.issue.kafka.producer.IssueMailProducer;
+import management.sedef.issue.kafka.producer.IssueProducer;
+import management.sedef.issue.kafka.event.IssueUserEvent;
 import management.sedef.issue.model.IssueAssignment;
 import management.sedef.issue.model.dto.AssignedUserDTO;
 import management.sedef.issue.model.enums.IssueAssignmentType;
@@ -40,6 +44,8 @@ public class IssueAssignmentImpl implements IssueAssignmentService {
     private final IssueAssignmentRequestToDomainMapper assignmentRequestToDomainMapper;
     private final RoleReadPort roleReadPort;
     private final UserEmailService userEmailService;
+    private final IssueProducer issueProducer;
+    private final IssueMailProducer issueMailProducer;
 
 
     //todo kayıtlıysa tekrar kaydetmemeli.
@@ -57,22 +63,23 @@ public class IssueAssignmentImpl implements IssueAssignmentService {
 
         IssueAssignment savedIssueAssignment = savePort.save(issueAssignment);
 
-        log.info("IssueAssignment Kaydedildi: \n" +
-                        "ID: {}\n" +
-                        "Issue ID: {}\n" +
-                        "Assigned User: {}\n" +
-                        "Assignment Date: {}\n" +
-                        "Assigned By: {}\n" +
-                        "Role: {}",
-                savedIssueAssignment.getId(),
-                savedIssueAssignment.getIssue() != null ? savedIssueAssignment.getIssue().getId() : "N/A",
-                savedIssueAssignment.getUserfullName(),
-                savedIssueAssignment.getAssignmentDate(),
-                savedIssueAssignment.getAssignedByfullName(),
-                savedIssueAssignment.getRole() != null ? savedIssueAssignment.getRole().getName() : "N/A"
-        );
-        
-        userEmailService.reportIssue(savedIssueAssignment);
+        IssueUserEvent issueUserEvent = IssueUserEvent.builder()
+                .issueId(savedIssueAssignment.getIssue().getId())
+                .assignedUserId(savedIssueAssignment.getAssignedUser().getId())
+                .assignmentDate(savedIssueAssignment.getAssignmentDate())
+                .assignedById(savedIssueAssignment.getAssignedBy().getId())
+                .role(savedIssueAssignment.getRole())
+                .build();
+
+        issueProducer.sendMessage(issueUserEvent);
+
+        IssueMailEvent issueMailEvent = IssueMailEvent.builder()
+                .issueId(savedIssueAssignment.getIssue().getId())
+                .build();
+
+
+        issueProducer.sendMessage(issueUserEvent);
+        issueMailProducer.sendMessage(issueMailEvent);
     }
 
     @Override
@@ -116,5 +123,10 @@ public class IssueAssignmentImpl implements IssueAssignmentService {
     public List<IssueAssignment> getAssignmentsByUserIdAndProjectId(Long userId, Long projectId) {
         return readPort.findByAssignedUserIdAndProjectId(userId, projectId);
     }
-    
+
+    @Override
+    public IssueAssignment findById(Long id) {
+        return readPort.findById(id);
+    }
+
 }

@@ -1,6 +1,6 @@
 package management.sedef.issue.model.mapper.issue;
 
-import management.sedef.Label.model.mapper.label.LabelIdToDomainMapper;
+import management.sedef.label.model.mapper.label.LabelIdToDomainMapper;
 import management.sedef.common.model.entity.mapper.BaseMapper;
 import management.sedef.issue.model.Issue;
 import management.sedef.issue.model.request.IssueRequest;

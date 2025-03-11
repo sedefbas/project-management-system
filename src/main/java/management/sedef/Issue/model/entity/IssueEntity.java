@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import management.sedef.Label.model.entity.LabelEntity;
+import management.sedef.label.model.entity.LabelEntity;
 import management.sedef.priority.model.entity.PriorityEntity;
 import management.sedef.project.model.entity.ProjectEntity;
 import management.sedef.stage.model.entity.StageEntity;

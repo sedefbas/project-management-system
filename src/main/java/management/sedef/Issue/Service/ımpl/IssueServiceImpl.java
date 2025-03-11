@@ -1,8 +1,8 @@
 package management.sedef.issue.Service.ımpl;
 
 import lombok.RequiredArgsConstructor;
-import management.sedef.Label.model.Label;
-import management.sedef.Label.service.LabelService;
+import management.sedef.label.model.Label;
+import management.sedef.label.service.LabelService;
 import management.sedef.company.model.Company;
 import management.sedef.company.service.CompanyService;
 import management.sedef.issue.Service.IssueService;

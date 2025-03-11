@@ -2,7 +2,7 @@ package management.sedef.issue.model;
 
 
 import lombok.*;
-import management.sedef.Label.model.Label;
+import management.sedef.label.model.Label;
 import management.sedef.priority.model.Priority;
 import management.sedef.project.model.Project;
 import management.sedef.stage.model.Stage;

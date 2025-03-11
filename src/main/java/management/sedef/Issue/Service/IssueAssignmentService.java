@@ -17,6 +17,8 @@ public interface IssueAssignmentService {
     void updateRole(Long issueId, Long userId,RoleName roleName);
     Map<IssueAssignmentType, List<AssignedUserDTO>> getAssignedUsersByIssueId(Long issueId);
     List<IssueAssignment> getAssignmentsByUserIdAndProjectId(Long userId, Long projectId);
+    IssueAssignment findById(Long id);
+
 
     //todo kullanıcının hangi görevlere atandığını proje id ye göre  listeme
 
