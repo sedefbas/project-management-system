@@ -129,7 +129,8 @@ public class TokenServiceImp implements TokenService {
     }
 
     public Long getUserIdFromToken(String token) {
-        Claims claims = getPayload(token);
+        String jwt = token.substring(7);
+        Claims claims = getPayload(jwt);
         Double userIdDouble = claims.get(TokenClaims.USER_ID.getValue(), Double.class);
         return userIdDouble != null ? userIdDouble.longValue() : null;
     }
