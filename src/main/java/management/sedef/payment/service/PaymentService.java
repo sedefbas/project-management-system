@@ -1,11 +1,11 @@
-package management.sedef.Payment.service;
+package management.sedef.payment.service;
 
 import com.iyzipay.model.*;
 import com.iyzipay.request.CreatePaymentRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import management.sedef.Payment.model.request.PaymentRequest;
-import management.sedef.Payment.utils.NetworkUtils;
+import management.sedef.payment.model.request.PaymentRequest;
+import management.sedef.payment.utils.NetworkUtils;
 import management.sedef.auth.exception.UserNotFoundByIdException;
 import management.sedef.auth.service.TokenService;
 import management.sedef.company.model.Company;

@@ -1,4 +1,4 @@
-package management.sedef.Payment.model;
+package management.sedef.payment.model;
 
 
 import lombok.Getter;

@@ -20,6 +20,9 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     template:
       notification-created-topic: notification-created
+      project-user-event-topic: project-user-events
+      issue-user-event-topic: issue-user-events
+      issue-mail-event-topic: issue-mail-events
 
 
   jpa:

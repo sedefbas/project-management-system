@@ -1,9 +1,9 @@
-package management.sedef.Payment.model.request;
+package management.sedef.payment.model.request;
 
 import lombok.Getter;
 import lombok.Setter;
-import management.sedef.Payment.model.BillingInfo;
-import management.sedef.Payment.model.CardDetails;
+import management.sedef.payment.model.BillingInfo;
+import management.sedef.payment.model.CardDetails;
 
 @Getter
 @Setter

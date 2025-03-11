@@ -1,8 +1,7 @@
-package management.sedef.Payment.model;
+package management.sedef.payment.model;
 
 
 import jakarta.persistence.Embeddable;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

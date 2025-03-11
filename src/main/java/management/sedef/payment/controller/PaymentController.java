@@ -1,14 +1,9 @@
-package management.sedef.Payment.controller;
+package management.sedef.payment.controller;
 import com.iyzipay.model.Payment;
-import com.iyzipay.model.ThreedsInitialize;
-import com.iyzipay.request.CreatePaymentRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import management.sedef.Payment.model.request.PaymentRequest;
-import management.sedef.Payment.service.IyzipayService;
-import management.sedef.Payment.service.PaymentService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import management.sedef.payment.model.request.PaymentRequest;
+import management.sedef.payment.service.PaymentService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
