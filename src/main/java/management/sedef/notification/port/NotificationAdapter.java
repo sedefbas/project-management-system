@@ -28,7 +28,7 @@ public class NotificationAdapter implements NotificationDeletePort,NotificationS
 
     @Override
     public List<Notification> getNotificationsByRecipientId(Long recipientId) {
-        List<NotificationDocument> documents = notificationRepository.findByRecipientIdsContainingOrderByCreatedAtDesc(recipientId);
+        List<NotificationDocument> documents = notificationRepository.findByRecipientIdContainingOrderByCreatedAtDesc(recipientId);
         return documents.stream()
                 .map(notificationDocumentToDomainMapper::map)
                 .collect(Collectors.toList());

@@ -1,4 +1,4 @@
-package management.sedef.Payment.utils;
+package management.sedef.payment.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NoArgsConstructor;

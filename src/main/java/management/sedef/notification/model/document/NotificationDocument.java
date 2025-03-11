@@ -24,9 +24,10 @@ public class NotificationDocument {
     private NotificationType type;
     private EventType eventType;
     private Long senderId;
+    private Long recipientId;
     private boolean isGeneral;
     private Instant createdAt;
-    private Map<Long, NotificationStatus> recipientIds;
+    private NotificationStatus notificationStatus;
     private Long projectId;
     private Long issueId;
 }
