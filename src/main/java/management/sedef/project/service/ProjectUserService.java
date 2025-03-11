@@ -11,7 +11,7 @@ import java.util.List;
 public interface ProjectUserService {
 
     void sendUserInvitationForProject(ProjectUserRequest request, Long projectId, Long companyId, String email);
-    void addUserToProjectByToken(String token);
+    void addUserToProjectByToken(String userToken, String adminToken);
     void removeUserFromProjectById(Long userId, Long projectId);
     void updateUserInProject(ProjectUserUpdateRequest request, Long userId, Long projectId, Long companyId);
     List<ProjectUser> getUsersForProject(Long projectId );

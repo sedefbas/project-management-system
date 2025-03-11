@@ -43,13 +43,14 @@ public class ProjectEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "project_group",
             joinColumns = @JoinColumn(name = "proje_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id")
     )
     private List<GroupEntity> groups;
+
 
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)

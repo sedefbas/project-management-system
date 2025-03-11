@@ -62,6 +62,13 @@ public class ProjectAdapter implements ProjectSaveAdapter, ProjectReadAdapter, P
     }
 
     @Override
+    public Project findById(Long projectId) {
+        ProjectEntity projectEntity = repository.findById(projectId)
+                .orElseThrow(() -> new ProjectNotFoundException("Proje ID: " + projectId + " bulunamadı."));
+        return projectEntityToDomainMapper.map(projectEntity);
+    }
+
+    @Override
     public void delete(Project project) {
         final ProjectEntity projectEntity = projectToEntityMapper.map(project);
        repository.delete(projectEntity);

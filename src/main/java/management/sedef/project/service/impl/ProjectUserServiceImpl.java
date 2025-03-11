@@ -9,9 +9,8 @@ import management.sedef.auth.model.enums.TokenClaims;
 import management.sedef.auth.service.TokenService;
 import management.sedef.company.model.Company;
 import management.sedef.company.service.CompanyService;
-import management.sedef.notification.config.NotificationEvent;
-import management.sedef.notification.kafka.KafkaProducer;
-import management.sedef.notification.service.NotificationService;
+import management.sedef.project.kafka.ProjectProducer;
+import management.sedef.project.kafka.ProjectUserEvent;
 import management.sedef.project.model.Project;
 import management.sedef.project.model.ProjectUser;
 import management.sedef.project.model.claims.ProjectUserClaims;
@@ -29,6 +28,7 @@ import management.sedef.user.exception.UserAlreadyExistsException;
 import management.sedef.user.model.User;
 import management.sedef.user.port.adapter.UserAdapter;
 import management.sedef.user.service.UserEmailService;
+import management.sedef.user.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -50,7 +50,7 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     private final ProjectUserClaimsToDomainMapper projectUserClaimsToDomainMapper;
     private final ProjectUserRequestToDomainMapper projectUserRequestToDomainMapper;
     private final UserAdapter userAdapter;
-    private final KafkaProducer kafkaProducer;
+    private final ProjectProducer projectProducer;
 
 
     public String generateInvitationLink(ProjectUserRequest request,Long projectId, Long companyId) {
@@ -90,18 +90,22 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     }
 
     @Override
-    public void addUserToProjectByToken(String token) {
+    public void addUserToProjectByToken(String token, String adminToken) {
+
+        Long taskAssigner = tokenService.getUserIdFromToken(adminToken);
+
         ProjectUserClaims projectUserClaims = tokenService.parseProjectInvitationToken(token);
         ProjectUser projectUser = projectUserClaimsToDomainMapper.map(projectUserClaims);
         checkIfUserAlreadyExists(projectUser);
         savePort.save(projectUser);
 
-        NotificationEvent notificationEvent = NotificationEvent.builder()
-                .userId(projectUser.getUser().getId())
+        ProjectUserEvent projectUserEvent = ProjectUserEvent.builder()
+                .recipientUserId(projectUser.getUser().getId())
                 .projeId(projectUser.getProject().getId())
+                .taskAssignerId(taskAssigner)
                 .build();
 
-        kafkaProducer.sendMessage(notificationEvent);
+        projectProducer.sendMessage(projectUserEvent);
     }
 
     private void checkIfUserAlreadyExists(ProjectUser projectUser) {

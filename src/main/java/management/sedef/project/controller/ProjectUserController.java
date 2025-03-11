@@ -92,8 +92,8 @@ public class ProjectUserController {
 
     @PostMapping("/{projectId}/user/add")
     @PreAuthorize("hasAnyAuthority('project:create')")
-    public SuccessResponse<Void> addUserToProjectByToken(@RequestParam String token){
-        service.addUserToProjectByToken(token);
+    public SuccessResponse<Void> addUserToProjectByToken(@RequestParam String token,@RequestHeader("Authorization") String adminToken){
+        service.addUserToProjectByToken(token,adminToken);
         return SuccessResponse.success();
     }
 
