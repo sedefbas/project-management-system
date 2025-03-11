@@ -1,12 +1,10 @@
-package management.sedef.notification.config;
-
+package management.sedef.project.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
@@ -16,8 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@EnableKafka
-public class KafkaConsumerConfig {
+public class ProjectConfigConsumer {
 
     @Value("${spring.kafka.consumer.bootstrap-servers}")
     private String kafkaAddress;
@@ -25,16 +22,9 @@ public class KafkaConsumerConfig {
     @Value("${spring.kafka.consumer.group-id}")
     private String groupId;
 
-
-//    //todo sonradan paketleri ekleyince configürasyonu düzenleyeceğim.
-//    @Value("${kafka.consumer.properties.spring.json.trusted.packages}")
-//    private String trustedPackages;
-
-
-    //listeneler containerlar oluşturuldu
     @Bean
-    public ConsumerFactory<String, NotificationEvent> consumerFactory() {
-        JsonDeserializer<NotificationEvent> jsonDeserializer = new JsonDeserializer<>(NotificationEvent.class);
+    public <T> ConsumerFactory<String, ProjectUserEvent> consumerFactory() {
+        JsonDeserializer<ProjectUserEvent> jsonDeserializer = new JsonDeserializer<>(ProjectUserEvent.class);
         jsonDeserializer.addTrustedPackages("*");
         jsonDeserializer.setUseTypeHeaders(false);
 
@@ -44,15 +34,13 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class.getName());
 
-
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), jsonDeserializer);
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, NotificationEvent> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, NotificationEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public <T> ConcurrentKafkaListenerContainerFactory<String, ProjectUserEvent> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, ProjectUserEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
-
 }
