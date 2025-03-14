@@ -2,8 +2,7 @@ package management.sedef.user.model.mapper;
 
 
 
-import management.sedef.issue.model.Issue;
-import management.sedef.issue.model.mapper.issue.IssueEntityToDomainMapper;
+
 import management.sedef.user.model.User;
 import management.sedef.user.repository.UserRepository;
 import org.mapstruct.Mapper;

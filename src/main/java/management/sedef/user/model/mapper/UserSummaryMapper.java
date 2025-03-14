@@ -17,7 +17,12 @@ public class UserSummaryMapper {
         return projectUsers.stream()
                 .map(projectUser -> {
                     User user = projectUser.getUser();  // ProjectUser'dan User'a erişim
-                    return new UserSummaryResponse(user.getId(), user.getFirstName(), user.getLastName());  // UserSummaryResponse oluşturuluyor
+                    return new UserSummaryResponse(
+                            user.getId(),
+                            user.getFirstName(),
+                            user.getLastName(),
+                            user.getPhoto()  // Fotoğraf bilgisini de alıyoruz
+                    );
                 })
                 .collect(Collectors.toList());  // Dönüştürülmüş listeyi döndürüyoruz
     }
