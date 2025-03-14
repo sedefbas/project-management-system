@@ -1,4 +1,4 @@
-package management.sedef.project.kafka;
+package management.sedef.project.kafka.event;
 
 import lombok.*;
 

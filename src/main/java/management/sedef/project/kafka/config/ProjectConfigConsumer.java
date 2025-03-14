@@ -1,5 +1,6 @@
-package management.sedef.project.kafka;
+package management.sedef.project.kafka.config;
 
+import management.sedef.project.kafka.event.ProjectUserEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,10 +20,10 @@ public class ProjectConfigConsumer {
     @Value("${spring.kafka.consumer.bootstrap-servers}")
     private String kafkaAddress;
 
-    @Value("${spring.kafka.consumer.group-id}")
+    @Value("${spring.kafka.consumer.project.group-id}")
     private String groupId;
 
-    @Bean
+    @Bean(name = "projectUserConsumerFactory")
     public <T> ConsumerFactory<String, ProjectUserEvent> consumerFactory() {
         JsonDeserializer<ProjectUserEvent> jsonDeserializer = new JsonDeserializer<>(ProjectUserEvent.class);
         jsonDeserializer.addTrustedPackages("*");
@@ -37,7 +38,7 @@ public class ProjectConfigConsumer {
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), jsonDeserializer);
     }
 
-    @Bean
+    @Bean(name = "projectUserKafkaListenerFactory")
     public <T> ConcurrentKafkaListenerContainerFactory<String, ProjectUserEvent> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, ProjectUserEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());

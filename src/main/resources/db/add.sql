@@ -77,7 +77,13 @@ VALUES
     ('help-comment:create', 'Yardım yorumu oluşturma izni', false, 'ACTIVE'),
     ('help-comment:delete', 'Yardım yorumunu silme izni', false, 'ACTIVE'),
     ('help-comment:upvote', 'Yardım yorumuna oylama yapma izni', false, 'ACTIVE'),
-    ('help-comment:downvote', 'Yardım yorumuna olumsuz oy verme izni', false, 'ACTIVE');
+    ('help-comment:downvote', 'Yardım yorumuna olumsuz oy verme izni', false, 'ACTIVE'),
+    ('issue-comment:create', 'Göreve yorum ekleme izni', false, 'ACTIVE'),
+    ('issue-comment:update', 'Görev yorumunu güncelleme izni', false, 'ACTIVE'),
+    ('issue-comment:delete', 'Görev yorumunu silme izni', false, 'ACTIVE'),
+    ('issue-comment:detail', 'Görev yorumunun detaylarını görme izni', false, 'ACTIVE'),
+    ('issue-comment:list', 'Görev yorumlarını listeleme izni', false, 'ACTIVE');
+
 
 
 

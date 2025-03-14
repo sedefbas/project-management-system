@@ -1,18 +1,17 @@
-package management.sedef.project.kafka;
+package management.sedef.project.kafka.consumer;
 
 import management.sedef.notification.model.enums.EventType;
 import management.sedef.notification.model.enums.NotificationStatus;
 import management.sedef.notification.model.enums.NotificationType;
 import management.sedef.notification.model.request.NotificationRequest;
 import management.sedef.notification.service.NotificationService;
+import management.sedef.project.kafka.event.ProjectUserEvent;
 import management.sedef.project.model.Project;
 import management.sedef.project.port.projectPort.ProjectReadAdapter;
 import management.sedef.user.model.User;
 import management.sedef.user.port.UserReadPort;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -28,7 +27,10 @@ public class ProjectConsumer {
         this.readPort = readPort;
     }
 
-    @KafkaListener(topics = "${spring.kafka.template.project-user-event-topic}", groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(
+            topics = "${spring.kafka.template.project-user-event-topic}",
+            containerFactory = "projectUserKafkaListenerFactory"
+    )
     public void consume(ProjectUserEvent event) {
 
         Project project = readAdapter.findById(event.getProjeId());

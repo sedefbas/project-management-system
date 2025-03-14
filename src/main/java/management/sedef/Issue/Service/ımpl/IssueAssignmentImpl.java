@@ -9,7 +9,7 @@ import management.sedef.auth.port.RoleReadPort;
 import management.sedef.issue.Service.IssueAssignmentService;
 import management.sedef.issue.kafka.event.IssueMailEvent;
 import management.sedef.issue.kafka.producer.IssueMailProducer;
-import management.sedef.issue.kafka.producer.IssueProducer;
+import management.sedef.issue.kafka.producer.IssueUserProducer;
 import management.sedef.issue.kafka.event.IssueUserEvent;
 import management.sedef.issue.model.IssueAssignment;
 import management.sedef.issue.model.dto.AssignedUserDTO;
@@ -44,7 +44,7 @@ public class IssueAssignmentImpl implements IssueAssignmentService {
     private final IssueAssignmentRequestToDomainMapper assignmentRequestToDomainMapper;
     private final RoleReadPort roleReadPort;
     private final UserEmailService userEmailService;
-    private final IssueProducer issueProducer;
+    private final IssueUserProducer issueProducer;
     private final IssueMailProducer issueMailProducer;
 
 
@@ -71,10 +71,9 @@ public class IssueAssignmentImpl implements IssueAssignmentService {
                 .role(savedIssueAssignment.getRole())
                 .build();
 
-        issueProducer.sendMessage(issueUserEvent);
 
         IssueMailEvent issueMailEvent = IssueMailEvent.builder()
-                .issueId(savedIssueAssignment.getIssue().getId())
+                .issueAssignmentId(savedIssueAssignment.getId())
                 .build();
 
 

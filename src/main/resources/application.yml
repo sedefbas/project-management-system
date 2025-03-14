@@ -10,19 +10,29 @@ spring:
     consumer:
       auto-offset-reset: earliest
       bootstrap-servers: localhost:29092
-      group-id: kafka-group
+
+      #issue için özel oluşturdum. Bu şekilde yatay ölçeklenebilir bir yapı kurdum.
+      issue:
+        mail-group-id: issue-mail-group
+        history-group-id: issue-history-group
+        user-group-id: issue-user-group
+      project:
+        group-id: issue-mail-group
+
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
     producer:
       acks: -1
       bootstrap-servers: localhost:29092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     template:
-      notification-created-topic: notification-created
       project-user-event-topic: project-user-events
       issue-user-event-topic: issue-user-events
       issue-mail-event-topic: issue-mail-events
+      issue-history-event-topic: history-events
+
 
 
   jpa:

@@ -16,7 +16,9 @@ public class CompanyUserMapper {
 
         companyUserDto.setUser(new UserSummaryResponse(companyUser.getUser().getId(),
                 companyUser.getUser().getFirstName(),
-                companyUser.getUser().getLastName()));
+                companyUser.getUser().getLastName(),
+                companyUser.getUser().getPhoto()));  // Burada photo bilgisi alınıyor
+
         return companyUserDto;
     }
 }

@@ -9,5 +9,5 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class IssueMailEvent {
-    private Long issueId;
+    private Long issueAssignmentId;
 }

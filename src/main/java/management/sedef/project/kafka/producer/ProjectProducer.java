@@ -1,6 +1,7 @@
-package management.sedef.project.kafka;
+package management.sedef.project.kafka.producer;
 
 
+import management.sedef.project.kafka.event.ProjectUserEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
