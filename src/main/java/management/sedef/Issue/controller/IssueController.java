@@ -38,8 +38,9 @@ public class IssueController {
 
     @DeleteMapping("/{issueId}")
     @PreAuthorize("hasAnyAuthority('issue:delete')")
-    public SuccessResponse<Void> delete(@PathVariable Long issueId) {
-        issueService.delete(issueId);
+    public SuccessResponse<Void> delete(@PathVariable Long issueId,
+                                        @RequestHeader("Authorization") String token) {
+        issueService.delete(issueId,token);
         return SuccessResponse.success();
     }
 
@@ -77,8 +78,9 @@ public class IssueController {
     @PreAuthorize("hasAnyAuthority('issue:update')")
     public SuccessResponse<Void> updateStage(
             @PathVariable Long issueId,
-            @RequestParam StageType type) {
-        issueService.updateStage(issueId, type);
+            @RequestParam StageType type,
+            @RequestHeader("Authorization") String token) {
+        issueService.updateStage(issueId, type,token);
         return SuccessResponse.success();
     }
 
@@ -86,8 +88,9 @@ public class IssueController {
     @PreAuthorize("hasAnyAuthority('issue:update')")
     public SuccessResponse<Void> updateLabel(
             @PathVariable Long issueId,
-            @RequestParam Long labelId) {
-        issueService.updateLabel(issueId, labelId);
+            @RequestParam Long labelId,
+            @RequestHeader("Authorization") String token) {
+        issueService.updateLabel(issueId, labelId, token);
         return SuccessResponse.success();
     }
 
@@ -95,8 +98,9 @@ public class IssueController {
     @PreAuthorize("hasAnyAuthority('issue:update')")
     public SuccessResponse<Void> updatePriority(
             @PathVariable Long issueId,
-            @RequestParam Long priorityId) {
-        issueService.updatePriority(issueId, priorityId);
+            @RequestParam Long priorityId,
+            @RequestHeader("Authorization") String token) {
+        issueService.updatePriority(issueId, priorityId, token);
         return SuccessResponse.success();
     }
 

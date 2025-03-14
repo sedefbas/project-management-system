@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface IssueService {
     void create(IssueRequest request,Long companyId, Long projectId, String token);
-    void delete(Long issueId);
+    void delete(Long issueId, String token);
     List<Issue> findIssuesByProject(Long projectId);
     List<Issue> findByStageIdAndProjectId(Long stageId, Long projectId);
     Issue findById(Long issueId);
-    void updateStage(Long issueId, StageType type);
-    void updateLabel(Long issueId, Long labelId );
-    void updatePriority(Long issueId, Long priorityId );
+    void updateStage(Long issueId, StageType type, String token);
+    void updateLabel(Long issueId, Long labelId, String token);
+    void updatePriority(Long issueId, Long priorityId, String token);
 }
