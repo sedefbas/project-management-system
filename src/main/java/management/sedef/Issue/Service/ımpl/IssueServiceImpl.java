@@ -1,9 +1,10 @@
 package management.sedef.issue.Service.ımpl;
 
 import lombok.RequiredArgsConstructor;
-import management.sedef.issue.kafka.event.ActionType;
+import management.sedef.issue.kafka.event.EventType;
 import management.sedef.issue.kafka.event.IssueHistoryEvent;
 import management.sedef.issue.kafka.producer.IssueHistoryProducer;
+import management.sedef.issue.model.entity.IssueEntity;
 import management.sedef.label.model.Label;
 import management.sedef.label.service.LabelService;
 import management.sedef.company.model.Company;
@@ -79,17 +80,13 @@ public class IssueServiceImpl implements IssueService {
             issue.setStage(stage);
         }
 
-        savePort.save(issue);
+        Issue issuesaved = savePort.save(issue);
+        createAndSendHistoryEvent(issuesaved.getId(), EventType.ISSUE_CREATED, token, "","" );
     }
-
 
     @Override
     public void delete(Long issueId, String token) {
         Issue issue = readPort.findById(issueId);
-        User user = userService.getUserFromToken(token);
-
-        createAndSendHistoryEvent(issueId, "DELETE", "", "", token);
-
         deletePort.delete(issue);
     }
 
@@ -98,58 +95,55 @@ public class IssueServiceImpl implements IssueService {
     public void updateStage(Long issueId, StageType type, String token) {
         Stage stage = stageService.findByName(type);
         Issue issue = readPort.findById(issueId);
-
-        String oldStage = issue.getStage().getName().name(); // Eski stage
-        String newStage = type.name(); // Yeni stage
+        String oldstage = issue.getStage().getName().getName();
 
         issue.setStage(stage);
-        savePort.save(issue);
+        Issue issueSaved = savePort.save(issue);
 
-        createAndSendHistoryEvent(issueId, "UPDATE", "{\"stage\": \"" + oldStage + "\"}", "{\"stage\": \"" + newStage + "\"}", token);
+        createAndSendHistoryEvent(issueId, EventType.ISSUE_STAGE_UPDATED, token, issueSaved.getStage().getName().getName(),oldstage);
     }
+
 
     @Override
     public void updateLabel(Long issueId, Long labelId, String token) {
         Issue issue = readPort.findById(issueId);
         Label label = labelService.findById(labelId);
-
-        String oldLabel = issue.getLabel() != null ? issue.getLabel().getName() : null;
-        String newLabel = label.getName();
-
+        String oldLabel = issue.getLabel().getName();
         issue.setLabel(label);
-        savePort.save(issue);
+        Issue issueSaved =  savePort.save(issue);
 
-        createAndSendHistoryEvent(issueId, "UPDATE", "{\"label\": \"" + oldLabel + "\"}", "{\"label\": \"" + newLabel + "\"}", token);
+        createAndSendHistoryEvent(issueId, EventType.ISSUE_LABEL_UPDATED, token,issueSaved.getLabel().getName() ,oldLabel );
     }
+
+
 
     @Override
     public void updatePriority(Long issueId, Long priorityId, String token) {
         Issue issue = readPort.findById(issueId);
         Priority priority = priorityService.findById(priorityId);
-
-        String oldPriority = issue.getPriority() != null ? issue.getPriority().getName() : null;
-        String newPriority = priority.getName();
-
+        String oldPriority = issue.getLabel().getName();
         issue.setPriority(priority);
-        savePort.save(issue);
+        Issue issueSaved =  savePort.save(issue);
 
-        createAndSendHistoryEvent(issueId, "UPDATE", "{\"priority\": \"" + oldPriority + "\"}", "{\"priority\": \"" + newPriority + "\"}", token);
+        createAndSendHistoryEvent(issueId, EventType.ISSUE_PRIORITY_UPDATED, token, issueSaved.getPriority().getName(),oldPriority);
     }
 
-    private void createAndSendHistoryEvent(Long issueId, String actionType, String oldValues, String newValues, String token) {
-        Issue issue = readPort.findById(issueId);
-        User user = userService.getUserFromToken(token);
 
-        IssueHistoryEvent event = IssueHistoryEvent.builder()
-                .issueId(issueId)
-                .actionType(ActionType.valueOf(actionType)) // Update türü belirleniyor
-                .oldValues(oldValues)
-                .newValues(newValues)
-                .userId(user.getId())
-                .modifiedAt(Instant.now())
-                .build();
+    private void createAndSendHistoryEvent(Long issueId, EventType type, String token,String newValue, String oldValue) {
+    Issue issue = readPort.findById(issueId);
+    User user = userService.getUserFromToken(token);
 
-        issueHistoryProducer.sendMessage(event);
-    }
-    
+
+    IssueHistoryEvent event = IssueHistoryEvent.builder()
+            .issueId(issueId)
+            .eventType(type)
+            .userId(user.getId())
+            .modifiedAt(Instant.now())
+            .newValues(newValue)
+            .oldValues(oldValue)
+            .build();
+
+    issueHistoryProducer.sendIssueHistoryEvent(event);
+}
+
 }

@@ -16,6 +16,7 @@ spring:
         mail-group-id: issue-mail-group
         history-group-id: issue-history-group
         user-group-id: issue-user-group
+        issue-comment-id: issue-comment-group
       project:
         group-id: issue-mail-group
 
@@ -29,9 +30,12 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     template:
       project-user-event-topic: project-user-events
-      issue-user-event-topic: issue-user-events
+      issue-event-topic: issue-user-events
       issue-mail-event-topic: issue-mail-events
       issue-history-event-topic: history-events
+      issue-assignment-event-topic: issue-assignment-events
+      issue-comment-event-topic: issue-comment-events
+
 
 
 

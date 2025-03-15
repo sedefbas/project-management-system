@@ -12,7 +12,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {UserIdToDomainMapper.class, IssueIdToDomainMapper.class})
 public interface IssueCommentRequestToDomainMapper  extends BaseMapper<IssueCommentRequest, IssueComment> {
 
-    @Mapping(source = "authorId", target = "author")
     @Mapping(source = "issueId", target = "issue")
     IssueComment map(IssueCommentRequest request);
 }

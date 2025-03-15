@@ -7,6 +7,7 @@ import management.sedef.auth.model.Role;
 import management.sedef.auth.model.enums.RoleName;
 import management.sedef.auth.port.RoleReadPort;
 import management.sedef.issue.Service.IssueAssignmentService;
+import management.sedef.issue.kafka.event.EventType;
 import management.sedef.issue.kafka.event.IssueMailEvent;
 import management.sedef.issue.kafka.producer.IssueMailProducer;
 import management.sedef.issue.kafka.producer.IssueUserProducer;
@@ -24,6 +25,7 @@ import management.sedef.user.service.UserEmailService;
 import management.sedef.user.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,9 +45,9 @@ public class IssueAssignmentImpl implements IssueAssignmentService {
     private final UserService userService;
     private final IssueAssignmentRequestToDomainMapper assignmentRequestToDomainMapper;
     private final RoleReadPort roleReadPort;
-    private final UserEmailService userEmailService;
     private final IssueUserProducer issueProducer;
     private final IssueMailProducer issueMailProducer;
+
 
 
     //todo kayıtlıysa tekrar kaydetmemeli.
@@ -64,27 +66,41 @@ public class IssueAssignmentImpl implements IssueAssignmentService {
         IssueAssignment savedIssueAssignment = savePort.save(issueAssignment);
 
         IssueUserEvent issueUserEvent = IssueUserEvent.builder()
+                .issueAssignmentId(savedIssueAssignment.getId())
                 .issueId(savedIssueAssignment.getIssue().getId())
                 .assignedUserId(savedIssueAssignment.getAssignedUser().getId())
                 .assignmentDate(savedIssueAssignment.getAssignmentDate())
                 .assignedById(savedIssueAssignment.getAssignedBy().getId())
                 .role(savedIssueAssignment.getRole())
+                .type(EventType.ISSUE_ASSIGNED_TO_USER)
                 .build();
-
 
         IssueMailEvent issueMailEvent = IssueMailEvent.builder()
                 .issueAssignmentId(savedIssueAssignment.getId())
                 .build();
 
+        issueMailProducer.sendMessage(issueMailEvent);
 
         issueProducer.sendMessage(issueUserEvent);
-        issueMailProducer.sendMessage(issueMailEvent);
     }
+
 
     @Override
     public void delete(Long issueId, Long userId) {
         IssueAssignment issueAssignment = readPort.findByIssueIdAndAssignedUserId(issueId,userId);
         deletePort.delete(issueAssignment);
+
+        IssueUserEvent issueUserEvent = IssueUserEvent.builder()
+                .issueAssignmentId(issueAssignment.getId())
+                .issueId(issueAssignment.getIssue().getId())
+                .assignedUserId(issueAssignment.getAssignedUser().getId())
+                .assignmentDate(issueAssignment.getAssignmentDate())
+                .assignedById(issueAssignment.getAssignedBy().getId())
+                .role(issueAssignment.getRole())
+                .type(EventType.ISSUE_UNASSIGNED_FROM_USER)
+                .build();
+
+        issueProducer.sendMessage(issueUserEvent);
     }
 
     @Override
@@ -93,6 +109,19 @@ public class IssueAssignmentImpl implements IssueAssignmentService {
         Optional<Role> role = roleReadPort.findByName(roleName);
         issueAssignment.setRole(role.get());
         savePort.save(issueAssignment);
+
+
+        IssueUserEvent issueUserEvent = IssueUserEvent.builder()
+                .issueAssignmentId(issueAssignment.getId())
+                .issueId(issueAssignment.getIssue().getId())
+                .assignedUserId(issueAssignment.getAssignedUser().getId())
+                .assignmentDate(issueAssignment.getAssignmentDate())
+                .assignedById(issueAssignment.getAssignedBy().getId())
+                .role(issueAssignment.getRole())
+                .type(EventType.ISSUE_ROLE_UPDATED)
+                .build();
+
+        issueProducer.sendMessage(issueUserEvent);
     }
 
     @Override
@@ -127,5 +156,6 @@ public class IssueAssignmentImpl implements IssueAssignmentService {
     public IssueAssignment findById(Long id) {
         return readPort.findById(id);
     }
+
 
 }

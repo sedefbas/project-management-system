@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IssueCommentService {
 
-    IssueComment saveComment(IssueCommentRequest request);
+    IssueComment saveComment(IssueCommentRequest request,String token);
 
     List<IssueComment> getCommentsByIssueId(Long issueId);
 

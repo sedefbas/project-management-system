@@ -1,7 +1,7 @@
 package management.sedef.notification.model.request;
 
 import lombok.*;
-import management.sedef.notification.model.enums.EventType;
+import management.sedef.issue.kafka.event.EventType;
 import management.sedef.notification.model.enums.NotificationStatus;
 import management.sedef.notification.model.enums.NotificationType;
 

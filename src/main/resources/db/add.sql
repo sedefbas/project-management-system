@@ -214,6 +214,7 @@ VALUES
 
 
 
+
 INSERT INTO stages (name, context, is_default) VALUES
                                                          ('TODO', 'Görev oluşturuldu, beklemede', true),
                                                          ('IN_PROGRESS', 'Üzerinde çalışılıyor', false),
@@ -236,6 +237,31 @@ INSERT INTO labels (name, photo, is_default) VALUES
                                                  ('Feature', 'feature-icon.png', FALSE),
                                                  ('Improvement', 'improvement-icon.png', FALSE),
                                                  ('Documentation', 'documentation-icon.png', TRUE);
+
+# -- Issue 1: Finansal süreçleri yöneten sistemle ilgili bir problem
+# INSERT INTO issues (name, explanation, start_date, dead_line_date, created_by_id, stage_id, project_id, priority_id, label_id)
+# VALUES
+#     ('Finans Sistemi Hata Giderme', 'Finansal süreçlerdeki hataların düzeltilmesi gerekiyor.', '2024-01-10', '2024-01-20', 1, 1, 1, 1, 1);  -- Admin, Project 1 (Finans Yönetim Sistemi)
+#
+# INSERT INTO issues (name, explanation, start_date, dead_line_date, created_by_id, stage_id, project_id, priority_id, label_id)
+# VALUES
+#     ('Müşteri Erişim Sorunu', 'Müşteri ilişkileri platformuna erişimde sorun yaşanıyor.', '2024-02-15', '2024-02-28', 1, 2, 2, 2, 4);  -- Admin, Project 2 (Müşteri Takip Platformu)
+#
+# INSERT INTO issues (name, explanation, start_date, dead_line_date, created_by_id, stage_id, project_id, priority_id, label_id)
+# VALUES
+#     ('E-Ticaret Entegrasyonu Hatası', 'E-ticaret sistemleri ile ERP arasındaki entegrasyon eksiklikleri giderilmelidir.', '2024-03-01', '2024-03-15', 2, 1, 3, 3, 4);  -- Company Owner, Project 3 (E-Ticaret Entegrasyonu)
+#
+# INSERT INTO issues (name, explanation, start_date, dead_line_date, created_by_id, stage_id, project_id, priority_id, label_id)
+# VALUES
+#     ('İçerik Veri Kaybı', 'İçerik yönetim sisteminde bazı veriler kayboluyor. Hızla çözüme kavuşturulmalıdır.', '2024-04-20', '2024-05-05', 1, 3, 4, 1, 1);  -- Admin, Project 4 (İçerik Yönetim Sistemi)
+#
+# INSERT INTO issues (name, explanation, start_date, dead_line_date, created_by_id, stage_id, project_id, priority_id, label_id)
+# VALUES
+#     ('Performans Düşüşü', 'Sistem güncellemesinin ardından performans düşüşü yaşanıyor. İncelenmesi gerekli.', '2024-05-01', '2024-05-10', 3, 2, 1, 2, 4);  -- User 1, Project 1 (Finans Yönetim Sistemi)
+#
+#
+
+
 
 -- Grupları ekleme
 INSERT INTO bands (name, company_id, color)

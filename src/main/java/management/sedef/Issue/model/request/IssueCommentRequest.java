@@ -16,8 +16,6 @@ public class IssueCommentRequest {
 
     private String commentText;
 
-    private Long authorId;
-
     private Long issueId;
 
 }

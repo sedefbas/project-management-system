@@ -1,5 +1,6 @@
 package management.sedef.issue.controller;
 
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import management.sedef.common.model.entity.response.SuccessResponse;
@@ -11,7 +12,6 @@ import management.sedef.issue.model.request.IssueCommentUpdateRequest;
 import management.sedef.issue.model.response.IssueCommentResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,14 +28,12 @@ public class IssueCommentController {
     @PreAuthorize("hasAnyAuthority('issue-comment:create')")
     public SuccessResponse<Void> create(
             @Valid @RequestBody IssueCommentRequest request,
-            @PathVariable Long companyId,
-            @PathVariable Long projectId,
-            @PathVariable Long issueId,
             @RequestHeader("Authorization") String token) {
 
-        issueCommentService.saveComment(request);
+        issueCommentService.saveComment(request, token);
         return SuccessResponse.success();
     }
+
 
     @DeleteMapping("/{commentId}")
     @PreAuthorize("hasAnyAuthority('issue-comment:delete')")
@@ -43,6 +41,7 @@ public class IssueCommentController {
         issueCommentService.deleteComment(commentId);
         return SuccessResponse.success();
     }
+
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('issue-comment:list')")
@@ -54,6 +53,7 @@ public class IssueCommentController {
         return SuccessResponse.success(commentResponses);
     }
 
+
     @GetMapping("/{commentId}")
     @PreAuthorize("hasAnyAuthority('issue-comment:detail')")
     public SuccessResponse<IssueCommentResponse> findById(@PathVariable Long commentId) {
@@ -62,12 +62,12 @@ public class IssueCommentController {
         return SuccessResponse.success(commentResponse);
     }
 
+
     @PatchMapping("/{commentId}")
     @PreAuthorize("hasAnyAuthority('issue-comment:update')")
     public SuccessResponse<Void> update(
             @PathVariable Long commentId,
             @Valid @RequestBody IssueCommentUpdateRequest request) {
-
         issueCommentService.updateComment(commentId,request);
         return SuccessResponse.success("Comment updated successfully.");
     }

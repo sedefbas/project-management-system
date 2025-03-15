@@ -2,13 +2,12 @@ package management.sedef.notification.model.document;
 
 import jakarta.persistence.Id;
 import lombok.*;
-import management.sedef.notification.model.enums.EventType;
+import management.sedef.issue.kafka.event.EventType;
 import management.sedef.notification.model.enums.NotificationStatus;
 import management.sedef.notification.model.enums.NotificationType;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
-import java.util.Map;
 
 @Document(collection = "notifications")
 @Getter

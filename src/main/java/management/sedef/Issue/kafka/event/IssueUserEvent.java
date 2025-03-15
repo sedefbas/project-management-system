@@ -13,9 +13,11 @@ import java.util.Date;
 @Builder
 public class IssueUserEvent {
 
+    private Long issueAssignmentId;
     private Long issueId;
-    private Long assignedUserId;
+    private Long assignedUserId; //atanan kullanıcı
     private Date assignmentDate;
-    private Long assignedById;
+    private Long assignedById; // Atamayı yapan kullanıcı
     private Role role;
+    private EventType type;
 }
