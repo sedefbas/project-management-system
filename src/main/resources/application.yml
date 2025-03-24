@@ -6,6 +6,12 @@ spring:
   application:
     name: project_yonetim_sistemi
 
+  servlet:
+      multipart:
+        enabled: true
+        max-file-size: 50MB
+        max-request-size: 50MB
+
   kafka:
     consumer:
       auto-offset-reset: earliest
