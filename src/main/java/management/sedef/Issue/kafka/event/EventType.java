@@ -23,7 +23,7 @@ public enum EventType {
     USER_INVITED("User Invited"),
     USER_REMOVED("User Removed"),
 
-    GENERAL_ANNOUNCEMENT("General Announcement");
+    GENERAL_ANNOUNCEMENT("General AnnouncementEntity");
 
     private final String value;
 
