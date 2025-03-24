@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class GroupController {
 
     private final GroupService groupService;
-    private final GroupToGroupResponseMapper groupToGroupResponseMapper = GroupToGroupResponseMapper.initialize();
+    private final GroupToGroupResponseMapper groupToGroupResponseMapper;
 
 
     @PostMapping
