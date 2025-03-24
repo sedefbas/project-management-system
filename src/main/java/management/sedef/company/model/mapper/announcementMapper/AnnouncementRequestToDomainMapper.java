@@ -15,4 +15,3 @@ public interface AnnouncementRequestToDomainMapper extends BaseMapper<Announceme
     @Mapping(source = "companyId", target = "company", qualifiedByName = "companyIdToDomain")
     Announcement map(AnnouncementRequest announcementRequest);
 }
-

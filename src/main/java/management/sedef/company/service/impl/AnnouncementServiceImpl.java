@@ -11,7 +11,9 @@ import management.sedef.company.port.announcementPort.AnnouncementReadPort;
 import management.sedef.company.port.announcementPort.AnnouncementSavePort;
 import management.sedef.company.service.AnnouncementService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
 
@@ -46,8 +48,16 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
-    public Announcement saveAnnouncement(AnnouncementRequest request) {
+    public Announcement saveAnnouncement(AnnouncementRequest request, MultipartFile photo) {
         Announcement announcementToSave = announcementRequestToDomainMapper.map(request);
+
+        try {
+            byte[] photoBytes = photo.getBytes();
+            announcementToSave.setPhoto(photoBytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        announcementToSave.setCreatedAt(Instant.now());
         return savePort.save(announcementToSave);
     }
 
@@ -57,7 +67,18 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
-    public void update(AnnouncementUpdateRequest request) {
+    public void update(AnnouncementUpdateRequest request, Long  announcementId) {
+        Announcement existingAnnouncement = readPort.findById(announcementId);
 
+        Announcement updatedAnnouncement = existingAnnouncement.builder()
+                .title(request.getTitle() != null ? request.getTitle() : existingAnnouncement.getTitle())
+                .content(request.getContent() != null ? request.getContent() : existingAnnouncement.getContent())
+                .photo(request.getPhoto() != null ? request.getPhoto() : existingAnnouncement.getPhoto())
+                .validUntil(request.getValidUntil() != null ? request.getValidUntil() : existingAnnouncement.getValidUntil())
+                .isActive(request.getIsActive() != null ? request.getIsActive() : existingAnnouncement.getIsActive())
+                .updatedAt(Instant.now())
+                .build();
+
+        savePort.save(updatedAnnouncement);
     }
 }

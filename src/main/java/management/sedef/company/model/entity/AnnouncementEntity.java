@@ -23,7 +23,7 @@ public class AnnouncementEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private CompanyEntity company;
 
     @Column(nullable = false, length = 255)

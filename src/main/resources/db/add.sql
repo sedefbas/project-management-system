@@ -87,7 +87,12 @@ VALUES
     ('issue-step:update', 'Görev adımını güncelleme izni', false, 'ACTIVE'),
     ('issue-step:delete', 'Görev adımını silme izni', false, 'ACTIVE'),
     ('issue-step:detail', 'Görev adımının detaylarını görme izni', false, 'ACTIVE'),
-    ('issue-step:list', 'Görev adımlarını listeleme izni', false, 'ACTIVE');
+    ('issue-step:list', 'Görev adımlarını listeleme izni', false, 'ACTIVE'),
+    ('announcement:create', 'Duyuru oluşturma izni', false, 'ACTIVE'),
+    ('announcement:update', 'Duyuru güncelleme izni', false, 'ACTIVE'),
+    ('announcement:delete', 'Duyuru silme izni', false, 'ACTIVE'),
+    ('announcement:detail', 'Duyuru detaylarını görme izni', false, 'ACTIVE');
+
 
 
 
