@@ -82,7 +82,12 @@ VALUES
     ('issue-comment:update', 'Görev yorumunu güncelleme izni', false, 'ACTIVE'),
     ('issue-comment:delete', 'Görev yorumunu silme izni', false, 'ACTIVE'),
     ('issue-comment:detail', 'Görev yorumunun detaylarını görme izni', false, 'ACTIVE'),
-    ('issue-comment:list', 'Görev yorumlarını listeleme izni', false, 'ACTIVE');
+    ('issue-comment:list', 'Görev yorumlarını listeleme izni', false, 'ACTIVE'),
+    ('issue-step:create', 'Görev adımı oluşturma izni', false, 'ACTIVE'),
+    ('issue-step:update', 'Görev adımını güncelleme izni', false, 'ACTIVE'),
+    ('issue-step:delete', 'Görev adımını silme izni', false, 'ACTIVE'),
+    ('issue-step:detail', 'Görev adımının detaylarını görme izni', false, 'ACTIVE'),
+    ('issue-step:list', 'Görev adımlarını listeleme izni', false, 'ACTIVE');
 
 
 
@@ -108,6 +113,7 @@ SELECT 6, id FROM permission;
 -- USER rolüne (role_id = 1) izinlerin atanması
 INSERT INTO role_permission (role_id, permission_id)
 SELECT 1, id
+
 FROM permission
 WHERE name IN ('user:detail', 'user:list', 'company:create');
 
@@ -163,10 +169,11 @@ VALUES
     (10, 'COMPLETED', 'EMAIL'); -- User 8
 
 -- Şirketleri oluşturma
-INSERT INTO companies (name, description, phone_number, email, website, status, subscription_plan_id)
+INSERT INTO companies (name, description, phone_number, email, website, status, subscription_plan_id, logo)
 VALUES
-    ('Tech Innovations', 'A leading tech company specializing in innovative solutions.', 1234567890, 'techinnovations@example.com', 'https://techinnovations.com', 'ACTIVE', 1),  -- Şirket 1
-    ('Creative Solutions', 'A creative company focused on design and development.', 2345678901, 'creativesolutions@example.com', 'https://creativesolutions.com', 'ACTIVE', 2);  -- Şirket 2
+    ('Tech Innovations', 'A leading tech company specializing in innovative solutions.', 1234567890, 'techinnovations@example.com', 'https://techinnovations.com', 'ACTIVE', 1, 'https://techinnovations.com/logo.png'),  -- Şirket 1
+    ('Creative Solutions', 'A creative company focused on design and development.', 2345678901, 'creativesolutions@example.com', 'https://creativesolutions.com', 'ACTIVE', 2, 'https://creativesolutions.com/logo.png');  -- Şirket 2
+
 
 INSERT INTO company_owners (company_id, user_id)
 VALUES
