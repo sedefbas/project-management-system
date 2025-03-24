@@ -5,6 +5,8 @@ import lombok.*;
 
 @Data
 @Builder
+@Getter
+@Setter
 public class Group {
 
     private Long id;

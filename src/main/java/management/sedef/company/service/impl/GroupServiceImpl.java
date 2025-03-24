@@ -32,6 +32,7 @@ public class GroupServiceImpl implements GroupService {
         Company company = companyService.findCompanyById(companyId);
         Group group = Group.builder()
                 .name(request.getName())
+                .color(request.getColor())
                 .company(company)
                 .build();
         GroupEntity groupEntity = groupToEntityMapper.map(group);
