@@ -48,6 +48,6 @@ public class IssueCommentEntity {
     private boolean isEdited = false;
 
     @ManyToOne
-    @JoinColumn(name = "parent_comment_id") // Eğer yorumlar birbirine yanıt verebiliyorsa
+    @JoinColumn(name = "parent_comment_id")
     private IssueCommentEntity parentComment;
 }

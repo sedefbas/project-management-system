@@ -25,7 +25,7 @@ public class ProjectController {
 
     private final ProjectService service;
     private final ProjectToResponseMapper projectToResponseMapper;
-    private final GroupToGroupResponseMapper groupToGroupResponseMapper = GroupToGroupResponseMapper.initialize();
+    private final GroupToGroupResponseMapper groupToGroupResponseMapper;
 
 
     @GetMapping("/{projectId}/groups")

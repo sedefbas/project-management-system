@@ -2,6 +2,8 @@ package management.sedef.issue.model;
 
 
 import lombok.*;
+import management.sedef.company.model.Group;
+import management.sedef.company.model.SubGroup;
 import management.sedef.label.model.Label;
 import management.sedef.priority.model.Priority;
 import management.sedef.project.model.Project;
@@ -27,6 +29,10 @@ public class Issue {
 
     private Date deadLineDate;
 
+    private Group group;
+
+    private SubGroup subGroup;
+
     private User createdBy;
 
     private Stage stage;
@@ -36,4 +42,6 @@ public class Issue {
     private Priority priority;
 
     private Label label;
+
+    private double completionPercentage;
 }
