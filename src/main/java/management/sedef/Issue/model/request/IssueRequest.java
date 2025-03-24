@@ -20,6 +20,9 @@ public class IssueRequest {
     @NotNull
     private Date startDate;
     private Date deadLineDate;
+    @NotNull
+    private Long groupId;
+    private Long subGroupId;
     private Long stageId;
     @NotNull
     private Long projectId;

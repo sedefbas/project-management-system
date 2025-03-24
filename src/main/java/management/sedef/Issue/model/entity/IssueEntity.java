@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import management.sedef.company.model.entity.GroupEntity;
+import management.sedef.company.model.entity.SubGroupEntity;
 import management.sedef.label.model.entity.LabelEntity;
 import management.sedef.priority.model.entity.PriorityEntity;
 import management.sedef.project.model.entity.ProjectEntity;
@@ -34,6 +36,12 @@ public class IssueEntity {
     private Date startDate;
 
     private Date deadLineDate;
+
+    @ManyToOne
+    private GroupEntity group;
+
+    @ManyToOne
+    private SubGroupEntity subGroup;
 
     @ManyToOne
     private UserEntity createdBy;
