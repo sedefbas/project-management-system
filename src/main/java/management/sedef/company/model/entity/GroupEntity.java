@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import management.sedef.project.model.Project;
+import management.sedef.project.model.entity.ProjectEntity;
 
 @Entity
 @Getter
@@ -25,7 +27,14 @@ public class GroupEntity {
     @Column(length = 7)
     private String color;
 
+
+    @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
+    private ProjectEntity project;
+
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)
     private CompanyEntity company;
+
+
 }

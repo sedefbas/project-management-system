@@ -27,10 +27,18 @@ public class GroupController {
     private final GroupToGroupResponseMapper groupToGroupResponseMapper;
 
 
-    @PostMapping
+    @DeleteMapping("/{groupId}")
+    @PreAuthorize("hasAnyAuthority('group:delete')")
+    public SuccessResponse<Void> delete(@PathVariable Long groupId) {
+        groupService.delete(groupId);
+        return SuccessResponse.success(); // Başarılı dönüş
+    }
+
+
+    @PostMapping("/{projectId}")
     @PreAuthorize("hasAnyAuthority('group:create')")
-    public SuccessResponse<Void> create(@PathVariable Long companyId, @RequestBody GroupRequest groupRequest){
-      groupService.create(companyId,groupRequest);
+    public SuccessResponse<Void> create(@PathVariable Long companyId,@PathVariable Long projectId, @RequestBody GroupRequest groupRequest){
+      groupService.create(companyId,projectId, groupRequest);
       return SuccessResponse.success();
     }
 
@@ -46,6 +54,18 @@ public class GroupController {
         return SuccessResponse.success(groupResponses);
     }
 
+    @GetMapping("/project/{projectId}")
+    @PreAuthorize("hasAnyAuthority('group:detail')")
+    public SuccessResponse<List<GroupResponse>> findByProjectId(@PathVariable Long projectId) {
+        List<Group> groups = groupService.findByProjectId(projectId);  // Servisten grupları alıyoruz
+        List<GroupResponse> groupResponses = groups.stream()
+                .map(groupToGroupResponseMapper::map)  // Mapper ile dönüşüm yapıyoruz
+                .collect(Collectors.toList());
+
+        return SuccessResponse.success(groupResponses);
+    }
+
+
     @GetMapping("/{groupId}")
     @PreAuthorize("hasAnyAuthority('group:detail')")
     public SuccessResponse<ExtendedGroupResponse> findById(@PathVariable Long groupId) {
@@ -54,12 +74,6 @@ public class GroupController {
         return SuccessResponse.success(response);
     }
 
-    @DeleteMapping("/{groupId}")
-    @PreAuthorize("hasAnyAuthority('group:delete')")
-    public SuccessResponse<Void> delete(@PathVariable Long groupId) {
-        groupService.delete(groupId);
-        return SuccessResponse.success(); // Başarılı dönüş
-    }
 
     @PutMapping("/{groupId}")
     @PreAuthorize("hasAnyAuthority('group:update')")

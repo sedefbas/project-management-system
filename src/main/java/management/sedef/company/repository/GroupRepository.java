@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface GroupRepository extends JpaRepository<GroupEntity,Long> {
     List<GroupEntity> findByCompany_Id(Long companyId);
-
+    List<GroupEntity> findByProject_Id(Long projectId);
 }

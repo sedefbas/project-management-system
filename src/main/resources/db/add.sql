@@ -275,23 +275,23 @@ INSERT INTO labels (name, photo, is_default) VALUES
 
 
 
--- Grupları ekleme
-INSERT INTO bands (name, company_id, color)
+INSERT INTO bands (name, company_id, project_id, color)
 VALUES
--- Tech Innovations (company_id = 1)
-('Yazılım Geliştirme', 1, '#FF5733'),
-('Pazarlama', 1, '#33FF57'),
-('Destek', 1, '#3357FF'),
-('Tasarım', 1, '#FF33A1'),
-('Satış', 1, '#FFD700'),
-('İnsan Kaynakları', 1, '#8A2BE2'),
+-- Tech Innovations (company_id = 1) için projeler:
+('Yazılım Geliştirme', 1, 1, '#FF5733'),  -- Finans Yönetim Sistemi
+('Pazarlama', 1, 1, '#33FF57'),
+('Destek', 1, 2, '#3357FF'),  -- Müşteri Takip Platformu
+('Tasarım', 1, 2, '#FF33A1'),
+('Satış', 1, 1, '#FFD700'),
+('İnsan Kaynakları', 1, 2, '#8A2BE2'),
 
--- Creative Solutions (company_id = 2)
-('Yazılım Geliştirme', 2, '#FF4500'),
-('Pazarlama', 2, '#32CD32'),
-('Tasarım', 2, '#00CED1'),
-('Satış', 2, '#DC143C'),
-('İnsan Kaynakları', 2, '#4169E1');
+-- Creative Solutions (company_id = 2) için projeler:
+('Yazılım Geliştirme', 2, 3, '#FF4500'),  -- E-Ticaret Entegrasyonu
+('Pazarlama', 2, 3, '#32CD32'),
+('Tasarım', 2, 4, '#00CED1'),  -- İçerik Yönetim Sistemi
+('Satış', 2, 3, '#DC143C'),
+('İnsan Kaynakları', 2, 4, '#4169E1');
+
 
 
 -- Alt Grupları ekleme

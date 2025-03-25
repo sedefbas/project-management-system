@@ -11,6 +11,9 @@ import management.sedef.company.model.request.GroupRequest;
 import management.sedef.company.model.request.GroupUpdateRequest;
 import management.sedef.company.repository.GroupRepository;
 import management.sedef.company.service.GroupService;
+import management.sedef.project.model.Project;
+import management.sedef.project.port.projectPort.ProjectReadAdapter;
+import management.sedef.project.service.ProjectService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,17 +26,19 @@ public class GroupServiceImpl implements GroupService {
 
     private final GroupRepository repository;
     private final CompanyServiceImpl companyService;
+    private final ProjectReadAdapter readAdapter;
     private final GroupToEntityMapper groupToEntityMapper = GroupToEntityMapper.initialize();
     private final GroupEntityToDomainMapper groupEntityToDomainMapper = GroupEntityToDomainMapper.initialize();
 
-
     @Override
-    public void create(Long companyId, GroupRequest request) {
+    public void create(Long companyId,Long projectId, GroupRequest request) {
         Company company = companyService.findCompanyById(companyId);
+        Project project = readAdapter.findByIdAndCompanyId(projectId,companyId);
         Group group = Group.builder()
                 .name(request.getName())
                 .color(request.getColor())
                 .company(company)
+                .project(project)
                 .build();
         GroupEntity groupEntity = groupToEntityMapper.map(group);
         repository.save(groupEntity);
@@ -62,6 +67,16 @@ public class GroupServiceImpl implements GroupService {
                 .map(groupEntityToDomainMapper::map)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Group> findByProjectId(Long projectId) {
+        List<GroupEntity> groupEntities = repository.findByProject_Id(projectId);
+
+        return groupEntities.stream()
+                .map(groupEntityToDomainMapper::map)
+                .collect(Collectors.toList());
+    }
+
 
     @Override
     public Group findById(Long id) {

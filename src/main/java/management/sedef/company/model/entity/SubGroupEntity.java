@@ -25,7 +25,7 @@ public class SubGroupEntity {
     @Column(length = 7)
     private String color;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "group_id", nullable = false)
     private GroupEntity group;
 
