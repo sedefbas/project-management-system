@@ -34,7 +34,7 @@ public class AnnouncementEntity {
 
     @Lob
     @Column(columnDefinition = "LONGBLOB")
-    private byte[] photo;
+    private String photo;
 
     private Instant createdAt;
 

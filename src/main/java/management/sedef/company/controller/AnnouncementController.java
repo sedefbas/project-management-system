@@ -29,9 +29,8 @@ public class AnnouncementController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyAuthority('announcement:create')")
     public SuccessResponse<Void> createAnnouncement(
-            @RequestPart("request") @Valid AnnouncementRequest request,
-            @RequestPart("photo") MultipartFile photo) {
-
+            @RequestPart AnnouncementRequest request,
+           @RequestPart MultipartFile photo) {
         service.saveAnnouncement(request,photo);
         return SuccessResponse.success();
     }
@@ -45,7 +44,7 @@ public class AnnouncementController {
         List<Announcement> announcements = service.getAnnouncementsByCompanyId(companyId);
 
         List<AnnouncementResponse> response = announcements.stream()
-                .map(AnnouncementResponse::new)
+                .map(announcementToResponseMapper::map)
                 .collect(Collectors.toList());
 
         return SuccessResponse.success(response);
@@ -75,13 +74,14 @@ public class AnnouncementController {
         return SuccessResponse.success();
     }
 
-    @PutMapping("/{announcementId}")
+    @PutMapping(value = "/{announcementId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyAuthority('announcement:update')")
     public SuccessResponse<Void> updateAnnouncement(
-            @RequestBody @Valid AnnouncementUpdateRequest request,
-            @PathVariable Long announcementId)  {
+            @RequestPart @Valid AnnouncementUpdateRequest request,
+            @PathVariable Long announcementId,
+            @RequestPart(required = false)  MultipartFile photo)  {
 
-        service.update(request,announcementId);
+        service.update(request,announcementId, photo);
         return SuccessResponse.success();
     }
 }

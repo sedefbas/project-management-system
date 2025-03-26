@@ -10,7 +10,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AnnouncementToResponseMapper {
 
-
     @Mapping(source = "company.id", target = "companyId")
     AnnouncementResponse map(Announcement announcement);
 }

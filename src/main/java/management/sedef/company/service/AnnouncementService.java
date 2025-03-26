@@ -21,5 +21,5 @@ public interface AnnouncementService {
 
     Announcement deleteAnnouncement(Long announcementId);
 
-    void update(AnnouncementUpdateRequest request, Long announcementId );
+    void update(AnnouncementUpdateRequest request, Long announcementId, MultipartFile photo );
 }

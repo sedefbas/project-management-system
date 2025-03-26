@@ -18,8 +18,6 @@ public class AnnouncementUpdateRequest {
 
     private String content;
 
-    private byte[] photo;
-
     private Instant validUntil;
 
     private Boolean isActive = true;

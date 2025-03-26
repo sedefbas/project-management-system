@@ -21,7 +21,7 @@ public class Announcement {
 
     private String content;
 
-    private byte[] photo;
+    private String photo;
 
     private Instant createdAt;
 
