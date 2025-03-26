@@ -14,6 +14,10 @@ import management.sedef.company.port.companyport.CompanyReadPort;
 import management.sedef.company.port.companyport.CompanySavePort;
 import management.sedef.company.service.AddressService;
 import management.sedef.company.service.CompanyService;
+import management.sedef.minio.payload.BucketNameEnum;
+import management.sedef.minio.payload.FileResponse;
+import management.sedef.minio.service.MinioService;
+import management.sedef.minio.util.FileTypeUtils;
 import management.sedef.subscriptionPlan.model.SubscriptionPlan;
 import management.sedef.subscriptionPlan.model.enums.SubscriptionPlanStatus;
 import management.sedef.subscriptionPlan.service.SubscriptionPlanService;
@@ -21,6 +25,7 @@ import management.sedef.user.model.User;
 import management.sedef.user.port.adapter.UserAdapter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -36,6 +41,7 @@ public class CompanyServiceImpl implements CompanyService {
     private final CompanyRequestToDomainMapper companyRequestToDomainMapper = CompanyRequestToDomainMapper.initialize();
     private final UserAdapter userAdapter;
     private final SubscriptionPlanService subscriptionPlanService;
+    private final MinioService minioService;
 
     @Override
     public Company findCompanyById(Long id) {
@@ -52,13 +58,25 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Transactional
     @Override
-    public void create(CompanyRequest request, String token) {
+    public void create(CompanyRequest request, MultipartFile logo, String token) {
+
+        String bucketName = BucketNameEnum.COMPANY_PHOTO.getBucketName();
+
+        String fileType = FileTypeUtils.getFileType(logo);
+        String photoUrl = null;
+
+        if (fileType != null) {
+            FileResponse fileResponse = minioService.putObject(logo, bucketName, fileType);
+            photoUrl = minioService.getObjectUrl(bucketName, fileResponse.getFilename());
+        }
 
         Long userId = tokenService.getUserIdFromToken(token);
         SubscriptionPlan subscriptionPlan = subscriptionPlanService.findByStatus(SubscriptionPlanStatus.FREE);
 
         Company company = companyRequestToDomainMapper.map(request);
         User user = userAdapter.findById(userId).get();
+
+        company.setLogo(photoUrl);
         company.setOwners(List.of(user));
         company.setStatus(CompanyStatus.ACTIVE);
         company.setSubscriptionPlan(subscriptionPlan);
@@ -67,6 +85,7 @@ public class CompanyServiceImpl implements CompanyService {
             Address address = addressService.create(request.getAddress());
             company.setAddress(address);
         }
+
         companySavePort.save(company);
     }
 

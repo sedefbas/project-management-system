@@ -11,8 +11,10 @@ import management.sedef.company.model.request.CompanyUpdateRequest;
 import management.sedef.company.model.response.CompanyResponse;
 import management.sedef.company.model.response.CompanySummaryResponse;
 import management.sedef.company.service.CompanyService;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,11 +28,12 @@ public class CompanyController {
     private final CompanyToResponseMapper companyToResponseMapper ;
 
     // ADMIN ve COMPANY_OWNER için şirket oluşturma yetkisi
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyAuthority('company:create')")
-    public SuccessResponse<Void> create(@RequestBody @Valid CompanyRequest request,
+    public SuccessResponse<Void> create(@RequestPart @Valid CompanyRequest request,
+                                        @RequestPart("logoFile") MultipartFile logoFile,
                                         @RequestHeader("Authorization") String token) {
-        companyService.create(request, token);
+        companyService.create(request,logoFile, token);
         return SuccessResponse.success();
     }
 

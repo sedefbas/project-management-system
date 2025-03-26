@@ -3,8 +3,7 @@ package management.sedef.company.model.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Getter
@@ -16,8 +15,6 @@ public class CompanyRequest {
 
     @NotNull
     private String name;
-
-    private String logo;
 
     private String description;
 

@@ -31,7 +31,7 @@ public class CompanyEntity  {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "logo")
+    @Column(name = "logo", columnDefinition = "TEXT")
     private String logo;
 
     @Column(name = "description")
