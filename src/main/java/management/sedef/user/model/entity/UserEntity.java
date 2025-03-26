@@ -37,7 +37,7 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "phone")
+    @Column(name = "phone" ,columnDefinition = "TEXT")
     private Long phone;
 
     @Column(name = "photo")

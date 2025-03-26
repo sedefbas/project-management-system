@@ -34,7 +34,5 @@ public class RegisterRequest {
 
     private Long phone;
 
-    private String photo;
-
     private RoleName roleName;
 }

@@ -8,6 +8,10 @@ import management.sedef.auth.model.request.RegisterRequest;
 import management.sedef.auth.model.request.VerifyRequest;
 import management.sedef.auth.port.RoleReadPort;
 import management.sedef.auth.service.RegistrationService;
+import management.sedef.minio.payload.BucketNameEnum;
+import management.sedef.minio.payload.FileResponse;
+import management.sedef.minio.service.MinioService;
+import management.sedef.minio.util.FileTypeUtils;
 import management.sedef.user.model.User;
 import management.sedef.user.model.UserVerification;
 import management.sedef.user.model.enums.UserStatus;
@@ -21,6 +25,7 @@ import management.sedef.user.service.UserEmailService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -35,11 +40,22 @@ class RegistrationServiceImpl implements RegistrationService {
     private final UserEmailService userEmailService;
     private final UserVerificationReadPort userVerificationReadPort;
     private final UserVerificationSavePort userVerificationSavePort;
+    private final MinioService minioService;
 
 
     @Override
     @Transactional
-    public void register(RegisterRequest request) {
+    public void register(RegisterRequest request, MultipartFile photo) {
+
+        String bucketName = BucketNameEnum.USERS_PHOTO.getBucketName();
+
+        String fileType = FileTypeUtils.getFileType(photo);
+        String photoUrl = null;
+
+        if (fileType != null) {
+            FileResponse fileResponse = minioService.putObject(photo, bucketName, fileType);
+            photoUrl = minioService.getObjectUrl(bucketName, fileResponse.getFilename());
+        }
 
         if (userReadPort.existsByEmail(request.getEmail())) {
             throw new UserAlreadyRegisteredException(request.getEmail());
@@ -58,6 +74,7 @@ class RegistrationServiceImpl implements RegistrationService {
                 .email(request.getEmail())
                 .status(UserStatus.NOT_VERIFIED)
                 .role(role)
+                .photo(photoUrl)
                 .phone(request.getPhone())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .createdAt(LocalDateTime.now())
