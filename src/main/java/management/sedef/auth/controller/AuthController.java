@@ -10,10 +10,9 @@ import management.sedef.auth.model.response.TokenResponse;
 import management.sedef.auth.service.AuthenticationService;
 import management.sedef.auth.service.RegistrationService;
 import management.sedef.common.model.entity.response.SuccessResponse;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -23,9 +22,10 @@ public class AuthController {
     private final RegistrationService registrationService;
     private final AuthenticationService authenticationService;
 
-    @PostMapping("/register")
-    SuccessResponse<Void> register(@RequestBody RegisterRequest request) {
-        registrationService.register(request);
+    @PostMapping(value = "/register" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    SuccessResponse<Void> register(@RequestPart RegisterRequest request,
+                                   @RequestPart MultipartFile photo) {
+        registrationService.register(request, photo);
         return SuccessResponse.success();
     }
 
