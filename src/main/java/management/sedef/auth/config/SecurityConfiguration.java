@@ -47,33 +47,28 @@ class SecurityConfiguration {
             "/configuration/ui",
             "/configuration/security"
     };
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity,
-            CustomBearerTokenAuthenticationFilter bearerTokenAuthenticationFilter) throws Exception {
+                                           CustomBearerTokenAuthenticationFilter bearerTokenAuthenticationFilter) throws Exception {
 
         httpSecurity.cors(customizer -> customizer.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(customizer -> customizer.requestMatchers(WHITE_LIST_URL)
-                        .permitAll()
-                        .requestMatchers(HttpMethod.GET, "/public/**")
-                        .permitAll()
-                        .requestMatchers("/api/v1/auth/**")
-                        .permitAll()
-                        .requestMatchers("/api/payments/**")
-                        .permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/user/*/followers", "/api/v1/user/*/followings")
-                        .permitAll()
-                        .requestMatchers("/api/v1/company/add/user")
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated())
+                .authorizeHttpRequests(customizer -> customizer
+                        .requestMatchers(WHITE_LIST_URL).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/public/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/payments/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/user/*/followers", "/api/v1/user/*/followings").permitAll()
+                        .requestMatchers("/api/v1/company/add/user").permitAll()
+                        .requestMatchers("/minio/**").permitAll() // MinIO URL'leri herkese açık
+                        .anyRequest().authenticated())
                 .sessionManagement(customizer -> customizer
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(bearerTokenAuthenticationFilter, BearerTokenAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
+
 
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

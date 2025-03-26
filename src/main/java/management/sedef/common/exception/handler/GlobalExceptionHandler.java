@@ -5,8 +5,11 @@ import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import management.sedef.common.exception.*;
 import management.sedef.common.model.ErrorResponse;
+import management.sedef.minio.exception.ApiError;
+import management.sedef.minio.exception.FileResponseException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -17,6 +20,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @RestControllerAdvice
@@ -188,5 +194,17 @@ public class GlobalExceptionHandler {
                 .header(ErrorResponse.Header.VALIDATION_ERROR.getName())
                 .message(exception.getMessage())
                 .build();
+    }
+
+    @ExceptionHandler(FileResponseException.class)
+    public ResponseEntity<Object> handleFileResponseNotFoundException(FileResponseException ex) {
+
+        List<String> details = new ArrayList<String>();
+        details.add(ex.getMessage());
+
+        ApiError err = new ApiError(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, LocalDateTime.now() ,
+                "FileResponseException", details);
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
 }

@@ -12,6 +12,19 @@ spring:
         max-file-size: 50MB
         max-request-size: 50MB
 
+
+  minio:
+    endpoint: http://127.0.0.1:9000
+    port: 9000
+    access-key: minioadmin
+    secret-key: minioadmin
+    secure: false
+    bucket-name: commons
+    image-size: 10485760
+    file-size: 1073741824
+
+
+
   kafka:
     consumer:
       auto-offset-reset: earliest
@@ -81,7 +94,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb+srv://bassedef98:1234@yonetimmongo.53k5l.mongodb.net/?retryWrites=true&w=majority&appName=yonetimMongo
+      uri: mongodb+srv://bassedef98:1234@yonetimmongo.53k5l.mongodb.net/?retryWrites=true&w=majority&appName=yonetimMongo&ssl=true
       database: user
 
 application:
