@@ -9,6 +9,7 @@ import management.sedef.help.model.request.HelpRequest;
 import management.sedef.help.service.HelpService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -46,8 +47,10 @@ public class HelpController {
 
     @PreAuthorize("hasAuthority('help:create')")
     @PostMapping
-    public SuccessResponse<Help> createHelp(@RequestBody @Valid HelpRequest helpRequest) {
-        Help createdHelp = helpService.createHelp(helpRequest);
+    public SuccessResponse<Help> createHelp(
+            @RequestPart @Valid HelpRequest helpRequest,
+            @RequestPart MultipartFile photo) {
+        Help createdHelp = helpService.createHelp(helpRequest, photo);
         return SuccessResponse.success(createdHelp);
     }
 

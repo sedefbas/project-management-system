@@ -9,11 +9,17 @@ import management.sedef.help.port.HelpDeletePort;
 import management.sedef.help.port.HelpReadPort;
 import management.sedef.help.port.HelpSavePort;
 import management.sedef.help.service.HelpService;
+import management.sedef.minio.payload.BucketNameEnum;
+import management.sedef.minio.payload.FileResponse;
+import management.sedef.minio.service.MinioService;
+import management.sedef.minio.util.FileTypeUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
@@ -24,6 +30,27 @@ public class HelpServiceImpl implements HelpService {
     private final HelpSavePort savePort;
     private final HelpDeletePort deletePort;
     private final HelpRequestToDomainMapper helpRequestToDomainMapper = HelpRequestToDomainMapper.initialize();
+    private final MinioService minioService;
+
+    @Override
+    public Help createHelp(HelpRequest request, MultipartFile photo) {
+
+        String bucketName = BucketNameEnum.HELP_PHOTO.getBucketName();
+        String fileType = FileTypeUtils.getFileType(photo);
+        List<String> screenshotUrls = new ArrayList<>();
+
+        if (fileType != null) {
+            FileResponse fileResponse = minioService.putObject(photo, bucketName, fileType);
+            String photoUrl = minioService.getObjectUrl(bucketName, fileResponse.getFilename());
+            screenshotUrls.add(photoUrl);
+        }
+
+        Help help = helpRequestToDomainMapper.map(request);
+        help.setCreatedAt(LocalDateTime.now());
+        help.setScreenshotUrls(screenshotUrls); // Liste olarak ayarla
+        return savePort.save(help);
+    }
+
 
     @Override
     public List<Help> getHelpsByProjectId(Integer projectId) {
@@ -35,12 +62,6 @@ public class HelpServiceImpl implements HelpService {
         return readPort.findByProjectIdAndHelpStatus(projectId, helpStatus);
     }
 
-    @Override
-    public Help createHelp(HelpRequest request) {
-        Help help = helpRequestToDomainMapper.map(request);
-        help.setCreatedAt(LocalDateTime.now()); // Oluşturulma tarihini şu anki zaman olarak ayarla
-        return savePort.save(help);
-    }
 
     @Override
     public Help getHelpById(String helpId) {
