@@ -38,15 +38,15 @@ class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {
             "/swagger-ui.html",
-            "/swagger-ui.html", // Swagger UI'nin giriş URL'si
-            "/swagger-ui/**", // Swagger UI'nin tüm alt URL'leri
-            "/v3/api-docs", // Swagger Docs
-            "/v3/api-docs/**", // Swagger Docs'in tüm alt URL'leri
+            "/swagger-ui/**",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
             "/swagger-resources/**",
             "/webjars/**",
             "/configuration/ui",
             "/configuration/security"
     };
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity,
                                            CustomBearerTokenAuthenticationFilter bearerTokenAuthenticationFilter) throws Exception {
@@ -55,30 +55,31 @@ class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(customizer -> customizer
                         .requestMatchers(WHITE_LIST_URL).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/public/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/payments/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/user/*/followers", "/api/v1/user/*/followings").permitAll()
                         .requestMatchers("/api/v1/company/add/user").permitAll()
-                        .requestMatchers("/minio/**").permitAll() // MinIO URL'leri herkese açık
+                        .requestMatchers("/minio/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(customizer -> customizer
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(bearerTokenAuthenticationFilter, BearerTokenAuthenticationFilter.class);
+                .addFilterBefore(bearerTokenAuthenticationFilter, BearerTokenAuthenticationFilter.class)
+
+                // OAuth2 Entegrasyonu
+                .oauth2Login(oauth2 -> oauth2
+                        .defaultSuccessUrl("/secured", true));
 
         return httpSecurity.build();
     }
 
-
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // Bu, izin verilen domain
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Yalnızca izin verilen
-                                                                                             // metodlar
-        configuration.setAllowedHeaders(List.of("Content-Type", "Authorization")); // İzin verilen başlıklar
-        configuration.setAllowCredentials(true); // Kimlik doğrulama bilgileri ile izin ver
+        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Content-Type", "Authorization"));
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Tüm endpointlere CORS yapılandırmasını uygula
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
@@ -86,5 +87,4 @@ class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

@@ -62,4 +62,10 @@ public class AuthController {
         return SuccessResponse.success();
     }
 
+    @GetMapping("/secured")
+    public String secured()
+    {
+        return "Secured!";
+    }
+
 }

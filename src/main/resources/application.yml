@@ -23,7 +23,16 @@ spring:
     image-size: 10485760
     file-size: 1073741824
 
-
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: Ov23liIViciO219vuKE5
+            client-secret: c7056ba43eaa4e15bb5ec9f62a3a8d2e224e0c25  #http://localhost:8085/login/oauth2/code/github
+  #          google:
+#            client-id: client-id
+#            client-secret: client-secret
 
   kafka:
     consumer:
