@@ -39,6 +39,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void create(ProjectRequest request, Long companyId) {
         Company company = companyService.findCompanyById(companyId);
+
         int existingProjectCount = readAdapter.countProjectsByCompanyId(companyId);
         ProjectValidator.validateMaxProjects(company.getSubscriptionPlan(), existingProjectCount);
         Project project = projectRequestToDomainMapper.map(request);
@@ -70,6 +71,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> getAllProjectsByCompanyId(Long companyId) {
+
         return readAdapter.getAllProjects(companyId);
     }
 

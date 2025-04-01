@@ -28,7 +28,7 @@ public class GroupServiceImpl implements GroupService {
     private final CompanyServiceImpl companyService;
     private final ProjectReadAdapter readAdapter;
     private final GroupToEntityMapper groupToEntityMapper = GroupToEntityMapper.initialize();
-    private final GroupEntityToDomainMapper groupEntityToDomainMapper = GroupEntityToDomainMapper.initialize();
+    private final GroupEntityToDomainMapper groupEntityToDomainMapper ;
 
     @Override
     public void create(Long companyId,Long projectId, GroupRequest request) {

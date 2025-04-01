@@ -24,8 +24,8 @@ public class ProjectAdapter implements ProjectSaveAdapter, ProjectReadAdapter, P
 
     private final ProjectRepository repository;
     private final ProjectToEntityMapper projectToEntityMapper = ProjectToEntityMapper.initialize();
-    private final ProjectEntityToDomainMapper projectEntityToDomainMapper = ProjectEntityToDomainMapper.initialize();
-    private final GroupEntityToDomainMapper groupEntityToDomainMapper = GroupEntityToDomainMapper.initialize();
+    private final ProjectEntityToDomainMapper projectEntityToDomainMapper ;
+    private final GroupEntityToDomainMapper groupEntityToDomainMapper ;
 
     @Override
     public Project save(Project project) {

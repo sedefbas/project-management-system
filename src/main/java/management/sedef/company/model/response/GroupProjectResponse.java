@@ -1,8 +1,7 @@
 package management.sedef.company.model.response;
 
-
 import lombok.*;
-import management.sedef.project.model.response.ProjeSummaryResponse;
+
 
 
 @Getter
@@ -11,7 +10,7 @@ import management.sedef.project.model.response.ProjeSummaryResponse;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GroupResponse {
+public class GroupProjectResponse {
     private Long id;
     private String name;
     private String color;

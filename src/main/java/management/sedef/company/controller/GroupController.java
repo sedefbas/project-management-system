@@ -61,7 +61,6 @@ public class GroupController {
         List<GroupResponse> groupResponses = groups.stream()
                 .map(groupToGroupResponseMapper::map)  // Mapper ile dönüşüm yapıyoruz
                 .collect(Collectors.toList());
-
         return SuccessResponse.success(groupResponses);
     }
 
