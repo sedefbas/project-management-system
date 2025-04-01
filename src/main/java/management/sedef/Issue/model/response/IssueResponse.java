@@ -3,14 +3,11 @@ package management.sedef.issue.model.response;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import management.sedef.company.model.Group;
+
 import management.sedef.company.model.response.GroupResponse;
 import management.sedef.company.model.response.SubGroupResponse;
-import management.sedef.label.model.Label;
 import management.sedef.label.model.response.LabelSummaryResponse;
-import management.sedef.priority.model.Priority;
 import management.sedef.priority.model.response.PrioritySummaryResponse;
-import management.sedef.stage.model.Stage;
 import management.sedef.stage.response.StageSummaryResponse;
 import management.sedef.user.model.response.UserSummaryResponse;
 

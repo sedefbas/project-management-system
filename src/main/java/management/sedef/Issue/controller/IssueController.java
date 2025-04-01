@@ -23,18 +23,19 @@ public class IssueController {
 
     private final IssueService issueService;
     private final IssueToResponseMapper issueToResponseMapper;
-
     @PostMapping
     @PreAuthorize("hasAnyAuthority('issue:create')")
-    public SuccessResponse<Void> create(
+    public SuccessResponse<Long> create(
             @Valid @RequestBody IssueRequest request,
             @PathVariable Long companyId,
             @PathVariable Long projectId,
             @RequestHeader("Authorization") String token) {
 
-        issueService.create(request, companyId, projectId, token);
-        return SuccessResponse.success();
+        Long issueId = issueService.create(request, companyId, projectId, token);
+
+        return SuccessResponse.success(issueId);
     }
+
 
     @DeleteMapping("/{issueId}")
     @PreAuthorize("hasAnyAuthority('issue:delete')")

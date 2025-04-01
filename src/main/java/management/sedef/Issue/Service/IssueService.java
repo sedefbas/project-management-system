@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public interface IssueService {
-    void create(IssueRequest request,Long companyId, Long projectId, String token);
+    Long create(IssueRequest request,Long companyId, Long projectId, String token);
     void delete(Long issueId, String token);
     List<Issue> findIssuesByProject(Long projectId);
     List<Issue> findByStageIdAndProjectId(Long stageId, Long projectId);

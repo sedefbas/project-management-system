@@ -64,7 +64,7 @@ public class IssueServiceImpl implements IssueService {
 
 
     @Override
-    public void create(IssueRequest request, Long companyId, Long projectId, String token) {
+    public Long create(IssueRequest request, Long companyId, Long projectId, String token) {
 
         Long count = readPort.countByProjectId(projectId);
         Company company = companyService.findCompanyById(companyId);
@@ -82,6 +82,8 @@ public class IssueServiceImpl implements IssueService {
 
         Issue issuesaved = savePort.save(issue);
         createAndSendHistoryEvent(issuesaved.getId(), EventType.ISSUE_CREATED, token, "","" );
+
+        return issuesaved.getId();
     }
 
     @Override
