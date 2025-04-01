@@ -37,10 +37,10 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "phone" ,columnDefinition = "TEXT")
+    @Column(name = "phone")
     private Long phone;
 
-    @Column(name = "photo")
+    @Column(name = "photo",columnDefinition = "TEXT")
     private String photo;
 
     @Enumerated(EnumType.STRING)

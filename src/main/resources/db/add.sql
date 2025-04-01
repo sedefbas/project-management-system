@@ -127,7 +127,7 @@ WHERE name IN ('user:detail', 'user:list', 'company:create');
 
 -- COMPANY_OWNER rolüne yeni izinlerin atanması
 INSERT INTO role_permission (role_id, permission_id)
-SELECT 8, id
+SELECT 7, id
 FROM permission
 WHERE name IN
       ('company:detail', 'company:list', 'company:addUserToCompany', 'company:update', 'company:delete',

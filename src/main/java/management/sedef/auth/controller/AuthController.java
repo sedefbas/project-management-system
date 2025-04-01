@@ -32,6 +32,7 @@ public class AuthController {
     @PostMapping("/verify-mail")
     SuccessResponse<Void> verifyMail(@RequestBody VerifyRequest verifyRequest) {
         registrationService.verifyMail(verifyRequest);
+
         return SuccessResponse.success();
     }
 
