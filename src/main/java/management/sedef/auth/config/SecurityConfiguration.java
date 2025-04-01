@@ -63,11 +63,11 @@ class SecurityConfiguration {
                         .anyRequest().authenticated())
                 .sessionManagement(customizer -> customizer
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(bearerTokenAuthenticationFilter, BearerTokenAuthenticationFilter.class)
+                .addFilterBefore(bearerTokenAuthenticationFilter, BearerTokenAuthenticationFilter.class);
 
-                // OAuth2 Entegrasyonu
-                .oauth2Login(oauth2 -> oauth2
-                        .defaultSuccessUrl("/secured", true));
+//                // OAuth2 Entegrasyonu
+//                .oauth2Login(oauth2 -> oauth2
+//                        .defaultSuccessUrl("/secured", true));
 
         return httpSecurity.build();
     }
