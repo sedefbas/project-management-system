@@ -28,17 +28,6 @@ public class ProjectController {
     private final GroupToGroupResponseMapper groupToGroupResponseMapper;
 
 
-    @GetMapping("/{projectId}/groups")
-    @PreAuthorize("hasAnyAuthority('project:detail')")
-    public SuccessResponse<List<GroupResponse>> findGroupsByProjectId(
-            @PathVariable Long companyId,
-            @PathVariable Long projectId
-    ) {
-        List<Group> groups = service.findGroupsByProjectIdAndCompanyId(projectId, companyId);
-        List<GroupResponse> groupResponses = groupToGroupResponseMapper.map(groups);
-        return SuccessResponse.success(groupResponses);
-    }
-
     @PostMapping()
     @PreAuthorize("hasAnyAuthority('project:create')")
     public SuccessResponse<Void> create(@RequestBody ProjectRequest request, @PathVariable Long companyId){
@@ -92,26 +81,26 @@ public class ProjectController {
         return SuccessResponse.success(projectResponses);
     }
 
-    @PostMapping("/{projectId}/groups/{groupId}")
-    @PreAuthorize("hasAnyAuthority('project:update')")
-    public SuccessResponse<Void> addGroupToProject(
-            @PathVariable Long companyId,
-            @PathVariable Long projectId,
-            @PathVariable Long groupId
-    ) {
-        service.addGroupToProject(companyId, projectId, groupId);
-        return SuccessResponse.success();
-    }
-
-    @DeleteMapping("/{projectId}/groups/{groupId}")
-    @PreAuthorize("hasAnyAuthority('project:update')")
-    public SuccessResponse<Void> removeGroupFromProject(
-            @PathVariable Long companyId,
-            @PathVariable Long projectId,
-            @PathVariable Long groupId
-    ) {
-        service.removeGroupFromProject(companyId, projectId, groupId);
-        return SuccessResponse.success();
-    }
+//    @PostMapping("/{projectId}/groups/{groupId}")
+//    @PreAuthorize("hasAnyAuthority('project:update')")
+//    public SuccessResponse<Void> addGroupToProject(
+//            @PathVariable Long companyId,
+//            @PathVariable Long projectId,
+//            @PathVariable Long groupId
+//    ) {
+//        service.addGroupToProject(companyId, projectId, groupId);
+//        return SuccessResponse.success();
+//    }
+//
+//    @DeleteMapping("/{projectId}/groups/{groupId}")
+//    @PreAuthorize("hasAnyAuthority('project:update')")
+//    public SuccessResponse<Void> removeGroupFromProject(
+//            @PathVariable Long companyId,
+//            @PathVariable Long projectId,
+//            @PathVariable Long groupId
+//    ) {
+//        service.removeGroupFromProject(companyId, projectId, groupId);
+//        return SuccessResponse.success();
+//    }
 
 }

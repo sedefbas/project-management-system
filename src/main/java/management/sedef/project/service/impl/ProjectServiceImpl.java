@@ -75,47 +75,40 @@ public class ProjectServiceImpl implements ProjectService {
         return readAdapter.getAllProjects(companyId);
     }
 
-    @Override
-    public List<Group> findGroupsByProjectIdAndCompanyId(Long projectId, Long companyId) {
-       return readAdapter.findGroupsByProjectIdAndCompanyId(projectId,companyId);
-    }
-
-    @Override
-    public void removeGroupFromProject(Long companyId, Long projectId, Long groupId) {
-
-        Project project = findByIdAndCompanyId(projectId, companyId);
-        List<Group> currentGroups = findGroupsByProjectIdAndCompanyId(projectId, companyId);
-
-        boolean existsInProject = currentGroups.stream()
-                .anyMatch(g -> g.getId().equals(groupId));
-
-        if (!existsInProject) {
-            throw new GroupNotFoundException("Grup, projede mevcut değil.");
-        }
-
-        project.getGroups().removeIf(g -> g.getId().equals(groupId));
-        saveAdapter.save(project);
-    }
-
-
-    @Override
-    public void addGroupToProject(Long companyId, Long projectId, Long groupId) {
-
-        Project project = findByIdAndCompanyId(projectId, companyId);
-
-        List<Group> currentGroups = findGroupsByProjectIdAndCompanyId(projectId,companyId);
-
-        List<Long> currentGroupIds = currentGroups.stream()
-                .map(Group::getId)
-                .collect(Collectors.toList());
-
-        if (!currentGroupIds.contains(groupId)) {
-            Group groupToAdd = groupService.findById(groupId);
-            project.getGroups().add(groupToAdd);
-            saveAdapter.save(project);
-        }
-    }
-
+//    @Override
+//    public void removeGroupFromProject(Long companyId, Long projectId, Long groupId) {
+//
+//        Project project = findByIdAndCompanyId(projectId, companyId);
+//        List<Group> currentGroups = findGroupsByProjectIdAndCompanyId(projectId, companyId);
+//
+//        boolean existsInProject = currentGroups.stream()
+//                .anyMatch(g -> g.getId().equals(groupId));
+//
+//        if (!existsInProject) {
+//            throw new GroupNotFoundException("Grup, projede mevcut değil.");
+//        }
+//
+//        saveAdapter.save(project);
+//    }
+//
+//
+//    @Override
+//    public void addGroupToProject(Long companyId, Long projectId, Long groupId) {
+//
+//        Project project = findByIdAndCompanyId(projectId, companyId);
+//
+//        List<Group> currentGroups = findGroupsByProjectIdAndCompanyId(projectId,companyId);
+//
+//        List<Long> currentGroupIds = currentGroups.stream()
+//                .map(Group::getId)
+//                .collect(Collectors.toList());
+//
+//        if (!currentGroupIds.contains(groupId)) {
+//            Group groupToAdd = groupService.findById(groupId);
+//            saveAdapter.save(project);
+//        }
+//    }
+//
 
 
 

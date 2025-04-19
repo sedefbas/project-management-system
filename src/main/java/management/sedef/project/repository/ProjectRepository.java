@@ -17,9 +17,6 @@ public interface ProjectRepository extends JpaRepository<ProjectEntity,Long> {
     @Query("SELECT p FROM ProjectEntity p WHERE p.company.id = :companyId")
     List<ProjectEntity> findAllByCompanyId(@Param("companyId") Long companyId);
 
-    @Query("SELECT p.groups FROM ProjectEntity p WHERE p.id = :projectId AND p.company.id = :companyId")
-    List<GroupEntity> findGroupsByProjectIdAndCompanyId(Long projectId, Long companyId);
-
     @Query("SELECT COUNT(p) FROM ProjectEntity p WHERE p.company.id = :companyId")
     int countProjectsByCompanyId(@Param("companyId") Long companyId);
 }

@@ -30,9 +30,5 @@ public class ProjectRequest {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
-    private ProjectStatus status;
-
-    @NotEmpty(message = "Group IDs cannot be empty")
-    @NotNull(message = "Group IDs cannot be null")
-    private List<Long> groupIds;
+    private ProjectStatus projectStatus;
 }

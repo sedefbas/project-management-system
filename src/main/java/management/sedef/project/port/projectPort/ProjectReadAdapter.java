@@ -9,6 +9,5 @@ public interface ProjectReadAdapter {
     int countProjectsByCompanyId(Long companyId);
     Project findByIdAndCompanyId(Long projectId,Long companyId);
     List<Project> getAllProjects(Long companyId);
-    List<Group> findGroupsByProjectIdAndCompanyId(Long projectId, Long companyId);
     Project findById(Long projectId);
 }

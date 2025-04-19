@@ -31,8 +31,6 @@ public class Project {
 
     private LocalDate endDate;
 
-    private List<Group> groups;
-
     private Company company;
 }
 

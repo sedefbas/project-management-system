@@ -20,9 +20,7 @@ public interface ProjectService {
 
     List<Project> getAllProjectsByCompanyId(Long companyId);
 
-    List<Group> findGroupsByProjectIdAndCompanyId(Long projectId, Long companyId);
+ //  void removeGroupFromProject(Long companyId, Long projectId, Long groupId);
 
-    void removeGroupFromProject(Long companyId, Long projectId, Long groupId);
-
-    void addGroupToProject(Long companyId, Long projectId, Long groupId);
+//    void addGroupToProject(Long companyId, Long projectId, Long groupId);
 }

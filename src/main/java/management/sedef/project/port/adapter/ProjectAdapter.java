@@ -1,9 +1,6 @@
 package management.sedef.project.port.adapter;
 
 import lombok.RequiredArgsConstructor;
-import management.sedef.company.model.Group;
-import management.sedef.company.model.entity.GroupEntity;
-import management.sedef.company.model.mapper.groupmapper.GroupEntityToDomainMapper;
 import management.sedef.project.exception.ProjectNotFoundException;
 import management.sedef.project.model.Project;
 import management.sedef.project.model.entity.ProjectEntity;
@@ -25,7 +22,7 @@ public class ProjectAdapter implements ProjectSaveAdapter, ProjectReadAdapter, P
     private final ProjectRepository repository;
     private final ProjectToEntityMapper projectToEntityMapper = ProjectToEntityMapper.initialize();
     private final ProjectEntityToDomainMapper projectEntityToDomainMapper ;
-    private final GroupEntityToDomainMapper groupEntityToDomainMapper ;
+
 
     @Override
     public Project save(Project project) {
@@ -52,13 +49,6 @@ public class ProjectAdapter implements ProjectSaveAdapter, ProjectReadAdapter, P
         return projectEntities.stream()
                 .map(projectEntityToDomainMapper::map)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Group> findGroupsByProjectIdAndCompanyId(Long projectId ,Long companyId) {
-        Project project = findByIdAndCompanyId(projectId,companyId); //hata kontrolü
-        List<GroupEntity> groupEntities = repository.findGroupsByProjectIdAndCompanyId(projectId,companyId);
-        return groupEntities.stream().map(groupEntityToDomainMapper::map).collect(Collectors.toList());
     }
 
     @Override
